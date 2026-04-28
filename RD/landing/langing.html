@@ -22,7 +22,7 @@
                     <a href="#">Shop</a>
                 </nav>
                 <div class="header-right">
-                    <button class="chat-btn">Let's Chat <span class="arrow-icon">↗</span></button>
+                    <button class="chat-btn">Let's Chat <span class="arrow-icon">&nearr;</span></button>
                     <button class="mobile-menu-btn">
                         <span></span><span></span><span></span>
                     </button>
@@ -39,8 +39,8 @@
 
             <main class="content">
                 <div class="hero-text-container">
-                    <h1>Luxurious car can you<br>buy from our shop</h1>
-                    <button class="shop-btn">Shop Now <span class="arrow-icon">↗</span></button>
+                    <h1 class="hero-headline">Luxurious car can you<br>buy from our shop</h1>
+                    <button class="shop-btn">Shop Now <span class="arrow-icon">&nearr;</span></button>
                 </div>
 
                 <!-- Hotspots -->
@@ -49,9 +49,15 @@
                 <div class="hotspot h3"></div>
 
                 <div class="bottom-controls">
-                    <button class="nav-btn prev">←</button>
-                    <div class="page-counter">02<span class="muted">/08</span></div>
-                    <button class="nav-btn next">→</button>
+                    <button class="nav-btn prev" aria-label="Previous slide">&larr;</button>
+                    <div class="right-controls">
+                        <div class="page-counter">
+                            <span class="current-slide">01</span>
+                            <span class="muted">/</span>
+                            <span class="total-slides">03</span>
+                        </div>
+                        <button class="nav-btn next" aria-label="Next slide">&rarr;</button>
+                    </div>
                 </div>
             </main>
         </div>
