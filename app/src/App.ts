@@ -1,4 +1,5 @@
 import { Component, h } from "./engine";
+import { AppRouter } from "./routers/App.router";
 
 interface AppState {
   currentPage: "home" | "about" | "contact" | "wishlist";
@@ -10,12 +11,6 @@ export class App extends Component<{}, AppState> {
   }
 
   render() {
-    const { currentPage } = this.state;
-
-    return h(
-      "div",
-      { className: "app-container" },
-      h("nav", { className: "navbar" }),
-    );
+    return h(AppRouter, {});
   }
 }
