@@ -11,6 +11,7 @@ import { SearchPage } from "../pages/Search.page.component";
 import { ProfilePage } from "../pages/Profile.page.component";
 import { AuthPage } from "../pages/Auth.page.Component";
 import { NotFoundPage } from "../pages/NotFound.page.component";
+import Footer from "../components/Footer.component";
 
 interface AppRouterState {
   currentRoute:
@@ -76,6 +77,7 @@ export class AppRouter extends Component<{}, AppRouterState> {
       currentRoute === "profile" && h(ProfilePage, null),
       currentRoute === "auth" && h(AuthPage, null),
       currentRoute === "not-found" && h(NotFoundPage, null),
+      h(Footer, null),
     );
   }
 }
