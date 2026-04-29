@@ -34,6 +34,30 @@ function isComponentClass(type: unknown): type is ComponentConstructor {
   return typeof type === "function" && type.prototype instanceof Component;
 }
 
+function getRawHtmlFromVChildren(children: VChild[]): string {
+  let html = "";
+  for (const child of children) {
+    if (typeof child === "string" || typeof child === "number") {
+      html += String(child);
+    }
+  }
+  return html;
+}
+
+function createDomFromRawHtml(html: string): Node {
+  const template = document.createElement("template");
+  template.innerHTML = html;
+
+  const content = template.content;
+  if (content.childNodes.length === 1) {
+    return content.firstChild!;
+  }
+
+  const wrapper = document.createElement("div");
+  while (content.firstChild) wrapper.appendChild(content.firstChild);
+  return wrapper;
+}
+
 // ── 3. DOM Property Management ──────────────────────────────────────────────
 
 /**
@@ -49,7 +73,13 @@ export function applyProps(
 
   // Step 1: Cleaning up. Remove old properties that are no longer needed.
   for (const key of Object.keys(oldProps)) {
-    if (key === "key" || key === "children" || key in newProps) continue;
+    if (
+      key === "key" ||
+      key === "children" ||
+      key === "innerHTML" ||
+      key in newProps
+    )
+      continue;
 
     if (key.startsWith("on")) {
       // If it's an event like "onClick", remove the old event listener
@@ -67,7 +97,7 @@ export function applyProps(
 
   // Step 2: Set the new properties or update the existing ones
   for (const [key, value] of Object.entries(newProps)) {
-    if (key === "key" || key === "children") continue;
+    if (key === "key" || key === "children" || key === "innerHTML") continue;
 
     if (key.startsWith("on") && typeof value === "function") {
       // Add new event listeners (like click or input events)
@@ -110,6 +140,19 @@ export function createDom(vnode: VChild): Node {
   }
 
   const { type, props, children } = vnode;
+
+  // Raw HTML injection (opt-in). Example:
+  //   h("<HTML>", null, "<div><b>Hi</b></div>")
+  // Treated as a leaf node: the engine does not diff inside it.
+  if (type === "<HTML>") {
+    const html = getRawHtmlFromVChildren(children);
+    const dom = createDomFromRawHtml(html);
+    if (dom.nodeType === Node.ELEMENT_NODE) {
+      applyProps(dom as Element, {}, props);
+    }
+    domVNode.set(dom, vnode);
+    return dom;
+  }
 
   // Case 2: The blueprint is a custom Component (e.g., <MyButton />)
   if (isComponentClass(type)) {
@@ -156,6 +199,11 @@ export function createDom(vnode: VChild): Node {
   domVNode.set(el, vnode);
   applyProps(el, {}, props); // Apply all the properties (classes, ids, styles)
 
+  if (props.innerHTML != null) {
+    (el as HTMLElement).innerHTML = String(props.innerHTML);
+    return el;
+  }
+
   // Recursively build and add all the children inside this element
   for (const child of children) {
     el.appendChild(createDom(child));
@@ -200,6 +248,20 @@ export function patchDOM(
   // Rule 3: The HTML tag completely changed (e.g. <div> became a <span>). Destroy the old, build the new.
   if (oldV.type !== newV.type) return replaceNode(parent, oldDom, newVNode);
 
+  // Raw HTML injection: treat it as a leaf node and replace when it changes.
+  if (newV.type === "<HTML>") {
+    const oldHtml = getRawHtmlFromVChildren(oldV.children);
+    const newHtml = getRawHtmlFromVChildren(newV.children);
+    if (oldHtml === newHtml) {
+      if (oldDom.nodeType === Node.ELEMENT_NODE) {
+        applyProps(oldDom as Element, oldV.props, newV.props);
+      }
+      domVNode.set(oldDom, newV);
+      return oldDom;
+    }
+    return replaceNode(parent, oldDom, newVNode);
+  }
+
   // Rule 4: It's the exact same custom Component. Just give it the new properties (props).
   if (isComponentClass(newV.type)) {
     const instance = domComponent.get(oldDom);
@@ -219,7 +281,26 @@ export function patchDOM(
   // Keep the DOM element, but update its properties and then check its children for updates.
   const el = oldDom as Element;
   applyProps(el, oldV.props, newV.props);
-  patchChildren(el, oldV.children, newV.children);
+
+  if (newV.props.innerHTML != null) {
+    if (oldV.props.innerHTML == null) {
+      while (el.firstChild) {
+        unmountNode(el.firstChild);
+        el.removeChild(el.firstChild);
+      }
+    }
+    (el as HTMLElement).innerHTML = String(newV.props.innerHTML);
+  } else if (oldV.props.innerHTML != null) {
+    while (el.firstChild) {
+      unmountNode(el.firstChild);
+      el.removeChild(el.firstChild);
+    }
+    for (const child of newV.children) {
+      el.appendChild(createDom(child));
+    }
+  } else {
+    patchChildren(el, oldV.children, newV.children);
+  }
 
   domVNode.set(el, newV);
   return el;
