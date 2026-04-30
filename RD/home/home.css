@@ -585,6 +585,61 @@ h1.fade-in {
     }
 }
 
+/* 3D Preview */
+.preview-3d {
+    background: white;
+    color: #111;
+    padding: clamp(56px, 8vw, 96px) 0;
+}
+
+.preview-inner {
+    width: min(1100px, calc(100% - 48px));
+    margin: 0 auto;
+}
+
+.preview-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: clamp(18px, 3vw, 28px);
+}
+
+.preview-header h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    color: #000;
+}
+
+.preview-header p {
+    color: #333;
+    opacity: 0.7;
+    line-height: 1.6;
+    max-width: 65ch;
+}
+
+.preview-card {
+    border: none;
+    background: white;
+    box-shadow: none;
+    position: relative;
+    overflow: visible;
+}
+
+.preview-model {
+    width: 100% !important;
+    height: clamp(360px, 60vh, 580px) !important;
+    display: block !important;
+    background: white;
+    position: relative;
+    z-index: 1;
+}
+
+.preview-model:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+}
+
 @media (max-width: 900px) {
     .type-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -603,6 +658,10 @@ h1.fade-in {
 
 @media (max-width: 640px) {
     .browse-inner {
+        width: calc(100% - 32px);
+    }
+
+    .preview-inner {
         width: calc(100% - 32px);
     }
 

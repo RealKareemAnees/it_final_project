@@ -1,156 +1,251 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Car Gallery Landing</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="home.css">
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="home.css" />
+    <script type="module" src="model-viewer.min.js"></script>
+  </head>
+  <body>
     <div class="mockup-frame">
-        <section class="app-container" aria-label="Hero slideshow">
-            <header class="header">
-                <div class="logo">Bergo</div>
-                <nav class="desktop-nav">
-                    <a href="#">Vehicles</a>
-                    <a href="#">Energy</a>
-                    <a href="#">Charging</a>
-                    <a href="#">Discover</a>
-                    <a href="#">Shop</a>
-                </nav>
-                <div class="header-right">
-                    <button class="chat-btn">Let's Chat <span class="arrow-icon">&nearr;</span></button>
-                    <button class="mobile-menu-btn" aria-label="Open menu">
-                        <span></span><span></span><span></span>
-                    </button>
-                </div>
-            </header>
+      <section class="app-container" aria-label="Hero slideshow">
+        <header class="header">
+          <div class="logo">Bergo</div>
+          <nav class="desktop-nav">
+            <a href="#">Vehicles</a>
+            <a href="#">Energy</a>
+            <a href="#">Charging</a>
+            <a href="#">Discover</a>
+            <a href="#">Shop</a>
+          </nav>
+          <div class="header-right">
+            <button class="chat-btn">
+              Let's Chat <span class="arrow-icon">&nearr;</span>
+            </button>
+            <button class="mobile-menu-btn" aria-label="Open menu">
+              <span></span><span></span><span></span>
+            </button>
+          </div>
+        </header>
 
-            <div class="mobile-nav">
-                <a href="#">Vehicles</a>
-                <a href="#">Energy</a>
-                <a href="#">Charging</a>
-                <a href="#">Discover</a>
-                <a href="#">Shop</a>
+        <div class="mobile-nav">
+          <a href="#">Vehicles</a>
+          <a href="#">Energy</a>
+          <a href="#">Charging</a>
+          <a href="#">Discover</a>
+          <a href="#">Shop</a>
+        </div>
+
+        <main class="content">
+          <div class="hero-text-container">
+            <h1 class="hero-headline">
+              Luxurious car can you<br />buy from our shop
+            </h1>
+            <button class="shop-btn">
+              Shop Now <span class="arrow-icon">&nearr;</span>
+            </button>
+          </div>
+
+          <!-- Hotspots -->
+          <div class="hotspot h1"></div>
+          <div class="hotspot h2"></div>
+          <div class="hotspot h3"></div>
+
+          <div class="bottom-controls">
+            <button class="nav-btn prev" aria-label="Previous slide">
+              &larr;
+            </button>
+            <div class="right-controls">
+              <div class="page-counter">
+                <span class="current-slide">01</span>
+                <span class="muted">/</span>
+                <span class="total-slides">03</span>
+              </div>
+              <button class="nav-btn next" aria-label="Next slide">
+                &rarr;
+              </button>
             </div>
+          </div>
+        </main>
+      </section>
 
-            <main class="content">
-                <div class="hero-text-container">
-                    <h1 class="hero-headline">Luxurious car can you<br>buy from our shop</h1>
-                    <button class="shop-btn">Shop Now <span class="arrow-icon">&nearr;</span></button>
-                </div>
+      <section class="thesis" aria-label="Website thesis">
+        <div class="thesis-inner">
+          <div class="thesis-text">
+            <h2>Thesis</h2>
+            <p>
+              Bergo is a clean, modern car gallery landing page designed to
+              spotlight premium vehicles through a full-screen slideshow. It
+              pairs bold typography with simple navigation so users can explore,
+              discover, and shop without distractions. The layout is responsive
+              by default, keeping the same high-end feel across desktop, tablet,
+              and mobile.
+            </p>
+            <a
+              href="#"
+              class="learn-more-btn"
+              aria-label="Learn more about Bergo"
+              >Learn More!</a
+            >
+          </div>
+          <div class="thesis-media">
+            <img
+              src="images/car-tire.jpg"
+              alt="Close-up of a performance car wheel"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </section>
 
-                <!-- Hotspots -->
-                <div class="hotspot h1"></div>
-                <div class="hotspot h2"></div>
-                <div class="hotspot h3"></div>
+      <section class="browse-types" aria-label="Browse by car type">
+        <div class="browse-inner">
+          <div class="browse-header">
+            <h2>Browse by Car Type</h2>
+            <p>Explore curated categories with a clean, consistent layout.</p>
+          </div>
 
-                <div class="bottom-controls">
-                    <button class="nav-btn prev" aria-label="Previous slide">&larr;</button>
-                    <div class="right-controls">
-                        <div class="page-counter">
-                            <span class="current-slide">01</span>
-                            <span class="muted">/</span>
-                            <span class="total-slides">03</span>
-                        </div>
-                        <button class="nav-btn next" aria-label="Next slide">&rarr;</button>
-                    </div>
-                </div>
-            </main>
-        </section>
+          <div class="type-grid">
+            <a class="type-card" href="#" aria-label="Browse luxury cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/luxury.jpg"
+                  alt="Luxury car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Luxury</span>
+            </a>
 
-        <section class="thesis" aria-label="Website thesis">
-            <div class="thesis-inner">
-                <div class="thesis-text">
-                    <h2>Thesis</h2>
-                    <p>
-                        Bergo is a clean, modern car gallery landing page designed to spotlight premium vehicles through a full-screen slideshow.
-                        It pairs bold typography with simple navigation so users can explore, discover, and shop without distractions.
-                        The layout is responsive by default, keeping the same high-end feel across desktop, tablet, and mobile.
-                    </p>
-                    <a href="#" class="learn-more-btn" aria-label="Learn more about Bergo">Learn More!</a>
-                </div>
-                <div class="thesis-media">
-                    <img src="images/car-tire.jpg" alt="Close-up of a performance car wheel" loading="lazy" decoding="async">
-                </div>
-            </div>
-        </section>
+            <a class="type-card" href="#" aria-label="Browse muscle cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/muscle.jpg"
+                  alt="Muscle car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Muscle</span>
+            </a>
 
-        <section class="browse-types" aria-label="Browse by car type">
-            <div class="browse-inner">
-                <div class="browse-header">
-                    <h2>Browse by Car Type</h2>
-                    <p>Explore curated categories with a clean, consistent layout.</p>
-                </div>
+            <a class="type-card" href="#" aria-label="Browse racing cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/racing.jpg"
+                  alt="Racing car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Racing</span>
+            </a>
 
-                <div class="type-grid">
-                    <a class="type-card" href="#" aria-label="Browse luxury cars">
-                        <div class="type-thumb">
-                            <img src="images/car-types/luxury.jpg" alt="Luxury car type" loading="lazy" decoding="async">
-                        </div>
-                        <span class="type-title">Luxury</span>
-                    </a>
+            <a class="type-card" href="#" aria-label="Browse offroad cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/offroader.jpg"
+                  alt="Offroad car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Offroad</span>
+            </a>
 
-                    <a class="type-card" href="#" aria-label="Browse muscle cars">
-                        <div class="type-thumb">
-                            <img src="images/car-types/muscle.jpg" alt="Muscle car type" loading="lazy" decoding="async">
-                        </div>
-                        <span class="type-title">Muscle</span>
-                    </a>
+            <a class="type-card" href="#" aria-label="Browse sedan cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/sedan.jpg"
+                  alt="Sedan car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Sedan</span>
+            </a>
 
-                    <a class="type-card" href="#" aria-label="Browse racing cars">
-                        <div class="type-thumb">
-                            <img src="images/car-types/racing.jpg" alt="Racing car type" loading="lazy" decoding="async">
-                        </div>
-                        <span class="type-title">Racing</span>
-                    </a>
+            <a class="type-card" href="#" aria-label="Browse SUV cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/SUV.jpg"
+                  alt="SUV car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">SUV</span>
+            </a>
 
-                    <a class="type-card" href="#" aria-label="Browse offroad cars">
-                        <div class="type-thumb">
-                            <img src="images/car-types/offroader.jpg" alt="Offroad car type" loading="lazy" decoding="async">
-                        </div>
-                        <span class="type-title">Offroad</span>
-                    </a>
+            <a class="type-card" href="#" aria-label="Browse sports cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/sports.jpg"
+                  alt="Sports car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Sports</span>
+            </a>
 
-                    <a class="type-card" href="#" aria-label="Browse sedan cars">
-                        <div class="type-thumb">
-                            <img src="images/car-types/sedan.jpg" alt="Sedan car type" loading="lazy" decoding="async">
-                        </div>
-                        <span class="type-title">Sedan</span>
-                    </a>
+            <a class="type-card" href="#" aria-label="Browse roadster cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/roadster.jpg"
+                  alt="Roadster car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Roadster</span>
+            </a>
+          </div>
 
-                    <a class="type-card" href="#" aria-label="Browse SUV cars">
-                        <div class="type-thumb">
-                            <img src="images/car-types/SUV.jpg" alt="SUV car type" loading="lazy" decoding="async">
-                        </div>
-                        <span class="type-title">SUV</span>
-                    </a>
+          <a href="#" class="more-link" aria-label="View more car types">
+            <span class="more-text">and much more</span>
+            <span class="more-arrow">→</span>
+          </a>
+        </div>
+      </section>
 
-                    <a class="type-card" href="#" aria-label="Browse sports cars">
-                        <div class="type-thumb">
-                            <img src="images/car-types/sports.jpg" alt="Sports car type" loading="lazy" decoding="async">
-                        </div>
-                        <span class="type-title">Sports</span>
-                    </a>
+      <section class="preview-3d" aria-label="3D preview">
+        <div class="preview-inner">
+          <div class="preview-header">
+            <h2>3D Preview</h2>
+            <p>Enjoy the 3D car preview in motion.</p>
+          </div>
 
-                    <a class="type-card" href="#" aria-label="Browse roadster cars">
-                        <div class="type-thumb">
-                            <img src="images/car-types/roadster.jpg" alt="Roadster car type" loading="lazy" decoding="async">
-                        </div>
-                        <span class="type-title">Roadster</span>
-                    </a>
-                </div>
-
-                <a href="#" class="more-link" aria-label="View more car types">
-                    <span class="more-text">and much more</span>
-                    <span class="more-arrow">→</span>
-                </a>
-            </div>
-        </section>
+          <div class="preview-card">
+            <model-viewer
+              class="preview-model"
+              src="images/car-3d.glb"
+              alt="3D car model"
+              camera-controls
+              auto-rotate
+              shadow-intensity="1"
+              shadow-softness="0.8"
+              exposure="1.2"
+              environment-image="neutral"
+              tone-mapping="aces"
+              camera-orbit="45deg 75deg 4m"
+              interaction-prompt="none"
+              ar
+            >
+            </model-viewer>
+          </div>
+        </div>
+      </section>
     </div>
     <script src="home.js"></script>
-</body>
+  </body>
 </html>
