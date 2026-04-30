@@ -356,6 +356,38 @@ h1.fade-in {
     border: none;
 }
 
+/* Learn More Button */
+.learn-more-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 24px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: white;
+    text-decoration: none;
+    color: #111;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.learn-more-btn:hover {
+    border-color: rgba(0, 0, 0, 0.35);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+.learn-more-btn:active {
+    transform: translateY(0);
+}
+
+.learn-more-btn:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+}
+
 /* Browse by Car Type */
 .browse-types {
     background: white;
