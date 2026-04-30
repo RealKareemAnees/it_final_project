@@ -40,8 +40,17 @@ const currentSlideSpan = document.querySelector('.current-slide');
 const totalSlideSpan = document.querySelector('.total-slides');
 const prevBtn = document.querySelector('.nav-btn.prev');
 const nextBtn = document.querySelector('.nav-btn.next');
+const header = document.querySelector('.header');
 const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
 const mobileNav = document.querySelector('.mobile-nav');
+
+function updateHeaderOnScroll() {
+    if (!header) return;
+    header.classList.toggle('is-scrolled', window.scrollY > 24);
+}
+
+window.addEventListener('scroll', updateHeaderOnScroll, { passive: true });
+updateHeaderOnScroll();
 
 function applySlide(index, options = {}) {
     if (!appContainer || !headline || !currentSlideSpan) {
