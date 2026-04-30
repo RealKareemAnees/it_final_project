@@ -7,11 +7,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="home.css">
 </head>
 <body>
     <div class="mockup-frame">
-        <div class="app-container">
+        <section class="app-container" aria-label="Hero slideshow">
             <header class="header">
                 <div class="logo">Bergo</div>
                 <nav class="desktop-nav">
@@ -23,7 +23,7 @@
                 </nav>
                 <div class="header-right">
                     <button class="chat-btn">Let's Chat <span class="arrow-icon">&nearr;</span></button>
-                    <button class="mobile-menu-btn">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
                         <span></span><span></span><span></span>
                     </button>
                 </div>
@@ -60,8 +60,24 @@
                     </div>
                 </div>
             </main>
-        </div>
+        </section>
+
+        <section class="thesis" aria-label="Website thesis">
+            <div class="thesis-inner">
+                <div class="thesis-text">
+                    <h2>Thesis</h2>
+                    <p>
+                        Bergo is a clean, modern car gallery landing page designed to spotlight premium vehicles through a full-screen slideshow.
+                        It pairs bold typography with simple navigation so users can explore, discover, and shop without distractions.
+                        The layout is responsive by default, keeping the same high-end feel across desktop, tablet, and mobile.
+                    </p>
+                </div>
+                <div class="thesis-media">
+                    <img src="images/car-tire.jpg" alt="Close-up of a performance car wheel" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </section>
     </div>
-    <script src="main.js"></script>
+    <script src="home.js"></script>
 </body>
 </html>
