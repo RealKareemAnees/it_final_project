@@ -12,7 +12,12 @@ import { ProfilePage } from "../pages/Profile.page.component";
 import { AuthPage } from "../pages/Auth.page.Component";
 import { NotFoundPage } from "../pages/NotFound.page.component";
 import Footer from "../components/Footer.component";
-
+import type { GlobalContextState } from "../contexts/Global.context";
+import type { ContextUpdater } from "../contexts/Context.base";
+interface AppRouterProps {
+  context: GlobalContextState;
+  setContext: (updates: ContextUpdater<GlobalContextState>) => void;
+}
 interface AppRouterState {
   currentRoute:
     | "home"
@@ -29,9 +34,9 @@ interface AppRouterState {
   params?: { id?: string };
 }
 
-export class AppRouter extends Component<{}, AppRouterState> {
-  constructor() {
-    super({});
+export class AppRouter extends Component<AppRouterProps, AppRouterState> {
+  constructor(props: AppRouterProps) {
+    super(props);
   }
 
   state: AppRouterState = {
@@ -78,6 +83,30 @@ export class AppRouter extends Component<{}, AppRouterState> {
       currentRoute === "auth" && h(AuthPage, null),
       currentRoute === "not-found" && h(NotFoundPage, null),
       h(Footer, null),
+
+      h(
+        "div",
+        { style: { marginTop: "20px", padding: "10px" } },
+        h("p", null, `Counter: ${this.props.context.counter}`),
+        h(
+          "button",
+          {
+            onClick: () =>
+              this.props.setContext({
+                counter: this.props.context.counter + 1,
+              }),
+            style: { marginRight: "10px" },
+          },
+          "Increment",
+        ),
+        h(
+          "button",
+          {
+            onClick: () => this.props.setContext({ counter: 0 }),
+          },
+          "Reset",
+        ),
+      ),
     );
   }
 }
