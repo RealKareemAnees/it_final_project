@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Gallery Landing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Global Styles & CSS Variables -->
+    <link rel="stylesheet" href="css/global.css" />
+    <!-- Component Styles -->
+    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/hero.css" />
+    <link rel="stylesheet" href="css/sections.css" />
+    <link rel="stylesheet" href="css/browse-countries.css" />
+    <link rel="stylesheet" href="css/contact-footer.css" />
+  </head>
+  <body>
+    <div class="mockup-frame">
+      <section class="app-container" aria-label="Hero slideshow">
+        <header class="header">
+          <div class="logo">Bergo</div>
+          <nav class="desktop-nav">
+            <a href="#">Vehicles</a>
+            <a href="#">Energy</a>
+            <a href="#">Charging</a>
+            <a href="#">Discover</a>
+            <a href="#">Shop</a>
+          </nav>
+          <div class="header-right">
+            <button class="chat-btn">
+              Let's Chat <span class="arrow-icon">&nearr;</span>
+            </button>
+            <button class="mobile-menu-btn" aria-label="Open menu">
+              <span></span><span></span><span></span>
+            </button>
+          </div>
+        </header>
+
+        <div class="mobile-nav">
+          <a href="#">Vehicles</a>
+          <a href="#">Energy</a>
+          <a href="#">Charging</a>
+          <a href="#">Discover</a>
+          <a href="#">Shop</a>
+        </div>
+
+        <main class="content">
+          <div class="hero-text-container">
+            <h1 class="hero-headline">
+              Luxurious car can you<br />buy from our shop
+            </h1>
+            <button class="shop-btn">
+              Shop Now <span class="arrow-icon">&nearr;</span>
+            </button>
+          </div>
+
+          <!-- Hotspots -->
+          <div class="hotspot h1"></div>
+          <div class="hotspot h2"></div>
+          <div class="hotspot h3"></div>
+
+          <div class="bottom-controls">
+            <button class="nav-btn prev" aria-label="Previous slide">
+              &larr;
+            </button>
+            <div class="right-controls">
+              <div class="page-counter">
+                <span class="current-slide">01</span>
+                <span class="muted">/</span>
+                <span class="total-slides">03</span>
+              </div>
+              <button class="nav-btn next" aria-label="Next slide">
+                &rarr;
+              </button>
+            </div>
+          </div>
+        </main>
+      </section>
+
+      <section class="thesis" aria-label="Website thesis">
+        <div class="thesis-inner">
+          <div class="thesis-text">
+            <h2>Thesis</h2>
+            <p>
+              Bergo is a clean, modern car gallery landing page designed to
+              spotlight premium vehicles through a full-screen slideshow. It
+              pairs bold typography with simple navigation so users can explore,
+              discover, and shop without distractions. The layout is responsive
+              by default, keeping the same high-end feel across desktop, tablet,
+              and mobile.
+            </p>
+            <a
+              href="#"
+              class="learn-more-btn"
+              aria-label="Learn more about Bergo"
+              >Learn More!</a
+            >
+          </div>
+          <div class="thesis-media">
+            <img
+              src="images/car-tire.jpg"
+              alt="Close-up of a performance car wheel"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="browse-types" aria-label="Browse by car type">
+        <div class="browse-inner">
+          <div class="browse-header">
+            <h2>Browse by Car Type</h2>
+            <p>Explore curated categories with a clean, consistent layout.</p>
+          </div>
+
+          <div class="type-grid">
+            <a class="type-card" href="#" aria-label="Browse luxury cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/luxury.jpg"
+                  alt="Luxury car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Luxury</span>
+            </a>
+
+            <a class="type-card" href="#" aria-label="Browse muscle cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/muscle.jpg"
+                  alt="Muscle car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Muscle</span>
+            </a>
+
+            <a class="type-card" href="#" aria-label="Browse racing cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/racing.jpg"
+                  alt="Racing car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Racing</span>
+            </a>
+
+            <a class="type-card" href="#" aria-label="Browse offroad cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/offroader.jpg"
+                  alt="Offroad car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Offroad</span>
+            </a>
+
+            <a class="type-card" href="#" aria-label="Browse sedan cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/sedan.jpg"
+                  alt="Sedan car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Sedan</span>
+            </a>
+
+            <a class="type-card" href="#" aria-label="Browse SUV cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/SUV.jpg"
+                  alt="SUV car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">SUV</span>
+            </a>
+
+            <a class="type-card" href="#" aria-label="Browse sports cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/sports.jpg"
+                  alt="Sports car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Sports</span>
+            </a>
+
+            <a class="type-card" href="#" aria-label="Browse roadster cars">
+              <div class="type-thumb">
+                <img
+                  src="images/car-types/roadster.jpg"
+                  alt="Roadster car type"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="type-title">Roadster</span>
+            </a>
+          </div>
+
+          <a href="#" class="more-link" aria-label="View more car types">
+            <span class="more-text">and much more</span>
+            <span class="more-arrow">→</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="browse-countries" aria-label="Browse by country">
+        <div class="countries-inner">
+          <div class="countries-header">
+            <h2>Browse by Country</h2>
+            <p>
+              Discover signature styles shaped by roads, culture, and
+              engineering traditions.
+            </p>
+          </div>
+
+          <div class="country-grid">
+            <article class="country-card">
+              <div class="country-image">
+                <img
+                  src="images/countries/american.jpeg"
+                  alt="American performance coupe at sunset"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="country-body">
+                <h3 class="country-title">American</h3>
+                <p class="country-copy">
+                  Bold silhouettes and long-distance comfort built for open
+                  highways.
+                </p>
+              </div>
+            </article>
+
+            <article class="country-card">
+              <div class="country-image">
+                <img
+                  src="images/countries/german.avif"
+                  alt="German supercar with classic architecture in the background"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="country-body">
+                <h3 class="country-title">German</h3>
+                <p class="country-copy">
+                  Precision engineering with quiet confidence in every detail.
+                </p>
+              </div>
+            </article>
+
+            <article class="country-card">
+              <div class="country-image">
+                <img
+                  src="images/countries/italian.jpeg"
+                  alt="Italian sports car in front of a graphic backdrop"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="country-body">
+                <h3 class="country-title">Italian</h3>
+                <p class="country-copy">
+                  Sculpted speed and artistry, where performance meets romance.
+                </p>
+              </div>
+            </article>
+
+            <article class="country-card">
+              <div class="country-image">
+                <img
+                  src="images/countries/japan.jpg"
+                  alt="Japanese performance car with bold graphic art"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="country-body">
+                <h3 class="country-title">Japanese</h3>
+                <p class="country-copy">
+                  Balanced innovation and reliability, crafted with care.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="search-section" aria-label="Search vehicles">
+        <div class="search-inner">
+          <div class="search-header">
+            <h2>Find Your Dream Car</h2>
+            <p>
+              Search by brand, model, or category to explore our collection.
+            </p>
+          </div>
+          <form class="search-form" action="#" method="GET">
+            <input
+              type="search"
+              class="search-input"
+              placeholder="e.g. Porsche 911 GT3 RS..."
+              required
+            />
+            <button type="submit" class="search-button" aria-label="Search">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </section>
+      <!-- ── CONTACT US SECTION ──────────────────────────────────────────── -->
+      <section class="contact-section" aria-label="Contact us">
+        <div class="contact-inner">
+          <div class="contact-eyebrow">Get in touch</div>
+          <h2 class="contact-heading">We'd love to hear<br />from you.</h2>
+          <p class="contact-sub">
+            Whether you're hunting for a specific model, need expert guidance,
+            or simply want to explore what's possible — our team is ready.
+          </p>
+          <a
+            href="contact.html"
+            class="contact-cta"
+            aria-label="Go to contact page"
+          >
+            Contact Us <span class="cta-arrow">&nearr;</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ── FOOTER ──────────────────────────────────────────────────────── -->
+      <footer class="site-footer" aria-label="Site footer">
+        <div class="footer-inner">
+          <div class="footer-top">
+            <div class="footer-brand">
+              <span class="footer-logo">Bergo</span>
+              <p class="footer-tagline">
+                Premium vehicles, curated for the discerning driver.
+              </p>
+            </div>
+
+            <nav class="footer-nav" aria-label="Footer navigation">
+              <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="#">Vehicles</a>
+                <a href="#">Energy</a>
+                <a href="#">Charging</a>
+                <a href="#">Discover</a>
+              </div>
+              <div class="footer-col">
+                <h4>Company</h4>
+                <a href="#">About</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+                <a href="#">Contact</a>
+              </div>
+              <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Cookies</a>
+              </div>
+            </nav>
+          </div>
+
+          <div class="footer-bottom">
+            <span class="footer-copy"
+              >&copy; 2025 Bergo. All rights reserved.</span
+            >
+            <div class="footer-socials">
+              <!-- Instagram -->
+              <a href="#" aria-label="Instagram" class="social-link">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle
+                    cx="17.5"
+                    cy="6.5"
+                    r="0.8"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                </svg>
+              </a>
+              <!-- X / Twitter -->
+              <a href="#" aria-label="X / Twitter" class="social-link">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                  />
+                </svg>
+              </a>
+              <!-- YouTube -->
+              <a href="#" aria-label="YouTube" class="social-link">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
