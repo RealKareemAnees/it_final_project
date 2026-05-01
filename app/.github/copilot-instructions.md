@@ -2,179 +2,141 @@
 
 this project is car wiki website
 
-# ENGINE Framework
+# K-engine Quick Guide
 
-ENGINE is a React-like UI framework written in vanilla TypeScript. It uses a Virtual DOM, class-based components, and a reconciliation engine. There are no JSX transforms — UI is built with the `h()` function.
-
----
-
-## Core Imports
+## Setup
 
 ```ts
-import { h, Component, createDom } from "./framework";
-import type { VNode } from "./framework";
+import { h, render } from "./index";
+import { App } from "./App";
+
+render(h(App, null), document.getElementById("root")!);
 ```
 
----
+````
 
-## Creating a Component
+## Elements
 
-Extend `Component<Props, State>`. Always implement `render()`. Use `initState()` for initial state.
+```ts id="s0d7zw"
+h("div", { className: "box" }, "Hello");
 
-```ts
-interface MyProps {
-  label: string;
-}
-interface MyState {
-  count: number;
-}
-
-class MyComponent extends Component<MyProps, MyState> {
-  initState(): MyState {
-    return { count: 0 };
-  }
-
-  render(): VNode {
-    return h(
-      "div",
-      null,
-      h("p", null, this.props.label),
-      h("button", { onClick: this.increment }, `Count: ${this.state.count}`),
-    );
-  }
-
-  private increment = () => {
-    this.setState((prev) => ({ count: prev.count + 1 }));
-  };
-}
-```
-
-**Rules:**
-
-- Always use arrow functions for event handlers (preserves `this`).
-- `render()` must be a pure function of `this.props` and `this.state`. No side effects inside it.
-- Use `this.setState(partialState)` or `this.setState(prev => newState)` to update state and trigger a re-render.
-
----
-
-## The h() Function
-
-`h(type, props, ...children)` creates a Virtual DOM node.
-
-```ts
 h(
-  "div",
-  { className: "card" }, // element + props
-  h("h1", null, "Title"), // nested element, no props
-  h(MyComponent, { label: "Hello" }), // component usage
-  isVisible && h("span", null, "Hi"), // conditional (false is ignored)
-  items.map(
-    (
-      item, // lists — always add key
-    ) => h("li", { key: item.id }, item.name),
-  ),
+  "button",
+  {
+    disabled: loading,
+    style: { color: "red" },
+    onClick: save,
+  },
+  "Save",
 );
 ```
 
-**Props notes:**
+## Components
 
-- Use `className` (not `class`) for CSS classes.
-- Event handlers use camelCase: `onClick`, `onChange`, `onInput`.
-- Inline styles use a style object: `{ style: { color: 'red', fontSize: '16px' } }`.
-- Boolean attributes: `{ disabled: true }` → adds the attribute; `{ disabled: false }` → removes it.
-- `null` or `undefined` prop values remove the attribute.
-- `key` is a reserved prop for list reconciliation — never read it inside the component.
+Extend `Component<Props, State>` and implement `render()`.
 
----
+```ts id="k5zjzs"
+class Counter extends Component<{}, { count: number }> {
+  initState() {
+    return { count: 0 };
+  }
 
-## Lifecycle Hooks
-
-Override these methods as needed:
-
-```ts
-componentDidMount(): void {
-  // Runs once after first render. Use for: fetch, timers, global listeners.
-}
-
-componentDidUpdate(prevProps, prevState): void {
-  // Runs after every setState(). Compare prev vs current to react to specific changes.
-}
-
-componentWillUnmount(): void {
-  // Runs before removal. Use for: clearInterval, removeEventListener, cleanup.
-}
-```
-
-NOTE: DONT USE THESE HOOKS
-
----
-
-## Mounting the App
-
-Call `createDom()` once at startup. It returns a real DOM node. Append it manually.
-
-```ts
-import { h, createDom } from "./framework";
-import { App } from "./App";
-
-const root = document.querySelector<HTMLDivElement>("#app")!;
-root.innerHTML = "";
-root.appendChild(createDom(h(App, null)));
-```
-
----
-
-## Keyed Lists
-
-When rendering dynamic lists, always provide a stable `key` on each child. This lets the reconciler match items by identity instead of position — preserving state and enabling efficient reordering.
-
-```ts
-render(): VNode {
-  return h('ul', null,
-    ...this.state.items.map(item =>
-      h('li', { key: item.id }, item.name)
-    )
-  );
-}
-```
-
----
-
-## Component Composition
-
-Pass child components into `h()` just like elements. Access nested children via `this.props.children`.
-
-```ts
-class Card extends Component<{ title: string }> {
-  render(): VNode {
+  render() {
     return h(
-      "div",
-      { className: "card" },
-      h("h2", null, this.props.title),
-      ...this.props.children, // renders whatever was passed between tags
+      "button",
+      {
+        onClick: () => this.setState((s) => ({ count: s.count + 1 })),
+      },
+      this.state.count,
     );
   }
 }
-
-// Usage:
-h(Card, { title: "Hello" }, h("p", null, "This is a child paragraph."));
 ```
 
----
+## State
 
-## Quick Reference
+```ts id="z8m9w3"
+this.setState({ loading: true });
 
-| Goal                       | How                                                  |
-| -------------------------- | ---------------------------------------------------- |
-| Create a vnode             | `h(type, props, ...children)`                        |
-| Create a component         | `class Foo extends Component<P, S>`                  |
-| Read props                 | `this.props.myProp`                                  |
-| Read state                 | `this.state.myField`                                 |
-| Update state               | `this.setState({ key: value })`                      |
-| Update state from previous | `this.setState(prev => ({ count: prev.count + 1 }))` |
-| Force re-render            | `this.forceUpdate()`                                 |
-| After mount side effect    | `componentDidMount()`                                |
-| Cleanup on remove          | `componentWillUnmount()`                             |
-| Render a list              | `items.map(i => h('li', { key: i.id }, i.name))`     |
-| Conditional render         | `condition && h('span', null, 'text')`               |
-| Mount app                  | `root.appendChild(createDom(h(App, null)))`          |
+this.setState((prev) => ({
+  count: prev.count + 1,
+}));
+
+this.forceUpdate();
+```
+
+## Lifecycle
+
+```ts id="v0g5yq"
+componentDidMount();
+componentDidUpdate(prevProps, prevState);
+componentWillUnmount();
+```
+
+## Conditional Rendering
+
+```ts id="nh2k5v"
+this.state.error && h("p", null, "Error");
+
+this.state.loading ? h("span", null, "Loading") : h(Content, null);
+```
+
+## Lists
+
+Always use `key`.
+
+```ts id="n2r6we"
+items.map((item) => h("li", { key: item.id }, item.name));
+```
+
+## Props
+
+Pass data/functions through props.
+
+```ts id="q8h3zt"
+h(Profile, {
+  user: this.state.user,
+  onRename: (name) => this.setState({ user: name }),
+});
+```
+
+## Context
+
+Use `ContextBase` for shared state.
+
+```ts id="y1f8mr"
+class ThemeContext extends ContextBase<{}, { dark: boolean }> {
+  initState() {
+    return { dark: false };
+  }
+}
+```
+
+Methods:
+
+```ts id="q4x7np"
+getContext();
+setContext();
+```
+
+## Raw HTML
+
+Trusted HTML only.
+
+```ts id="e9k2la"
+raw("<strong>Hello</strong>");
+```
+
+Sanitize user input before using `raw()`.
+
+## API
+
+- `h(type, props, ...children)` → create VNode
+- `render(vnode, container)` → mount app
+- `raw(html)` → inject HTML
+- `Component<P,S>` → base component class
+- `ContextBase<P,S>` → shared state helper
+
+```
+
+````
