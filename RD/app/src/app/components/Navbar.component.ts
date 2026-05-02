@@ -1,6 +1,6 @@
 import { Component, h } from "../K-engine";
 import type { VNode, Props } from "../K-engine/types";
-import { navigate } from "../utils/Router";
+import { navigate } from "../utils/routing.utils";
 
 interface NavBarProps extends Props {
   navigateTo?: (path: string) => void;

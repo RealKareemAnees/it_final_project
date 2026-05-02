@@ -5,7 +5,7 @@ import { Footer } from "./components/Footer.component";
 import { HomePage } from "./pages/home/Home.page.component";
 import { AuthPage } from "./pages/Auth/Auth";
 import { AboutPage } from "./pages/About/About";
-import { getCurrentRoute } from "./utils/Router";
+import { getCurrentRoute } from "./utils/routing.utils";
 
 interface AppState {
   currentRoute: string;
