@@ -1,5 +1,5 @@
-import { Component, h } from "../../K-engine";
-import type { VNode } from "../../K-engine/types";
+import { Component, h } from "../K-engine";
+import type { VNode } from "../K-engine/types";
 
 export class Footer extends Component {
   render(): VNode {

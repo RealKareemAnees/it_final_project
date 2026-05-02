@@ -1,7 +1,7 @@
 import { Component, h } from "./K-engine";
 import type { VNode } from "./K-engine/types";
-import { NavBar } from "./pages/components/Navbar.component";
-import { Footer } from "./pages/components/Footer.component";
+import { NavBar } from "./components/Navbar.component";
+import { Footer } from "./components/Footer.component";
 import { HomePage } from "./pages/home/Home.page.component";
 import { AuthPage } from "./pages/Auth/Auth";
 import { AboutPage } from "./pages/About/About";
