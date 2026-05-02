@@ -1,6 +1,10 @@
 import { render, h } from "./K-engine";
 import { App } from "./App";
 
+// stup theme
+import { applyThemeFromLocalStorage } from "./utils/theme.utils";
+applyThemeFromLocalStorage();
+
 // Find or create root container
 let container = document.getElementById("app");
 if (!container) {
