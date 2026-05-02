@@ -2,15 +2,7 @@ import { Component, h } from "../K-engine";
 import type { VNode, Props } from "../K-engine/types";
 import { navigate } from "../utils/routing.utils";
 
-interface NavBarProps extends Props {
-  navigateTo?: (path: string) => void;
-}
-
-export class NavBar extends Component<NavBarProps> {
-  handleNavigation = (path: string) => {
-    navigate(path);
-  };
-
+export class NavBar extends Component {
   render(): VNode {
     return h(
       "nav",
@@ -30,7 +22,7 @@ export class NavBar extends Component<NavBarProps> {
         h(
           "button",
           {
-            onClick: () => this.handleNavigation("/"),
+            onClick: () => navigate("/"),
             style: {
               background: "none",
               color: "white",
@@ -43,7 +35,7 @@ export class NavBar extends Component<NavBarProps> {
         h(
           "button",
           {
-            onClick: () => this.handleNavigation("/about"),
+            onClick: () => navigate("/about"),
             style: {
               background: "none",
               color: "white",
@@ -56,7 +48,7 @@ export class NavBar extends Component<NavBarProps> {
         h(
           "button",
           {
-            onClick: () => this.handleNavigation("/auth"),
+            onClick: () => navigate("/auth"),
             style: {
               background: "none",
               color: "white",
