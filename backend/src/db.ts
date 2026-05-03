@@ -1,14 +1,12 @@
 import { MongoClient, Db, MongoClientOptions } from "mongodb";
-import { MONGODB_URI } from "./config";
 
 let client: MongoClient | null = null;
 let dbInstance: Db | null = null;
 
 export async function connectToDatabase() {
   if (dbInstance) return dbInstance;
-  if (!MONGODB_URI) throw new Error("MONGODB_URI not set in environment");
 
-  client = new MongoClient(MONGODB_URI as string);
+  client = new MongoClient("mongodb://localhost:27017/it_final_db" as string);
   await client.connect();
   dbInstance = client.db();
   return dbInstance;

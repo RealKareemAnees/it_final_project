@@ -1,19 +1,17 @@
-import express from "express";
-import cors from "cors";
-import usersRouter from "./routes/users";
+const http = require("http");
 
-export function createApp() {
-  const app = express();
-  app.use(cors());
-  app.use(express.json());
+const server = http.createServer((req, res) => {
+  if (req.url === "/" && req.method === "GET") {
+    res.writeHead(200, {
+      "Content-Type": "text/html",
+    });
 
-  app.use("/users", usersRouter);
+    return res.end("<h1>Home page</h1>");
+  }
 
-  app.get("/", (req, res) =>
-    res.json({ ok: true, service: "it-final-backend" }),
-  );
+  res.writeHead(404, {
+    "Content-Type": "text/html",
+  });
+});
 
-  return app;
-}
-
-export default createApp;
+export default server;

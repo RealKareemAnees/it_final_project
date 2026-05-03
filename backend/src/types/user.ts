@@ -1,6 +1,6 @@
 export interface User {
-  _id?: string;
-  name: string;
-  email: string;
-  age?: number;
+  username: string;
+  password: string;
+  wishList: string[];
+  theme: "light" | "dark";
 }

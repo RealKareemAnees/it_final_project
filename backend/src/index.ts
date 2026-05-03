@@ -1,18 +1,15 @@
-import createApp from "./server";
+import server from "./server";
 import { connectToDatabase } from "./db";
-import { PORT } from "./config";
 
-async function main() {
-  const app = createApp();
-  await connectToDatabase();
-  app.listen(PORT, () => {
-    // eslint-disable-next-line no-console
-    console.log(`Server running on port ${PORT}`);
-  });
+async function startServer() {
+  try {
+    await connectToDatabase();
+    server.listen(3000, () => {
+      console.log("Server is running on http://localhost:3000");
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error);
+  }
 }
 
-main().catch((err) => {
-  // eslint-disable-next-line no-console
-  console.error("Failed to start server", err);
-  process.exit(1);
-});
+startServer();
