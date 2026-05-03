@@ -1,0 +1,116 @@
+
+.about-content {
+  padding: 80px 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex: 1; 
+}
+
+
+.about-hero {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.about-hero h1 {
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 1.2;
+  background: linear-gradient(to right, #ffffff, #888888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease;
+}
+
+
+.about-hero h1:hover {
+  background: none;
+  color: #00ff66;
+  -webkit-text-fill-color: #00ff66;
+}
+
+
+.project-goals, 
+.project-capabilities, 
+.team-information {
+  background: #111111;
+  border: 1px solid #222222;
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 40px;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+
+.project-goals:hover, 
+.project-capabilities:hover, 
+.team-information:hover {
+  border-color: #00ff66;
+  box-shadow: 0 5px 20px rgba(0, 255, 102, 0.05);
+}
+
+
+.section-text h2 {
+  font-size: 2rem;
+  color: #ffffff;
+  border-bottom: 2px solid #333;
+  padding-bottom: 10px;
+  display: inline-block;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.section-text p {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #aaaaaa;
+  transition: color 0.3s ease;
+}
+
+
+.section-text h2:hover {
+  color: #00ff66;
+  border-bottom-color: #00ff66;
+}
+
+
+.section-text p:hover {
+  color: #00ff66;
+}
+
+
+.capabilities-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.capabilities-list li {
+  background: #1a1a1a;
+  padding: 25px;
+  border-radius: 8px;
+  border-left: 4px solid #ffffff;
+  color: #cccccc;
+  line-height: 1.6;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+}
+
+.capabilities-list li strong {
+  color: #ffffff;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.15rem;
+  transition: color 0.3s ease;
+}
+
+
+.capabilities-list li:hover {
+  border-left-color: #00ff66;
+  color: #00ff66;
+  transform: translateX(5px); 
+
+.capabilities-list li:hover strong {
+  color: #00ff66;
+}
