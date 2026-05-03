@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Car Marketplace</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: #111827;
+        color: #e5e7eb;
+      }
+      header {
+        background: #0b1220;
+        border-bottom: 1px solid #23304a;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      nav {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      a {
+        text-decoration: none;
+        color: #93c5fd;
+        font-weight: 500;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .card {
+        background: #0b1220;
+        border: 1px solid #23304a;
+        border-radius: 8px;
+        padding: 1.25rem;
+      }
+      .stat {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-top: 0.5rem;
+      }
+      .section {
+        background: #0b1220;
+        border: 1px solid #23304a;
+        border-radius: 8px;
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
+      }
+      .feedback-item {
+        padding: 1rem 0;
+        border-bottom: 1px solid #23304a;
+      }
+      .feedback-item:last-child {
+        border-bottom: 0;
+      }
+      .meta {
+        color: #93c5fd;
+        font-size: 0.9rem;
+        margin-bottom: 0.35rem;
+      }
+      .message {
+        color: #e5e7eb;
+        line-height: 1.5;
+      }
+      button {
+        border: none;
+        background: #2563eb;
+        color: white;
+        padding: 0.7rem 1rem;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .danger {
+        background: #dc2626;
+      }
+      #loading {
+        padding: 2rem;
+        text-align: center;
+      }
+      #error {
+        display: none;
+        background: #3f1d1d;
+        color: #fecaca;
+        padding: 0.9rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>🛠 Admin Dashboard</h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">User Dashboard</a>
+        <a href="/profile">Profile</a>
+        <a href="/manage-cars">Manage Cars</a>
+        <button class="danger" onclick="logout()">Logout</button>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div id="error"></div>
+      <div id="loading">Loading admin data...</div>
+
+      <div class="grid" id="statsGrid" style="display: none">
+        <div class="card">
+          <div>Feedback messages</div>
+          <div class="stat" id="feedbackCount">0</div>
+        </div>
+        <div class="card">
+          <div>Total cars</div>
+          <div class="stat" id="carCount">0</div>
+        </div>
+        <div class="card">
+          <div>Signed in as</div>
+          <div class="stat" id="adminName">admin</div>
+        </div>
+      </div>
+
+      <div class="section" id="feedbackSection" style="display: none">
+        <h2>Incoming Feedback</h2>
+        <div id="feedbackList"></div>
+      </div>
+    </div>
+
+    <script>
+      // Loads admin metrics, checks permissions, and renders feedback entries.
+      async function loadAdminData() {
+        try {
+          const userRes = await fetch("/api/users/me");
+          if (!userRes.ok) {
+            window.location.href = "/login";
+            return;
+          }
+
+          const userData = await userRes.json();
+          if (userData.user.role !== "admin") {
+            window.location.href = "/dashboard";
+            return;
+          }
+
+          document.getElementById("adminName").textContent =
+            userData.user.username;
+
+          const [feedbackRes, carsRes] = await Promise.all([
+            fetch("/api/admin/feedback"),
+            fetch("/api/cars/all"),
+          ]);
+
+          const feedbackData = await feedbackRes.json();
+          const carsData = await carsRes.json();
+          const feedback = feedbackData.feedback || [];
+          const cars = carsData.cars || [];
+
+          document.getElementById("feedbackCount").textContent =
+            feedback.length;
+          document.getElementById("carCount").textContent = cars.length;
+          document.getElementById("feedbackList").innerHTML = feedback.length
+            ? feedback
+                .map(
+                  (item) => `
+                <div class="feedback-item">
+                  <div class="meta">${item.name} · ${item.email} · ${new Date(item.createdAt).toLocaleString()}</div>
+                  <div class="message">${item.message}</div>
+                </div>
+              `,
+                )
+                .join("")
+            : "<p>No feedback received yet.</p>";
+
+          document.getElementById("statsGrid").style.display = "grid";
+          document.getElementById("feedbackSection").style.display = "block";
+          document.getElementById("loading").style.display = "none";
+        } catch (error) {
+          document.getElementById("error").textContent =
+            "Failed to load admin dashboard";
+          document.getElementById("error").style.display = "block";
+          document.getElementById("loading").style.display = "none";
+        }
+      }
+
+      // Logs the current user out and returns them to the login page.
+      async function logout() {
+        await fetch("/api/auth/logout", { method: "POST" });
+        window.location.href = "/login";
+      }
+
+      loadAdminData();
+    </script>
+  </body>
+</html>

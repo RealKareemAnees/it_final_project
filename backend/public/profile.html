@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - Car Marketplace</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: #f5f5f5;
+      }
+      header {
+        background: white;
+        border-bottom: 1px solid #ddd;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      nav {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      a {
+        text-decoration: none;
+        color: #0066cc;
+        font-weight: 500;
+      }
+      .container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+      .card {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.9rem 0;
+        border-bottom: 1px solid #eee;
+      }
+      .row:last-child {
+        border-bottom: 0;
+      }
+      .label {
+        color: #666;
+        font-weight: 600;
+      }
+      .actions {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+      }
+      button {
+        border: none;
+        background: #0066cc;
+        color: white;
+        padding: 0.7rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      button.secondary {
+        background: #666;
+      }
+      button.danger {
+        background: #cc0000;
+      }
+      input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      .theme {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+      .theme button {
+        background: #ddd;
+        color: #333;
+      }
+      .theme button.active {
+        background: #667eea;
+        color: white;
+      }
+      #loading {
+        text-align: center;
+        padding: 2rem;
+      }
+      #error {
+        display: none;
+        background: #ffe6e6;
+        color: #cc0000;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+      .wishlist-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>🚗 My Profile</h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/contact">Contact</a>
+        <a href="/manage-cars">Manage Cars</a>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div id="error"></div>
+      <div id="loading">Loading profile...</div>
+
+      <div class="card" id="profileCard" style="display: none">
+        <h2>Account</h2>
+        <div class="row">
+          <span class="label">Username</span><span id="username"></span>
+        </div>
+        <div class="row">
+          <span class="label">Role</span><span id="role"></span>
+        </div>
+        <div class="row">
+          <span class="label">Theme</span>
+          <div class="theme">
+            <button
+              class="theme-btn"
+              data-theme="light"
+              onclick="updateTheme('light')"
+            >
+              Light
+            </button>
+            <button
+              class="theme-btn"
+              data-theme="dark"
+              onclick="updateTheme('dark')"
+            >
+              Dark
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="wishlistCard" style="display: none">
+        <h2>Wishlist</h2>
+        <div id="wishlistContainer"></div>
+      </div>
+
+      <div class="card">
+        <h2>Quick Note</h2>
+        <p>This page shows only your own profile and wishlist data.</p>
+      </div>
+    </div>
+
+    <script>
+      let currentUser = null;
+
+      // Loads the signed-in user's account information and wishlist.
+      async function loadProfile() {
+        try {
+          const res = await fetch("/api/users/me");
+          if (!res.ok) {
+            window.location.href = "/login";
+            return;
+          }
+
+          const data = await res.json();
+          currentUser = data.user;
+          document.getElementById("username").textContent =
+            currentUser.username;
+          document.getElementById("role").textContent =
+            currentUser.role || "user";
+
+          document.querySelectorAll(".theme-btn").forEach((button) => {
+            button.classList.toggle(
+              "active",
+              button.dataset.theme === currentUser.theme,
+            );
+          });
+
+          document.getElementById("profileCard").style.display = "block";
+          document.getElementById("loading").style.display = "none";
+          await loadWishlist(currentUser.wishList || []);
+        } catch (error) {
+          document.getElementById("error").textContent =
+            "Failed to load profile";
+          document.getElementById("error").style.display = "block";
+          document.getElementById("loading").style.display = "none";
+        }
+      }
+
+      // Loads all cars and filters the ones that belong in the wishlist.
+      async function loadWishlist(carIds) {
+        const res = await fetch("/api/cars/all");
+        const data = await res.json();
+        const cars = data.cars || [];
+        const items = cars.filter(
+          (car) =>
+            carIds.includes(String(car.localID)) ||
+            carIds.includes(car.localID),
+        );
+
+        document.getElementById("wishlistCard").style.display = "block";
+        document.getElementById("wishlistContainer").innerHTML = items.length
+          ? items
+              .map(
+                (car) =>
+                  `<div class="wishlist-item"><span>${car.name}</span><span>$${car.price.toLocaleString()}</span></div>`,
+              )
+              .join("")
+          : "<p>No wishlist items yet.</p>";
+      }
+
+      // Updates the stored theme preference and refreshes the profile view.
+      async function updateTheme(theme) {
+        await fetch("/api/users/update", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ theme }),
+        });
+        await loadProfile();
+      }
+
+      loadProfile();
+    </script>
+  </body>
+</html>

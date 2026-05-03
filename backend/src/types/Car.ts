@@ -7,4 +7,6 @@ export interface Car {
   description: string;
   country: string;
   tags: string[];
+  price: number;
+  localID: number;
 }
