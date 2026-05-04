@@ -1,6 +1,5 @@
 import { createServer, IncomingMessage, ServerResponse } from "http";
 import { sendJSON } from "./lib/http";
-import { handlePageRoutes } from "./routes/pages";
 import { handleAuthRoutes } from "./routes/auth";
 import { handleUserRoutes } from "./routes/users";
 import { handleAdminRoutes } from "./routes/admin";
@@ -15,9 +14,7 @@ async function handleRequest(req: IncomingMessage, res: ServerResponse) {
   const urlPath = url.split("?")[0];
 
   try {
-    // Gives the page router first chance to serve HTML pages.
-    if (await handlePageRoutes(req, res, urlPath, method)) return;
-    // Routes authentication requests next because they establish sessions.
+    // Routes authentication requests first because we only expose APIs.
     if (await handleAuthRoutes(req, res, urlPath, method)) return;
     // Handles user profile and wishlist requests after auth.
     if (await handleUserRoutes(req, res, urlPath, method)) return;
