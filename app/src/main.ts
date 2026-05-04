@@ -9,6 +9,7 @@ import "../styles/browse-countries.css";
 import "../styles/contact-footer.css";
 import "../styles/footer.css";
 import "../styles/pages.css";
+import "../styles/pages/single-car.css";
 
 // Bootstrap theme + session
 import { applyThemeFromLocalStorage } from "./utils/theme.utils";

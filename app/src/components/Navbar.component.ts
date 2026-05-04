@@ -14,6 +14,7 @@ export class NavBar extends Component<NavBarProps> {
   private headerEl: HTMLElement | null = null;
   private mobileMenuBtn: HTMLButtonElement | null = null;
   private mobileNav: HTMLElement | null = null;
+  private mobileMenuOpen = false;
 
   private handleScroll = (): void => {
     if (!this.headerEl) return;
@@ -35,6 +36,11 @@ export class NavBar extends Component<NavBarProps> {
     event.stopPropagation();
     if (!this.mobileNav) return;
     const isActive = this.mobileNav.classList.toggle("active");
+    this.mobileMenuOpen = isActive;
+    if (this.mobileMenuBtn) {
+      this.mobileMenuBtn.setAttribute("aria-expanded", String(isActive));
+    }
+    this.mobileNav.setAttribute("aria-hidden", String(!isActive));
     this.updateMenuButtonState(isActive);
     document.body.classList.toggle("nav-drawer-open", isActive);
   };
@@ -105,6 +111,11 @@ export class NavBar extends Component<NavBarProps> {
   private closeMenu(): void {
     if (!this.mobileNav) return;
     this.mobileNav.classList.remove("active");
+    this.mobileMenuOpen = false;
+    this.mobileNav.setAttribute("aria-hidden", "true");
+    if (this.mobileMenuBtn) {
+      this.mobileMenuBtn.setAttribute("aria-expanded", "false");
+    }
     document.body.classList.remove("nav-drawer-open");
     this.updateMenuButtonState(false);
   }
@@ -206,6 +217,15 @@ export class NavBar extends Component<NavBarProps> {
           h(
             "a",
             {
+              href: "/about",
+              onClick: (event: MouseEvent) =>
+                this.handleNavClick(event, "/about"),
+            },
+            "About",
+          ),
+          h(
+            "a",
+            {
               href: "/browse",
               onClick: (event: MouseEvent) =>
                 this.handleNavClick(event, "/browse"),
@@ -255,7 +275,7 @@ export class NavBar extends Component<NavBarProps> {
         "div",
         {
           className: "mobile-nav",
-          "aria-hidden": "true",
+          "aria-hidden": this.mobileMenuOpen ? "false" : "true",
         },
         h(
           "a",
@@ -264,6 +284,15 @@ export class NavBar extends Component<NavBarProps> {
             onClick: (event: MouseEvent) => this.handleNavClick(event, "/"),
           },
           "Home",
+        ),
+        h(
+          "a",
+          {
+            href: "/about",
+            onClick: (event: MouseEvent) =>
+              this.handleNavClick(event, "/about"),
+          },
+          "About",
         ),
         h(
           "a",
@@ -283,6 +312,7 @@ export class NavBar extends Component<NavBarProps> {
           },
           "Contact",
         ),
+
         user?.username
           ? h(
               "a",

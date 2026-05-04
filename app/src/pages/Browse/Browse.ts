@@ -2,16 +2,26 @@ import { Component, h } from "../../K-engine";
 import type { VNode } from "../../K-engine/types";
 import type { Car } from "../../types/car.interface";
 import type { UserInfo } from "../../types/userInfo.interface";
+import { apiFetch } from "../../utils/api.utils";
 import { addToWishlist, removeFromWishlist } from "../../utils/auth.utils";
 import { navigate } from "../../utils/routing.utils";
-import {
-  filterCars,
-  filterOptions,
-  type BrowseFilters,
-} from "../../data/cars.data";
+
+interface FilterOptions {
+  countries: string[];
+  types: string[];
+  brands: string[];
+  tags: string[];
+}
 
 interface BrowseProps {
   user: UserInfo | null;
+}
+
+interface BrowseFilters {
+  country: string;
+  type: string;
+  brand: string;
+  tag: string;
 }
 
 interface BrowseState {
@@ -19,6 +29,7 @@ interface BrowseState {
   loading: boolean;
   error: string | null;
   filters: BrowseFilters;
+  options: FilterOptions;
 }
 
 const emptyFilters: BrowseFilters = {
@@ -28,15 +39,36 @@ const emptyFilters: BrowseFilters = {
   tag: "",
 };
 
+const emptyOptions: FilterOptions = {
+  countries: [],
+  types: [],
+  brands: [],
+  tags: [],
+};
+
+function normalize(value: string): string {
+  return value.trim().toLowerCase();
+}
+
+function uniqueSorted(values: string[]): string[] {
+  return Array.from(new Set(values)).sort((a, b) => a.localeCompare(b));
+}
+
 export class BrowsePage extends Component<BrowseProps, BrowseState> {
   initState(): BrowseState {
-    return { cars: [], loading: true, error: null, filters: emptyFilters };
+    return {
+      cars: [],
+      loading: true,
+      error: null,
+      filters: emptyFilters,
+      options: emptyOptions,
+    };
   }
 
   componentDidMount(): void {
     document.title = "Browse Cars - Bergo";
     window.addEventListener("popstate", this.handleRouteChange);
-    this.loadCars();
+    void this.loadCars();
   }
 
   componentWillUnmount(): void {
@@ -44,7 +76,7 @@ export class BrowsePage extends Component<BrowseProps, BrowseState> {
   }
 
   private handleRouteChange = (): void => {
-    this.loadCars();
+    void this.loadCars();
   };
 
   private getFiltersFromUrl(): BrowseFilters {
@@ -57,10 +89,53 @@ export class BrowsePage extends Component<BrowseProps, BrowseState> {
     };
   }
 
-  private loadCars(): void {
+  private buildOptionsFromCars(cars: Car[]): FilterOptions {
+    return {
+      countries: uniqueSorted(cars.map((car) => car.country).filter(Boolean)),
+      types: uniqueSorted(cars.map((car) => car.type).filter(Boolean)),
+      brands: uniqueSorted(cars.map((car) => car.manufacturer).filter(Boolean)),
+      tags: uniqueSorted(cars.flatMap((car) => car.tags || []).filter(Boolean)),
+    };
+  }
+
+  private async loadCars(): Promise<void> {
+    this.setState({ loading: true, error: null });
     const filters = this.getFiltersFromUrl();
-    const cars = filterCars(filters);
-    this.setState({ cars, filters, loading: false, error: null });
+
+    try {
+      const [all, filtered] = await Promise.all([
+        apiFetch<{ cars: Car[] }>("/api/cars/all"),
+        (() => {
+          const params = new URLSearchParams();
+          if (filters.country) params.set("country", filters.country);
+          if (filters.type) params.set("type", filters.type);
+          if (filters.brand) params.set("manufacturer", filters.brand);
+          if (filters.tag) params.set("tag", filters.tag);
+          const qs = params.toString();
+          return apiFetch<{ cars: Car[] }>(
+            `/api/cars/search${qs ? `?${qs}` : ""}`,
+          );
+        })(),
+      ]);
+
+      this.setState({
+        cars: filtered.cars,
+        filters,
+        options: this.buildOptionsFromCars(all.cars),
+        loading: false,
+        error: null,
+      });
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Failed to load cars.";
+      this.setState({
+        cars: [],
+        filters,
+        options: emptyOptions,
+        loading: false,
+        error: message,
+      });
+    }
   }
 
   private isWishlisted(car: Car): boolean {
@@ -110,6 +185,7 @@ export class BrowsePage extends Component<BrowseProps, BrowseState> {
     options: string[],
   ): VNode {
     const active = this.state.filters[key];
+    const normalizedActive = normalize(active);
 
     return h(
       "div",
@@ -130,7 +206,9 @@ export class BrowsePage extends Component<BrowseProps, BrowseState> {
           h(
             "button",
             {
-              className: `filter-pill ${active === option ? "is-active" : ""}`,
+              className: `filter-pill ${
+                normalize(option) === normalizedActive ? "is-active" : ""
+              }`,
               key: `${label}-${option}`,
               onClick: () => this.toggleFilter(key, option),
             },
@@ -152,7 +230,7 @@ export class BrowsePage extends Component<BrowseProps, BrowseState> {
   }
 
   render(): VNode {
-    const { cars, loading, error, filters } = this.state;
+    const { cars, loading, error, filters, options } = this.state;
     const activeFilters = [
       filters.country
         ? { key: "country" as const, label: `Country: ${filters.country}` }
@@ -197,10 +275,10 @@ export class BrowsePage extends Component<BrowseProps, BrowseState> {
               "Clear all",
             ),
           ),
-          this.renderFilterGroup("Country", "country", filterOptions.countries),
-          this.renderFilterGroup("Type", "type", filterOptions.types),
-          this.renderFilterGroup("Brand", "brand", filterOptions.brands),
-          this.renderFilterGroup("Tags", "tag", filterOptions.tags),
+          this.renderFilterGroup("Country", "country", options.countries),
+          this.renderFilterGroup("Type", "type", options.types),
+          this.renderFilterGroup("Brand", "brand", options.brands),
+          this.renderFilterGroup("Tags", "tag", options.tags),
         ),
         h(
           "section",

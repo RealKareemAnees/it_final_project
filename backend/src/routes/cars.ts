@@ -26,24 +26,6 @@ export async function handleCarRoutes(
     return true;
   }
 
-  if (urlPath.startsWith("/api/cars/") && method === "GET") {
-    const idPart = urlPath.split("/api/cars/")[1];
-    const id = Number(idPart);
-    if (!idPart || Number.isNaN(id)) {
-      sendJSON(res, { error: "Invalid car id" }, 400);
-      return true;
-    }
-
-    const car = await getCarByID(id);
-    if (!car) {
-      sendJSON(res, { error: "Car not found" }, 404);
-      return true;
-    }
-
-    sendJSON(res, { car });
-    return true;
-  }
-
   if (urlPath === "/api/cars/search" && method === "GET") {
     // Reads the query string parameters that define the search filters.
     const params = new URLSearchParams(url.split("?")[1] || "");
@@ -112,6 +94,24 @@ export async function handleCarRoutes(
 
     // Sends the filtered car results back to the client.
     sendJSON(res, { cars: results });
+    return true;
+  }
+
+  if (urlPath.startsWith("/api/cars/") && method === "GET") {
+    const idPart = urlPath.split("/api/cars/")[1];
+    const id = Number(idPart);
+    if (!idPart || Number.isNaN(id)) {
+      sendJSON(res, { error: "Invalid car id" }, 400);
+      return true;
+    }
+
+    const car = await getCarByID(id);
+    if (!car) {
+      sendJSON(res, { error: "Car not found" }, 404);
+      return true;
+    }
+
+    sendJSON(res, { car });
     return true;
   }
 

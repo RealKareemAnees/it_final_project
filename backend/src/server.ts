@@ -13,7 +13,11 @@ async function handleRequest(req: IncomingMessage, res: ServerResponse) {
   const method = req.method || "";
   const urlPath = url.split("?")[0];
 
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+  const origin = String(req.headers.origin || "");
+  const allowedOrigin = /^http:\/\/localhost:517\d$/.test(origin)
+    ? origin
+    : "http://localhost:5173";
+  res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");

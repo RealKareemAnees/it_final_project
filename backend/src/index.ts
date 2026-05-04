@@ -1,5 +1,6 @@
 import server from "./server";
-import { connectToDatabase, createUser, getUserInfoByUsername } from "./db";
+import { connectToDatabase, createUser, getUserInfoByUsername, getDb } from "./db";
+import { seedCars } from "./seed/cars";
 
 // Starts the application by connecting to the database, ensuring an admin user exists, and then listening for traffic.
 async function startServer() {
@@ -18,6 +19,14 @@ async function startServer() {
         theme: "light",
         role: "admin",
       });
+    }
+
+    // Seeds initial cars so the browse page isn't empty on first run.
+    const db = getDb();
+    const existingCars = await db.collection("cars").countDocuments();
+    if (existingCars === 0) {
+      await db.collection("cars").insertMany(seedCars);
+      console.log(`Seeded ${seedCars.length} cars`);
     }
 
     // Logs the server URL once the HTTP listener is ready.

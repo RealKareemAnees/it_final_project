@@ -161,54 +161,60 @@
 /* ── MOBILE NAVIGATION ──────────────────────────────────────────── */
 .mobile-nav {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.95);
-    padding: 80px 32px 32px;
+    left: 12px;
+    right: 12px;
+    top: 72px;
+    width: auto;
+    background-color: rgba(0, 0, 0, 0.96);
+    padding: 14px;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-lg);
-    transform: translateY(-100%);
-    transition: transform var(--transition-slower);
+    gap: 6px;
+    transform: translateY(-12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform var(--transition-medium), opacity var(--transition-medium);
     z-index: 55;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.55);
 }
 
 .mobile-nav.active {
     transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
 }
 
-/* Keep chrome above the full-screen drawer so the menu button stays usable */
+/* Keep chrome above the dropdown so the menu button stays usable */
 body.nav-drawer-open .header {
     z-index: calc(var(--z-mobile-nav) + 20);
-}
-
-body.nav-drawer-open {
-    overflow: hidden;
-    touch-action: none;
 }
 
 .mobile-nav a {
     color: var(--color-text-light);
     text-decoration: none;
-    font-size: var(--font-size-xl);
-    padding: 12px 0;
-    opacity: 0.85;
-    transition: opacity var(--transition-base);
+    font-size: var(--font-size-base);
+    padding: 10px 12px;
+    opacity: 0.92;
+    border-radius: var(--radius-md);
+    transition: opacity var(--transition-base), background var(--transition-base);
 }
 
 .mobile-nav .nav-button {
     background: transparent;
     color: var(--color-text-light);
     text-align: left;
-    padding: 12px 0;
-    font-size: var(--font-size-xl);
-    opacity: 0.85;
+    padding: 10px 12px;
+    font-size: var(--font-size-base);
+    opacity: 0.92;
+    border-radius: var(--radius-md);
 }
 
 .mobile-nav a:hover,
 .mobile-nav a:active {
     opacity: 1;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 /* ── DARK THEME HEADER ───────────────────────────────────────────── */
@@ -293,5 +299,11 @@ body.darktheme .header:not(.is-scrolled):not(.is-inner) .chat-btn .arrow-icon {
         width: 20px;
         height: 20px;
         font-size: var(--font-size-sm);
+    }
+
+    .mobile-nav {
+        top: 64px;
+        left: 12px;
+        right: 12px;
     }
 }

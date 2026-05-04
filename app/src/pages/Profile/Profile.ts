@@ -5,7 +5,6 @@ import type { Car } from "../../types/car.interface";
 import { apiFetch } from "../../utils/api.utils";
 import { navigate } from "../../utils/routing.utils";
 import { removeFromWishlist } from "../../utils/auth.utils";
-import { carCatalog } from "../../data/cars.data";
 
 interface ProfileProps {
   user: UserInfo | null;
@@ -36,15 +35,11 @@ export class ProfilePage extends Component<ProfileProps, ProfileState> {
       );
       this.setState({ cars: filtered, loading: false });
     } catch (error) {
-      const wishList = this.props.user?.wishList || [];
-      const fallback = carCatalog.filter((car) =>
-        wishList.includes(String(car.localID)),
-      );
       const message =
         error instanceof Error ? error.message : "Failed to load wishlist.";
       this.setState({
-        cars: fallback,
-        error: fallback.length ? null : message,
+        cars: [],
+        error: message,
         loading: false,
       });
     }

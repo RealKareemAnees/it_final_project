@@ -5,7 +5,6 @@ import type { UserInfo } from "../../types/userInfo.interface";
 import { apiFetch } from "../../utils/api.utils";
 import { addToWishlist, removeFromWishlist } from "../../utils/auth.utils";
 import { navigate } from "../../utils/routing.utils";
-import { getCarById } from "../../data/cars.data";
 
 interface SingleCarProps {
   user: UserInfo | null;
@@ -40,11 +39,6 @@ export class SingleCarPage extends Component<SingleCarProps, SingleCarState> {
       const data = await apiFetch<{ car: Car }>(`/api/cars/${id}`);
       this.setState({ car: data.car, loading: false, selectedIndex: 0 });
     } catch (error) {
-      const fallback = getCarById(Number(id));
-      if (fallback) {
-        this.setState({ car: fallback, loading: false, selectedIndex: 0 });
-        return;
-      }
       const message =
         error instanceof Error ? error.message : "Failed to load car.";
       this.setState({ error: message, loading: false });
@@ -52,8 +46,7 @@ export class SingleCarPage extends Component<SingleCarProps, SingleCarState> {
   }
 
   private isWishlisted(car: Car): boolean {
-    const wishList = this.props.user?.wishList || [];
-    return wishList.includes(String(car.localID));
+    return (this.props.user?.wishList || []).includes(String(car.localID));
   }
 
   private async toggleWishlist(car: Car): Promise<void> {
@@ -61,130 +54,289 @@ export class SingleCarPage extends Component<SingleCarProps, SingleCarState> {
       navigate("/auth");
       return;
     }
-
     if (this.isWishlisted(car)) {
       await removeFromWishlist(car.localID);
-      return;
+    } else {
+      await addToWishlist(car.localID);
     }
-
-    await addToWishlist(car.localID);
   }
 
   render(): VNode {
     const { car, loading, error, selectedIndex } = this.state;
 
     if (loading) {
-      return h("div", { className: "page-section" }, "Loading car...");
+      return h(
+        "div",
+        { className: "page-section sc-state-view" },
+        h("div", { className: "sc-spinner" }),
+        h("p", { className: "sc-state-text" }, "Loading car details…"),
+      );
     }
 
     if (error || !car) {
       return h(
         "div",
-        { className: "page-section" },
-        h("h2", null, "Car not found"),
-        h("p", null, error || "We could not load this car."),
+        { className: "page-section sc-state-view" },
+        h("h2", { className: "sc-state-heading" }, "Car not found"),
+        h(
+          "p",
+          { className: "sc-state-text" },
+          error || "We could not load this car.",
+        ),
+        h(
+          "button",
+          { className: "sc-btn-primary", onClick: () => navigate("/browse") },
+          "← Back to Browse",
+        ),
       );
     }
 
-    const activeImage = car.images?.[selectedIndex] || car.images?.[0];
+    const images = (car.images || []).filter(Boolean);
+    const total = images.length;
+    const safeIndex = total > 0 ? ((selectedIndex % total) + total) % total : 0;
+    const fallback = "/assets/images/slide-1-images/audi.avif";
+    const tags = car.tags || [];
+    const wishlisted = this.isWishlisted(car);
+
+    const goTo = (index: number): void => {
+      if (total < 2) return;
+      this.setState({
+        selectedIndex: ((index % total) + total) % total,
+      });
+    };
+
+    // ── Filmstrip: all images side-by-side, translated via CSS
+    // Strip width = total * 100%; each image takes 1/total of strip = 100% of track
+    // translateX(-safeIndex * 100/total %) shifts exactly one track-width per step
+    const filmstrip =
+      total > 0
+        ? h(
+            "div",
+            {
+              className: "sc-strip",
+              style: {
+                width: `${total * 100}%`,
+                transform: `translateX(-${safeIndex * (100 / total)}%)`,
+              },
+            },
+            ...images.map((src, i) =>
+              h("img", {
+                key: `img-${car.localID}-${i}`,
+                src,
+                alt: `${car.name} – view ${i + 1}`,
+                className: "sc-strip-img",
+              }),
+            ),
+          )
+        : h("img", {
+            src: fallback,
+            alt: car.name,
+            className: "sc-strip-img sc-strip-img--solo",
+          });
+
+    const dots =
+      total > 1
+        ? h(
+            "div",
+            { className: "sc-dots" },
+            ...images.map((_, i) =>
+              h("button", {
+                key: `dot-${i}`,
+                className: `sc-dot${i === safeIndex ? " active" : ""}`,
+                onClick: () => goTo(i),
+                "aria-label": `Image ${i + 1}`,
+              }),
+            ),
+          )
+        : null;
+
+    const thumbs =
+      total > 1
+        ? h(
+            "div",
+            { className: "sc-thumbs" },
+            ...images.map((src, i) =>
+              h("button", {
+                key: `thumb-${car.localID}-${i}`,
+                className: `sc-thumb${i === safeIndex ? " active" : ""}`,
+                onClick: () => goTo(i),
+                "aria-label": `View image ${i + 1}`,
+                style: { backgroundImage: `url('${src}')` },
+              }),
+            ),
+          )
+        : null;
 
     return h(
       "div",
       { className: "page-section single-car-page" },
+
+      // ── Hero ─────────────────────────────────────────────────
       h(
         "div",
-        { className: "single-car-hero" },
+        { className: "sc-hero" },
+
+        // Gallery
         h(
           "div",
-          { className: "single-car-gallery" },
+          { className: "sc-gallery-panel" },
           h(
             "div",
-            { className: "single-car-main" },
-            h("img", {
-              src: activeImage || "/assets/images/slide-1-images/audi.avif",
-              alt: car.name,
-            }),
+            { className: "sc-gallery-stage" },
+
+            // Track (clips the strip)
+            h("div", { className: "sc-track" }, filmstrip),
+
+            // Type badge
             h(
               "div",
-              { className: "single-car-overlay" },
-              h("span", { className: "detail-tag" }, car.type),
-              h(
-                "div",
-                { className: "single-car-actions" },
-                h(
-                  "button",
-                  {
-                    className: "primary-button",
-                    onClick: () => void this.toggleWishlist(car),
-                  },
-                  this.isWishlisted(car)
-                    ? "Remove from Wishlist"
-                    : "Add to Wishlist",
-                ),
-                h(
-                  "button",
-                  {
-                    className: "secondary-button",
-                    onClick: () => navigate("/browse"),
-                  },
-                  "Back to Browse",
-                ),
-              ),
+              { className: "sc-badge-wrap" },
+              h("span", { className: "sc-type-badge" }, car.type),
             ),
+
+            // Prev / Next arrows
+            total > 1
+              ? h(
+                  "div",
+                  { className: "sc-arrows" },
+                  h(
+                    "button",
+                    {
+                      className: "sc-arrow",
+                      onClick: () => goTo(safeIndex - 1),
+                      "aria-label": "Previous image",
+                    },
+                    h("span", { className: "sc-arrow-icon" }, "‹"),
+                  ),
+                  h(
+                    "button",
+                    {
+                      className: "sc-arrow",
+                      onClick: () => goTo(safeIndex + 1),
+                      "aria-label": "Next image",
+                    },
+                    h("span", { className: "sc-arrow-icon" }, "›"),
+                  ),
+                )
+              : null,
+
+            // Dot indicators
+            dots,
           ),
-          h(
-            "div",
-            { className: "single-car-thumbs" },
-            (car.images || []).map((image, index) =>
-              h("button", {
-                className: `thumb ${index === selectedIndex ? "active" : ""}`,
-                key: `${car.localID}-${index}`,
-                onClick: () => this.setState({ selectedIndex: index }),
-                style: { backgroundImage: `url('${image}')` },
-              }),
-            ),
-          ),
+
+          // Thumbnails
+          thumbs,
         ),
+
+        // Details
         h(
           "div",
-          { className: "single-car-details" },
-          h("h1", null, car.name),
-          h(
-            "p",
-            { className: "detail-sub" },
-            `${car.manufacturer} · ${car.year} · ${car.country}`,
-          ),
+          { className: "sc-details" },
+
+          // Header
           h(
             "div",
-            { className: "detail-price" },
-            h("span", null, "From"),
-            h("strong", null, `$${car.price.toLocaleString()}`),
-          ),
-          h(
-            "div",
-            { className: "detail-grid" },
-            h("div", null, h("span", null, "Type"), h("strong", null, car.type)),
-            h("div", null, h("span", null, "Year"), h("strong", null, String(car.year))),
-            h("div", null, h("span", null, "Country"), h("strong", null, car.country)),
-            h("div", null, h("span", null, "Brand"), h("strong", null, car.manufacturer)),
-          ),
-          h(
-            "div",
-            { className: "detail-tags" },
-            car.tags.map((tag) =>
-              h("span", { className: "car-tag", key: tag }, tag),
+            { className: "sc-details-head" },
+            h("p", { className: "sc-manufacturer" }, car.manufacturer),
+            h("h1", { className: "sc-car-name" }, car.name),
+            h(
+              "p",
+              { className: "sc-car-meta" },
+              `${car.year} · ${car.country}`,
             ),
           ),
-          h("p", { className: "detail-description" }, car.description),
+
+          // Price
+          h(
+            "div",
+            { className: "sc-price-block" },
+            h("span", { className: "sc-price-label" }, "Starting from"),
+            h(
+              "span",
+              { className: "sc-price" },
+              `$${car.price.toLocaleString()}`,
+            ),
+          ),
+
+          h("hr", { className: "sc-rule" }),
+
+          // Spec grid
+          h(
+            "div",
+            { className: "sc-specs-grid" },
+            h(
+              "div",
+              { className: "sc-spec" },
+              h("span", { className: "sc-spec-label" }, "Type"),
+              h("span", { className: "sc-spec-value" }, car.type),
+            ),
+            h(
+              "div",
+              { className: "sc-spec" },
+              h("span", { className: "sc-spec-label" }, "Year"),
+              h("span", { className: "sc-spec-value" }, String(car.year)),
+            ),
+            h(
+              "div",
+              { className: "sc-spec" },
+              h("span", { className: "sc-spec-label" }, "Origin"),
+              h("span", { className: "sc-spec-value" }, car.country),
+            ),
+            h(
+              "div",
+              { className: "sc-spec" },
+              h("span", { className: "sc-spec-label" }, "Brand"),
+              h("span", { className: "sc-spec-value" }, car.manufacturer),
+            ),
+          ),
+
+          // Tags
+          tags.length > 0
+            ? h(
+                "div",
+                { className: "sc-tags" },
+                ...tags.map((tag) =>
+                  h("span", { className: "sc-tag", key: tag }, tag),
+                ),
+              )
+            : null,
+
+          // Description
+          h("p", { className: "sc-description" }, car.description),
+
+          // CTA row
+          h(
+            "div",
+            { className: "sc-actions" },
+            h(
+              "button",
+              {
+                className: `sc-btn-primary${wishlisted ? " sc-btn-primary--saved" : ""}`,
+                onClick: () => void this.toggleWishlist(car),
+              },
+              wishlisted ? "Saved to Wishlist ✓" : "Add to Wishlist",
+            ),
+            h(
+              "button",
+              {
+                className: "sc-btn-ghost",
+                onClick: () => navigate("/browse"),
+              },
+              "← Back to Browse",
+            ),
+          ),
         ),
       ),
+
+      // ── Feature cards ─────────────────────────────────────────
       h(
         "section",
-        { className: "single-car-specs" },
+        { className: "sc-features" },
         h(
           "div",
-          { className: "spec-card" },
-          h("h3", null, "Design focus"),
+          { className: "sc-feat-card" },
+          h("div", { className: "sc-feat-icon" }, "◈"),
+          h("h3", null, "Design Focus"),
           h(
             "p",
             null,
@@ -193,8 +345,9 @@ export class SingleCarPage extends Component<SingleCarProps, SingleCarState> {
         ),
         h(
           "div",
-          { className: "spec-card" },
-          h("h3", null, "Driver feel"),
+          { className: "sc-feat-card" },
+          h("div", { className: "sc-feat-icon" }, "◎"),
+          h("h3", null, "Driver Feel"),
           h(
             "p",
             null,
@@ -203,7 +356,8 @@ export class SingleCarPage extends Component<SingleCarProps, SingleCarState> {
         ),
         h(
           "div",
-          { className: "spec-card" },
+          { className: "sc-feat-card" },
+          h("div", { className: "sc-feat-icon" }, "◻"),
           h("h3", null, "Ownership"),
           h(
             "p",
