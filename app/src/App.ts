@@ -2,7 +2,7 @@ import { Component, h } from "./K-engine";
 import type { VNode } from "./K-engine/types";
 import { NavBar } from "./components/Navbar.component";
 import { Footer } from "./components/Footer.component";
-import { HomePage } from "./pages/home/Home.page.component";
+import { HomePage } from "./pages/home/Home.page.component.ts";
 import { AuthPage } from "./pages/Auth/Auth";
 import { AboutPage } from "./pages/About/About";
 import { BrowsePage } from "./pages/Browse/Browse";
@@ -36,7 +36,7 @@ export class App extends Component<{}, AppState> {
   };
 
   render(): VNode {
-    const { currentRoute, params } = this.state;
+    const { currentRoute } = this.state;
 
     let pageContent: VNode;
 
@@ -78,11 +78,18 @@ export class App extends Component<{}, AppState> {
         );
     }
 
+    const isStandalone =
+      currentRoute === "home" || currentRoute === "" || currentRoute === "auth";
+
+    if (isStandalone) {
+      return h("div", { id: "app-container" }, pageContent);
+    }
+
     return h(
       "div",
-      { id: "app-container", style: { fontFamily: "Arial, sans-serif" } },
+      { id: "app-container" },
       h(NavBar, null),
-      h("main", { style: { padding: "20px", minHeight: "70vh" } }, pageContent),
+      h("main", { className: "page-shell" }, pageContent),
       h(Footer, null),
     );
   }
