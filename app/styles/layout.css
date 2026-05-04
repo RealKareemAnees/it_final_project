@@ -1,0 +1,107 @@
+/* ── PAGE SHELL & SHARED LAYOUT ──────────────────────────────── */
+.page-shell {
+  width: min(var(--size-container), calc(100% - 48px));
+  margin: 0 auto;
+  padding: clamp(90px, 10vw, 120px) 0 var(--spacing-7xl);
+  min-height: 70vh;
+}
+
+.page-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4xl);
+}
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.page-header--split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: var(--spacing-4xl);
+  align-items: center;
+}
+
+.page-header h1 {
+  font-size: var(--font-size-heading-lg);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.page-header p {
+  color: var(--color-text-muted);
+  max-width: 60ch;
+  line-height: var(--line-height-relaxed);
+}
+
+.page-eyebrow {
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing-2xl);
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.page-note {
+  color: var(--color-text-muted);
+}
+
+.page-error {
+  color: #b94b4b;
+}
+
+.page-success {
+  color: #2a6b44;
+}
+
+/* Form field shared base */
+.field,
+.admin-form input,
+.admin-form textarea,
+.contact-form input,
+.contact-form textarea {
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  padding: 12px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+}
+
+/* Dark theme */
+body.darktheme .page-header p,
+body.darktheme .page-note,
+body.darktheme .page-error,
+body.darktheme .page-success {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+body.darktheme .page-eyebrow {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .page-header--split {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-shell {
+    padding-top: 90px;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-shell {
+    width: min(var(--size-container), calc(100% - 32px));
+  }
+}

@@ -1,0 +1,200 @@
+/* ── BROWSE PAGE ──────────────────────────────────────────────────── */
+.browse-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: var(--spacing-4xl);
+}
+
+.browse-filters {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-3xl);
+  border: 1px solid var(--color-border-light);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xl);
+  position: sticky;
+  top: 110px;
+  height: fit-content;
+}
+
+.filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.filter-group h3 {
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-2xl);
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-md);
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.filter-pill {
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-light);
+  background: var(--color-surface-muted);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-lg);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.filter-pill:hover {
+  background: var(--color-surface-strong);
+}
+
+.filter-pill.is-active {
+  background: var(--color-text-dark);
+  color: var(--color-text-light);
+  border-color: var(--color-text-dark);
+}
+
+.browse-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-xl);
+}
+
+.results-count {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+}
+
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.filter-chip {
+  border: 1px solid var(--color-border-light);
+  background: var(--color-surface);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-chip::after {
+  content: " ×";
+  opacity: 0.6;
+}
+
+.filter-chip:hover {
+  background: var(--color-surface-strong);
+}
+
+.filter-empty {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* Skeleton loader for browse */
+.browse-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--spacing-2xl);
+}
+
+.skeleton-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 210px;
+  background: linear-gradient(90deg, var(--color-surface-muted) 25%, var(--color-surface-strong) 50%, var(--color-surface-muted) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-body {
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.skeleton-line {
+  height: 12px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg, var(--color-surface-muted) 25%, var(--color-surface-strong) 50%, var(--color-surface-muted) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-line--short { width: 40%; }
+.skeleton-line--medium { width: 65%; }
+.skeleton-line--full { width: 100%; }
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .browse-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .browse-filters {
+    position: static;
+  }
+}
+
+/* Dark theme */
+body.darktheme .browse-filters {
+  background: var(--color-bg-darker);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+}
+
+body.darktheme .filter-group h3 {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+body.darktheme .filter-pill {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-light);
+}
+
+body.darktheme .filter-pill.is-active {
+  background: var(--color-bg-light);
+  color: var(--color-text-dark);
+  border-color: var(--color-bg-light);
+}
+
+body.darktheme .filter-chip {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-light);
+}
+
+body.darktheme .skeleton-card {
+  background: var(--color-bg-darker);
+  border-color: rgba(255, 255, 255, 0.1);
+}

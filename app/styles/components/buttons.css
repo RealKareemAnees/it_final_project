@@ -1,0 +1,61 @@
+/* ── BUTTONS ──────────────────────────────────────────────────── */
+.primary-button,
+.secondary-button,
+.ghost-button,
+.car-action {
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  padding: 10px 18px;
+  border: none;
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  cursor: pointer;
+}
+
+.primary-button,
+.car-action {
+  background: var(--color-text-dark);
+  color: var(--color-text-light);
+}
+
+.secondary-button {
+  background: var(--color-surface-strong);
+  color: var(--color-text-dark);
+}
+
+.ghost-button {
+  background: transparent;
+  color: var(--color-text-dark);
+}
+
+.primary-button:hover,
+.secondary-button:hover,
+.ghost-button:hover,
+.car-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.primary-button:active,
+.secondary-button:active,
+.ghost-button:active,
+.car-action:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Dark theme */
+body.darktheme .primary-button,
+body.darktheme .car-action {
+  background: var(--color-bg-light);
+  color: var(--color-text-dark);
+}
+
+body.darktheme .secondary-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-light);
+}
+
+body.darktheme .ghost-button {
+  color: var(--color-text-light);
+}
