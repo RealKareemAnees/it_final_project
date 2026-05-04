@@ -9,9 +9,17 @@ import "../styles/browse-countries.css";
 import "../styles/contact-footer.css";
 import "../styles/search-bar.css";
 import "../styles/footer.css";
+import "../styles/pages.css";
 
-// stup theme
+// Bootstrap theme + session
 import { applyThemeFromLocalStorage } from "./utils/theme.utils";
+import {
+  ensureLocalStorageDefaults,
+  getUSerinfoFromLocalStorage,
+} from "./utils/localStorage.util";
+import { fetchCurrentUser } from "./utils/auth.utils";
+
+ensureLocalStorageDefaults();
 applyThemeFromLocalStorage();
 
 // Find or create root container
@@ -24,3 +32,11 @@ if (!container) {
 
 // Render the App component
 render(h(App, null), container);
+
+void (async () => {
+  await fetchCurrentUser();
+  const stored = getUSerinfoFromLocalStorage();
+  if (stored?.theme) {
+    applyThemeFromLocalStorage();
+  }
+})();

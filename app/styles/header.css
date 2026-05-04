@@ -19,7 +19,8 @@
         border-bottom var(--transition-medium);
 }
 
-.header.is-scrolled {
+.header.is-scrolled,
+.header.is-inner {
     background-color: rgba(255, 255, 255, 0.92);
     color: var(--color-text-dark);
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
@@ -56,6 +57,36 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-lg);
+}
+
+.nav-search {
+    width: min(320px, 32vw);
+    max-width: 360px;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.nav-link {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-regular);
+    color: inherit;
+    text-decoration: none;
+    background: transparent;
+    padding: 6px 10px;
+    transition: opacity var(--transition-base);
+}
+
+.nav-link:hover {
+    opacity: 0.7;
+}
+
+.nav-button {
+    border: none;
+    cursor: pointer;
 }
 
 .chat-btn {
@@ -112,16 +143,19 @@
     transition: var(--transition-medium);
 }
 
-.header.is-scrolled .mobile-menu-btn span {
+.header.is-scrolled .mobile-menu-btn span,
+.header.is-inner .mobile-menu-btn span {
     background-color: var(--color-text-dark);
 }
 
-.header.is-scrolled .chat-btn {
+.header.is-scrolled .chat-btn,
+.header.is-inner .chat-btn {
     background-color: var(--color-text-dark);
     color: var(--color-text-light);
 }
 
-.header.is-scrolled .chat-btn .arrow-icon {
+.header.is-scrolled .chat-btn .arrow-icon,
+.header.is-inner .chat-btn .arrow-icon {
     background-color: var(--color-text-light);
     color: var(--color-text-dark);
 }
@@ -155,6 +189,15 @@
     transition: opacity var(--transition-base);
 }
 
+.mobile-nav .nav-button {
+    background: transparent;
+    color: var(--color-text-light);
+    text-align: left;
+    padding: 12px 0;
+    font-size: var(--font-size-xl);
+    opacity: 0.85;
+}
+
 .mobile-nav a:hover,
 .mobile-nav a:active {
     opacity: 1;
@@ -169,10 +212,18 @@
     .desktop-nav {
         gap: var(--spacing-lg);
     }
+
+    .nav-search {
+        width: min(240px, 30vw);
+    }
 }
 
 @media (max-width: 900px) {
     .desktop-nav {
+        display: none;
+    }
+
+    .nav-search {
         display: none;
     }
 

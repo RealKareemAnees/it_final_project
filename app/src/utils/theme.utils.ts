@@ -1,29 +1,24 @@
 import {
+  ensureLocalStorageDefaults,
   getUSerinfoFromLocalStorage,
   saveUserInfoToLocalStorage,
 } from "./localStorage.util";
 
-export function switchTheme(): void {
+export function setTheme(theme: "light" | "dark"): void {
   const root = document.body;
+  root.classList.toggle("darktheme", theme === "dark");
 
-  if (root.classList.contains("darktheme")) {
-    root.classList.remove("darktheme");
-    saveUserInfoToLocalStorage({
-      ...getUSerinfoFromLocalStorage(),
-      theme: "light",
-    } as any);
-  } else {
-    root.classList.add("darktheme");
-    saveUserInfoToLocalStorage({
-      ...getUSerinfoFromLocalStorage(),
-      theme: "dark",
-    } as any);
-  }
+  const current = getUSerinfoFromLocalStorage() || ensureLocalStorageDefaults();
+  saveUserInfoToLocalStorage({ ...current, theme });
+}
+
+export function switchTheme(): "light" | "dark" {
+  const next = document.body.classList.contains("darktheme") ? "light" : "dark";
+  setTheme(next);
+  return next;
 }
 
 export function applyThemeFromLocalStorage(): void {
-  const savedTheme = getUSerinfoFromLocalStorage()?.theme;
-  if (savedTheme && savedTheme === "dark") {
-    document.body.classList.add("darktheme");
-  }
+  const savedTheme = getUSerinfoFromLocalStorage()?.theme || "light";
+  setTheme(savedTheme);
 }

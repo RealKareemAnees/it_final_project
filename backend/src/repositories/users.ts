@@ -57,6 +57,12 @@ export async function updateUser(
   await db.collection("users").updateOne({ username }, { $set: updates });
 }
 
+// Deletes a user record entirely.
+export async function deleteUserByUsername(username: string): Promise<void> {
+  const db = getDb();
+  await db.collection("users").deleteOne({ username });
+}
+
 // Loads every user record from the database.
 export async function getAllUsers(): Promise<User[]> {
   const db = getDb();

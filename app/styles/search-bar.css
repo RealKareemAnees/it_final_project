@@ -109,3 +109,100 @@
     stroke-linecap: round;
     stroke-linejoin: round;
 }
+
+/* Inline + Compact Variants */
+.search-section--inline,
+.search-section--compact {
+    background: transparent;
+    padding: 0;
+    text-align: left;
+}
+
+.search-section--inline::after,
+.search-section--compact::after {
+    display: none;
+}
+
+.search-inner--inline,
+.search-inner--compact {
+    width: 100%;
+    margin: 0;
+    align-items: stretch;
+    gap: var(--spacing-md);
+}
+
+.search-section--inline .search-header h2 {
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+}
+
+.search-section--inline .search-header p {
+    color: var(--color-text-muted);
+    opacity: 0.85;
+}
+
+.search-form--inline {
+    max-width: 100%;
+    background: var(--color-surface);
+    border-color: var(--color-border-medium);
+    border-radius: var(--radius-xl);
+}
+
+.search-section--inline .search-input {
+    color: var(--color-text-dark);
+    font-size: var(--font-size-base);
+    padding: 14px 20px;
+}
+
+.search-form--compact {
+    max-width: 100%;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    border-radius: var(--radius-full);
+}
+
+.search-section--compact .search-input {
+    color: var(--color-text-light);
+    font-size: var(--font-size-sm);
+    padding: 10px 16px;
+}
+
+.search-section--compact .search-input::placeholder {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.search-section--compact .search-button {
+    width: 34px;
+    height: 34px;
+    margin-right: 6px;
+}
+
+.header.is-scrolled .search-form--compact,
+.header.is-inner .search-form--compact {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.18);
+}
+
+.header.is-scrolled .search-section--compact .search-input,
+.header.is-inner .search-section--compact .search-input {
+    color: var(--color-text-dark);
+}
+
+.header.is-scrolled .search-section--compact .search-input::placeholder,
+.header.is-inner .search-section--compact .search-input::placeholder {
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.header.is-scrolled .search-section--compact .search-button,
+.header.is-inner .search-section--compact .search-button {
+    background: var(--color-text-dark);
+    color: var(--color-text-light);
+}
+
+.mobile-nav .search-section--compact {
+    margin-bottom: var(--spacing-xl);
+}
+
+.mobile-nav .search-form--compact {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}

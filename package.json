@@ -1,0 +1,12 @@
+{
+  "name": "it-final-project",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm --prefix backend run dev\" \"npm --prefix app run dev\"",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix app run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

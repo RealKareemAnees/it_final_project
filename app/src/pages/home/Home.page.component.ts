@@ -3,6 +3,7 @@ import type { VNode } from "../../K-engine/types";
 import { NavBar } from "../../components/Navbar.component";
 import { Footer } from "../../components/Footer.component";
 import { SearchBar } from "../../components/SearchBar.component";
+import { navigate } from "../../utils/routing.utils";
 
 const localFiles = ["aston-martin.jpg", "audi.avif", "porsche.jpg"];
 
@@ -23,7 +24,13 @@ const slides = localFiles.map((file, index) => ({
   position: "center 55%",
 }));
 
-export class HomePage extends Component {
+import type { UserInfo } from "../../types/userInfo.interface";
+
+interface HomePageProps {
+  user: UserInfo | null;
+}
+
+export class HomePage extends Component<HomePageProps> {
   private currentSlide = 0;
   private carouselReady = false;
   private nextHandler?: () => void;
@@ -34,7 +41,6 @@ export class HomePage extends Component {
     document.title = "Car Gallery Landing";
     document.body.classList.remove("auth-page");
     this.initCarousel();
-    this.initCountryCards();
   }
 
   componentDidUpdate(): void {
@@ -140,14 +146,9 @@ export class HomePage extends Component {
     this.carouselReady = false;
   }
 
-  private initCountryCards(): void {
-    const cards = document.querySelectorAll(".country-card");
-    cards.forEach((card) => {
-      card.addEventListener("click", () => {
-        const title = card.querySelector(".country-title")?.textContent;
-        console.log("Navigating to country:", title);
-      });
-    });
+  private handleNavigate(event: MouseEvent, path: string): void {
+    event.preventDefault();
+    navigate(path);
   }
 
   render(): VNode {
@@ -157,7 +158,11 @@ export class HomePage extends Component {
       h(
         "section",
         { className: "app-container", "aria-label": "Hero slideshow" },
-        h("div", { "data-header-root": "" }, h(NavBar, null)),
+        h(
+          "div",
+          { "data-header-root": "" },
+          h(NavBar, { user: this.props.user }),
+        ),
         h(
           "main",
           { className: "content" },
@@ -173,7 +178,7 @@ export class HomePage extends Component {
             ),
             h(
               "button",
-              { className: "shop-btn" },
+              { className: "shop-btn", onClick: () => navigate("/browse") },
               "Shop Now ",
               h("span", { className: "arrow-icon" }, raw("&nearr;")),
             ),
@@ -231,9 +236,11 @@ export class HomePage extends Component {
             h(
               "a",
               {
-                href: "#",
+                href: "/about",
                 className: "learn-more-btn",
                 "aria-label": "Learn more about Bergo",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavigate(event, "/about"),
               },
               "Learn More!",
             ),
@@ -273,8 +280,10 @@ export class HomePage extends Component {
               "a",
               {
                 className: "type-card",
-                href: "#",
+                href: "/browse?type=Luxury",
                 "aria-label": "Browse luxury cars",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavigate(event, "/browse?type=Luxury"),
               },
               h(
                 "div",
@@ -292,8 +301,10 @@ export class HomePage extends Component {
               "a",
               {
                 className: "type-card",
-                href: "#",
+                href: "/browse?type=Muscle",
                 "aria-label": "Browse muscle cars",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavigate(event, "/browse?type=Muscle"),
               },
               h(
                 "div",
@@ -311,8 +322,10 @@ export class HomePage extends Component {
               "a",
               {
                 className: "type-card",
-                href: "#",
+                href: "/browse?type=Racing",
                 "aria-label": "Browse racing cars",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavigate(event, "/browse?type=Racing"),
               },
               h(
                 "div",
@@ -330,8 +343,10 @@ export class HomePage extends Component {
               "a",
               {
                 className: "type-card",
-                href: "#",
+                href: "/browse?type=Offroad",
                 "aria-label": "Browse offroad cars",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavigate(event, "/browse?type=Offroad"),
               },
               h(
                 "div",
@@ -349,8 +364,10 @@ export class HomePage extends Component {
               "a",
               {
                 className: "type-card",
-                href: "#",
+                href: "/browse?type=Sedan",
                 "aria-label": "Browse sedan cars",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavigate(event, "/browse?type=Sedan"),
               },
               h(
                 "div",
@@ -368,8 +385,10 @@ export class HomePage extends Component {
               "a",
               {
                 className: "type-card",
-                href: "#",
+                href: "/browse?type=SUV",
                 "aria-label": "Browse SUV cars",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavigate(event, "/browse?type=SUV"),
               },
               h(
                 "div",
@@ -387,8 +406,10 @@ export class HomePage extends Component {
               "a",
               {
                 className: "type-card",
-                href: "#",
+                href: "/browse?type=Sports",
                 "aria-label": "Browse sports cars",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavigate(event, "/browse?type=Sports"),
               },
               h(
                 "div",
@@ -406,8 +427,10 @@ export class HomePage extends Component {
               "a",
               {
                 className: "type-card",
-                href: "#",
+                href: "/browse?type=Roadster",
                 "aria-label": "Browse roadster cars",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavigate(event, "/browse?type=Roadster"),
               },
               h(
                 "div",
@@ -425,9 +448,11 @@ export class HomePage extends Component {
           h(
             "a",
             {
-              href: "#",
+              href: "/browse",
               className: "more-link",
               "aria-label": "View more car types",
+              onClick: (event: MouseEvent) =>
+                this.handleNavigate(event, "/browse"),
             },
             h("span", { className: "more-text" }, "and much more"),
             h("span", { className: "more-arrow" }, raw("&rarr;")),
@@ -455,8 +480,14 @@ export class HomePage extends Component {
             "div",
             { className: "country-grid" },
             h(
-              "article",
-              { className: "country-card" },
+              "a",
+              {
+                className: "country-card",
+                href: "/browse?country=USA",
+                "aria-label": "Browse American cars",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavigate(event, "/browse?country=USA"),
+              },
               h(
                 "div",
                 { className: "country-image" },
@@ -479,8 +510,14 @@ export class HomePage extends Component {
               ),
             ),
             h(
-              "article",
-              { className: "country-card" },
+              "a",
+              {
+                className: "country-card",
+                href: "/browse?country=Germany",
+                "aria-label": "Browse German cars",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavigate(event, "/browse?country=Germany"),
+              },
               h(
                 "div",
                 { className: "country-image" },
@@ -503,8 +540,14 @@ export class HomePage extends Component {
               ),
             ),
             h(
-              "article",
-              { className: "country-card" },
+              "a",
+              {
+                className: "country-card",
+                href: "/browse?country=Italy",
+                "aria-label": "Browse Italian cars",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavigate(event, "/browse?country=Italy"),
+              },
               h(
                 "div",
                 { className: "country-image" },
@@ -527,8 +570,14 @@ export class HomePage extends Component {
               ),
             ),
             h(
-              "article",
-              { className: "country-card" },
+              "a",
+              {
+                className: "country-card",
+                href: "/browse?country=Japan",
+                "aria-label": "Browse Japanese cars",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavigate(event, "/browse?country=Japan"),
+              },
               h(
                 "div",
                 { className: "country-image" },
@@ -578,9 +627,11 @@ export class HomePage extends Component {
           h(
             "a",
             {
-              href: "contact.html",
+              href: "/contact",
               className: "contact-cta",
               "aria-label": "Go to contact page",
+              onClick: (event: MouseEvent) =>
+                this.handleNavigate(event, "/contact"),
             },
             "Contact Us ",
             h("span", { className: "cta-arrow" }, raw("&nearr;")),

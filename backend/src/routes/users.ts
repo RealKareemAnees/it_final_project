@@ -1,11 +1,13 @@
 import { IncomingMessage, ServerResponse } from "http";
 import {
   addToWishList,
+  deleteUserByUsername,
+  getAllUsers,
   getUserInfoByUsername,
   removeFromWishList,
   updateUser,
 } from "../repositories/users";
-import { getAuthenticatedUser, safeUser } from "../lib/auth";
+import { getAuthenticatedUser, requireAdmin, safeUser } from "../lib/auth";
 import { parseBody, sendJSON } from "../lib/http";
 
 // Handles authenticated user profile and wishlist endpoints.
@@ -26,6 +28,43 @@ export async function handleUserRoutes(
 
     // Returns the sanitized user profile to the client.
     sendJSON(res, { user: safeUser(user) });
+    return true;
+  }
+
+  if (urlPath === "/api/users/all" && method === "GET") {
+    const admin = await requireAdmin(req);
+    if (!admin) {
+      sendJSON(res, { error: "Admin only" }, 403);
+      return true;
+    }
+
+    const users = await getAllUsers();
+    sendJSON(res, { users: users.map((user) => safeUser(user)) });
+    return true;
+  }
+
+  if (urlPath === "/api/users/delete" && method === "POST") {
+    const admin = await requireAdmin(req);
+    if (!admin) {
+      sendJSON(res, { error: "Admin only" }, 403);
+      return true;
+    }
+
+    const body = await parseBody(req);
+    const username = String(body.username || "").trim();
+
+    if (!username) {
+      sendJSON(res, { error: "Username required" }, 400);
+      return true;
+    }
+
+    if (username === "admin") {
+      sendJSON(res, { error: "Cannot delete admin" }, 400);
+      return true;
+    }
+
+    await deleteUserByUsername(username);
+    sendJSON(res, { success: true });
     return true;
   }
 

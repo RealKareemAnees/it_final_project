@@ -13,6 +13,17 @@ async function handleRequest(req: IncomingMessage, res: ServerResponse) {
   const method = req.method || "";
   const urlPath = url.split("?")[0];
 
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+
+  if (method === "OPTIONS") {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
   try {
     // Routes authentication requests first because we only expose APIs.
     if (await handleAuthRoutes(req, res, urlPath, method)) return;

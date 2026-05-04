@@ -45,10 +45,16 @@
     --color-bg-dark: #0f0f0f;
     --color-bg-darker: #111;
     --color-bg-light: #fff;
+    --color-bg-page: #f6f6f6;
+    --color-surface: #ffffff;
+    --color-surface-muted: #f2f2f2;
+    --color-surface-strong: #e9e9e9;
     --color-text-dark: #111;
     --color-text-light: #fff;
     --color-text-muted: #333;
     --color-text-subtle: rgba(255, 255, 255, 0.6);
+    --color-accent: #c3a269;
+    --color-accent-strong: #a8844d;
 
     --color-overlay-light: rgba(0, 0, 0, 0.2);
     --color-overlay-medium: rgba(0, 0, 0, 0.5);
@@ -81,11 +87,11 @@
     --spacing-padding-xl: clamp(80px, 12vw, 130px);
 
     /* Border Radius */
-    --radius-sm: 8px;
-    --radius-md: 16px;
-    --radius-lg: 30px;
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
     --radius-xl: 40px;
-    --radius-full: 50%;
+    --radius-full: 999px;
 
     /* Transitions & Animations */
     --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
@@ -120,12 +126,17 @@ body {
 
 body {
     font-family: var(--font-primary);
-    background-color: var(--color-bg-dark);
+    background-color: var(--color-bg-page);
     min-height: 100vh;
-    color: var(--color-text-light);
+    color: var(--color-text-dark);
     margin: 0;
     padding: 0;
     position: relative;
+}
+
+body.darktheme {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
 }
 
 /* ── TYPOGRAPHY ──────────────────────── */

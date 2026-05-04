@@ -1,8 +1,17 @@
 import { Component, h, raw } from "../K-engine";
 import type { VNode } from "../K-engine/types";
 import { navigate } from "../utils/routing.utils";
+import type { UserInfo } from "../types/userInfo.interface";
+import { logoutUser, updateThemePreference } from "../utils/auth.utils";
+import { switchTheme } from "../utils/theme.utils";
+import { SearchBar } from "./SearchBar.component";
 
-export class NavBar extends Component {
+interface NavBarProps {
+  user: UserInfo | null;
+  isInner?: boolean;
+}
+
+export class NavBar extends Component<NavBarProps> {
   private headerEl: HTMLElement | null = null;
   private mobileMenuBtn: HTMLButtonElement | null = null;
   private mobileNav: HTMLElement | null = null;
@@ -35,6 +44,11 @@ export class NavBar extends Component {
   };
 
   componentDidMount(): void {
+    this.initHeader();
+  }
+
+  componentDidUpdate(): void {
+    this.teardownHeader();
     this.initHeader();
   }
 
@@ -93,32 +107,137 @@ export class NavBar extends Component {
     this.updateMenuButtonState(false);
   }
 
+  private handleNavClick = (event: MouseEvent, path: string): void => {
+    event.preventDefault();
+    navigate(path);
+  };
+
+  private handleLogout = async (): Promise<void> => {
+    await logoutUser();
+    navigate("/");
+  };
+
+  private handleThemeToggle = async (): Promise<void> => {
+    const nextTheme = switchTheme();
+    if (this.props.user?.username) {
+      await updateThemePreference(nextTheme);
+    }
+  };
+
   render(): VNode {
+    const { user } = this.props;
+    const isAdmin = user?.role === "admin";
+
+    const guestLinks = h(
+      "div",
+      { className: "nav-actions" },
+      h(
+        "a",
+        {
+          href: "/auth",
+          className: "nav-link",
+          onClick: (event: MouseEvent) => this.handleNavClick(event, "/auth"),
+        },
+        "Login",
+      ),
+      h(
+        "a",
+        {
+          href: "/auth",
+          className: "nav-link",
+          onClick: (event: MouseEvent) => this.handleNavClick(event, "/auth"),
+        },
+        "Signup",
+      ),
+    );
+
+    const userLinks = h(
+      "div",
+      { className: "nav-actions" },
+      h(
+        "a",
+        {
+          href: "/profile",
+          className: "nav-link",
+          onClick: (event: MouseEvent) =>
+            this.handleNavClick(event, "/profile"),
+        },
+        "Profile",
+      ),
+      isAdmin
+        ? h(
+            "a",
+            {
+              href: "/admin",
+              className: "nav-link",
+              onClick: (event: MouseEvent) =>
+                this.handleNavClick(event, "/admin"),
+            },
+            "Dashboard",
+          )
+        : null,
+      h(
+        "button",
+        { className: "nav-link nav-button", onClick: this.handleLogout },
+        "Logout",
+      ),
+    );
+
     return h(
       "div",
       null,
       h(
         "header",
-        { className: "header" },
+        { className: `header ${this.props.isInner ? "is-inner" : ""}` },
         h("div", { className: "logo", onClick: () => navigate("/") }, "Bergo"),
         h(
           "nav",
           { className: "desktop-nav" },
-          h("a", { href: "#" }, "Vehicles"),
-          h("a", { href: "#" }, "Energy"),
-          h("a", { href: "#" }, "Charging"),
-          h("a", { href: "#" }, "Discover"),
-          h("a", { href: "#" }, "Shop"),
+          h(
+            "a",
+            {
+              href: "/",
+              onClick: (event: MouseEvent) => this.handleNavClick(event, "/"),
+            },
+            "Home",
+          ),
+          h(
+            "a",
+            {
+              href: "/browse",
+              onClick: (event: MouseEvent) =>
+                this.handleNavClick(event, "/browse"),
+            },
+            "Browse",
+          ),
+          h(
+            "a",
+            {
+              href: "/contact",
+              onClick: (event: MouseEvent) =>
+                this.handleNavClick(event, "/contact"),
+            },
+            "Contact",
+          ),
         ),
         h(
           "div",
           { className: "header-right" },
           h(
+            "div",
+            { className: "nav-search" },
+            h(SearchBar, {
+              variant: "compact",
+              placeholder: "Search cars, brands, tags...",
+            }),
+          ),
+          h(
             "button",
-            { className: "chat-btn" },
-            "Let's Chat ",
+            { className: "chat-btn", onClick: this.handleThemeToggle },
+            "Theme ",
             h("span", { className: "arrow-icon" }, raw("&nearr;")),
           ),
+          user?.username ? userLinks : guestLinks,
           h(
             "button",
             { className: "mobile-menu-btn", "aria-label": "Open menu" },
@@ -131,11 +250,85 @@ export class NavBar extends Component {
       h(
         "div",
         { className: "mobile-nav" },
-        h("a", { href: "#" }, "Vehicles"),
-        h("a", { href: "#" }, "Energy"),
-        h("a", { href: "#" }, "Charging"),
-        h("a", { href: "#" }, "Discover"),
-        h("a", { href: "#" }, "Shop"),
+        h(
+          "div",
+          { className: "mobile-search" },
+          h(SearchBar, {
+            variant: "compact",
+            placeholder: "Search cars...",
+          }),
+        ),
+        h(
+          "a",
+          {
+            href: "/",
+            onClick: (event: MouseEvent) => this.handleNavClick(event, "/"),
+          },
+          "Home",
+        ),
+        h(
+          "a",
+          {
+            href: "/browse",
+            onClick: (event: MouseEvent) =>
+              this.handleNavClick(event, "/browse"),
+          },
+          "Browse",
+        ),
+        h(
+          "a",
+          {
+            href: "/contact",
+            onClick: (event: MouseEvent) =>
+              this.handleNavClick(event, "/contact"),
+          },
+          "Contact",
+        ),
+        user?.username
+          ? h(
+              "a",
+              {
+                href: "/profile",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavClick(event, "/profile"),
+              },
+              "Profile",
+            )
+          : h(
+              "a",
+              {
+                href: "/auth",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavClick(event, "/auth"),
+              },
+              "Login",
+            ),
+        isAdmin
+          ? h(
+              "a",
+              {
+                href: "/admin",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavClick(event, "/admin"),
+              },
+              "Dashboard",
+            )
+          : null,
+        user?.username
+          ? h(
+              "button",
+              { className: "nav-link nav-button", onClick: this.handleLogout },
+              "Logout",
+            )
+          : h(
+              "a",
+              {
+                href: "/auth",
+                onClick: (event: MouseEvent) =>
+                  this.handleNavClick(event, "/auth"),
+              },
+              "Signup",
+            ),
       ),
     );
   }
