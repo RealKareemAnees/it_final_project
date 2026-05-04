@@ -163,10 +163,10 @@ export class SingleCarPage extends Component<SingleCarProps, SingleCarState> {
           h(
             "div",
             { className: "detail-grid" },
-            h("div", null, h("span", "Type"), h("strong", car.type)),
-            h("div", null, h("span", "Year"), h("strong", String(car.year))),
-            h("div", null, h("span", "Country"), h("strong", car.country)),
-            h("div", null, h("span", "Brand"), h("strong", car.manufacturer)),
+            h("div", null, h("span", null, "Type"), h("strong", null, car.type)),
+            h("div", null, h("span", null, "Year"), h("strong", null, String(car.year))),
+            h("div", null, h("span", null, "Country"), h("strong", null, car.country)),
+            h("div", null, h("span", null, "Brand"), h("strong", null, car.manufacturer)),
           ),
           h(
             "div",

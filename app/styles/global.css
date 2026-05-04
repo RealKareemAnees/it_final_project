@@ -134,6 +134,14 @@ body {
     position: relative;
 }
 
+html.darktheme {
+    color-scheme: dark;
+}
+
+html:not(.darktheme) {
+    color-scheme: light;
+}
+
 body.darktheme {
     background-color: var(--color-bg-dark);
     color: var(--color-text-light);

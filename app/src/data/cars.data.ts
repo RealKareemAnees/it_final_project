@@ -1,7 +1,6 @@
 import type { Car } from "../types/car.interface";
 
 export interface BrowseFilters {
-  query: string;
   country: string;
   type: string;
   brand: string;
@@ -231,36 +230,18 @@ export const filterOptions = {
 };
 
 export function filterCars(filters: BrowseFilters): Car[] {
-  const query = normalize(filters.query);
   const country = normalize(filters.country);
   const type = normalize(filters.type);
   const brand = normalize(filters.brand);
   const tag = normalize(filters.tag);
 
   return carCatalog.filter((car) => {
-    const searchable = [
-      car.name,
-      car.manufacturer,
-      car.type,
-      car.country,
-      car.tags.join(" "),
-    ]
-      .join(" ")
-      .toLowerCase();
-
-    const matchesQuery = !query || searchable.includes(query);
     const matchesCountry = !country || normalize(car.country) === country;
     const matchesType = !type || normalize(car.type) === type;
     const matchesBrand = !brand || normalize(car.manufacturer) === brand;
     const matchesTag = !tag || car.tags.some((item) => normalize(item) === tag);
 
-    return (
-      matchesQuery &&
-      matchesCountry &&
-      matchesType &&
-      matchesBrand &&
-      matchesTag
-    );
+    return matchesCountry && matchesType && matchesBrand && matchesTag;
   });
 }
 

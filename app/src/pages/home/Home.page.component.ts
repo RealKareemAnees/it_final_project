@@ -2,7 +2,6 @@ import { Component, h, raw } from "../../K-engine";
 import type { VNode } from "../../K-engine/types";
 import { NavBar } from "../../components/Navbar.component";
 import { Footer } from "../../components/Footer.component";
-import { SearchBar } from "../../components/SearchBar.component";
 import { navigate } from "../../utils/routing.utils";
 
 const localFiles = ["aston-martin.jpg", "audi.avif", "porsche.jpg"];
@@ -602,7 +601,33 @@ export class HomePage extends Component<HomePageProps> {
           ),
         ),
       ),
-      h(SearchBar, null),
+      h(
+        "section",
+        { className: "home-cta", "aria-label": "Browse the catalog" },
+        h(
+          "div",
+          { className: "home-cta-inner" },
+          h("p", { className: "home-cta-eyebrow" }, "Catalog"),
+          h("h2", { className: "home-cta-title" }, "Find your next drive"),
+          h(
+            "p",
+            { className: "home-cta-copy" },
+            "Browse by country, brand, body style, and tags—everything in one place.",
+          ),
+          h(
+            "a",
+            {
+              href: "/browse",
+              className: "home-cta-btn",
+              onClick: (event: MouseEvent) => {
+                event.preventDefault();
+                navigate("/browse");
+              },
+            },
+            "Browse cars",
+          ),
+        ),
+      ),
       h(
         "section",
         { className: "contact-section", "aria-label": "Contact us" },

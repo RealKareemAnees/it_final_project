@@ -37,7 +37,7 @@ export class App extends Component<{}, AppState> {
     this.checkGuards();
   }
 
-  componentDidUpdate(prevProps: {}, prevState: AppState): void {
+  componentDidUpdate(_prevProps: {}, prevState: AppState): void {
     if (
       prevState.currentRoute !== this.state.currentRoute ||
       prevState.user !== this.state.user

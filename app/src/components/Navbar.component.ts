@@ -4,7 +4,6 @@ import { navigate } from "../utils/routing.utils";
 import type { UserInfo } from "../types/userInfo.interface";
 import { logoutUser, updateThemePreference } from "../utils/auth.utils";
 import { switchTheme } from "../utils/theme.utils";
-import { SearchBar } from "./SearchBar.component";
 
 interface NavBarProps {
   user: UserInfo | null;
@@ -37,6 +36,7 @@ export class NavBar extends Component<NavBarProps> {
     if (!this.mobileNav) return;
     const isActive = this.mobileNav.classList.toggle("active");
     this.updateMenuButtonState(isActive);
+    document.body.classList.toggle("nav-drawer-open", isActive);
   };
 
   private handleMobileLinkClick = (): void => {
@@ -54,6 +54,7 @@ export class NavBar extends Component<NavBarProps> {
 
   componentWillUnmount(): void {
     this.teardownHeader();
+    document.body.classList.remove("nav-drawer-open");
   }
 
   private initHeader(): void {
@@ -104,6 +105,7 @@ export class NavBar extends Component<NavBarProps> {
   private closeMenu(): void {
     if (!this.mobileNav) return;
     this.mobileNav.classList.remove("active");
+    document.body.classList.remove("nav-drawer-open");
     this.updateMenuButtonState(false);
   }
 
@@ -224,23 +226,25 @@ export class NavBar extends Component<NavBarProps> {
           "div",
           { className: "header-right" },
           h(
-            "div",
-            { className: "nav-search" },
-            h(SearchBar, {
-              variant: "compact",
-              placeholder: "Search cars, brands, tags...",
-            }),
-          ),
-          h(
             "button",
-            { className: "chat-btn", onClick: this.handleThemeToggle },
-            "Theme ",
+            {
+              type: "button",
+              className: "chat-btn theme-toggle-btn",
+              onClick: this.handleThemeToggle,
+              "aria-label": "Toggle color theme",
+            },
+            "Theme",
             h("span", { className: "arrow-icon" }, raw("&nearr;")),
           ),
           user?.username ? userLinks : guestLinks,
           h(
             "button",
-            { className: "mobile-menu-btn", "aria-label": "Open menu" },
+            {
+              type: "button",
+              className: "mobile-menu-btn",
+              "aria-label": "Open menu",
+              "aria-expanded": "false",
+            },
             h("span", null),
             h("span", null),
             h("span", null),
@@ -249,15 +253,10 @@ export class NavBar extends Component<NavBarProps> {
       ),
       h(
         "div",
-        { className: "mobile-nav" },
-        h(
-          "div",
-          { className: "mobile-search" },
-          h(SearchBar, {
-            variant: "compact",
-            placeholder: "Search cars...",
-          }),
-        ),
+        {
+          className: "mobile-nav",
+          "aria-hidden": "true",
+        },
         h(
           "a",
           {

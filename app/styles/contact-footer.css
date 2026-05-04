@@ -114,3 +114,25 @@
         font-size: clamp(2rem, 4vw, 2.8rem);
     }
 }
+
+/* Dark theme */
+body.darktheme .contact-section {
+    background: var(--color-bg-dark);
+    color: var(--color-text-light);
+}
+
+body.darktheme .contact-eyebrow {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+body.darktheme .contact-heading {
+    color: var(--color-text-light);
+}
+
+body.darktheme .contact-sub {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+body.darktheme .contact-section::before {
+    background: rgba(255, 255, 255, 0.12);
+}

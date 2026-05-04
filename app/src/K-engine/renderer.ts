@@ -5,7 +5,7 @@
 // understand and fast enough for small apps.
 
 import { Component } from "./component";
-import type { VChild, VNode, Props } from "./types";
+import type { VChild, Props } from "./types";
 
 function isComponent(type: unknown): type is new (props: any) => Component {
   return typeof type === "function" && type.prototype instanceof Component;

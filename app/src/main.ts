@@ -7,7 +7,6 @@ import "../styles/hero.css";
 import "../styles/sections.css";
 import "../styles/browse-countries.css";
 import "../styles/contact-footer.css";
-import "../styles/search-bar.css";
 import "../styles/footer.css";
 import "../styles/pages.css";
 

@@ -4,9 +4,7 @@ import type { Car } from "../../types/car.interface";
 import type { UserInfo } from "../../types/userInfo.interface";
 import { addToWishlist, removeFromWishlist } from "../../utils/auth.utils";
 import { navigate } from "../../utils/routing.utils";
-import { SearchBar } from "../../components/SearchBar.component";
 import {
-  carCatalog,
   filterCars,
   filterOptions,
   type BrowseFilters,
@@ -24,7 +22,6 @@ interface BrowseState {
 }
 
 const emptyFilters: BrowseFilters = {
-  query: "",
   country: "",
   type: "",
   brand: "",
@@ -53,7 +50,6 @@ export class BrowsePage extends Component<BrowseProps, BrowseState> {
   private getFiltersFromUrl(): BrowseFilters {
     const params = new URLSearchParams(window.location.search);
     return {
-      query: params.get("name")?.trim() || "",
       country: params.get("country")?.trim() || "",
       type: params.get("type")?.trim() || "",
       brand: params.get("brand")?.trim() || "",
@@ -88,12 +84,11 @@ export class BrowsePage extends Component<BrowseProps, BrowseState> {
 
   private applyFilter(key: keyof BrowseFilters, value: string): void {
     const params = new URLSearchParams(window.location.search);
-    const paramKey = key === "query" ? "name" : key;
 
     if (value) {
-      params.set(paramKey, value);
+      params.set(key, value);
     } else {
-      params.delete(paramKey);
+      params.delete(key);
     }
 
     const queryString = params.toString();
@@ -159,15 +154,14 @@ export class BrowsePage extends Component<BrowseProps, BrowseState> {
   render(): VNode {
     const { cars, loading, error, filters } = this.state;
     const activeFilters = [
-      filters.query
-        ? { key: "query", label: `Search: ${filters.query}` }
-        : null,
       filters.country
-        ? { key: "country", label: `Country: ${filters.country}` }
+        ? { key: "country" as const, label: `Country: ${filters.country}` }
         : null,
-      filters.type ? { key: "type", label: `Type: ${filters.type}` } : null,
-      filters.brand ? { key: "brand", label: `Brand: ${filters.brand}` } : null,
-      filters.tag ? { key: "tag", label: `Tag: ${filters.tag}` } : null,
+      filters.type ? { key: "type" as const, label: `Type: ${filters.type}` } : null,
+      filters.brand
+        ? { key: "brand" as const, label: `Brand: ${filters.brand}` }
+        : null,
+      filters.tag ? { key: "tag" as const, label: `Tag: ${filters.tag}` } : null,
     ].filter(Boolean) as Array<{ key: keyof BrowseFilters; label: string }>;
 
     return h(
@@ -175,30 +169,13 @@ export class BrowsePage extends Component<BrowseProps, BrowseState> {
       { className: "page-section browse-page" },
       h(
         "div",
-        { className: "page-header page-header--split" },
+        { className: "page-header" },
+        h("span", { className: "page-eyebrow" }, "Browse"),
+        h("h1", null, "Browse Cars"),
         h(
-          "div",
-          { className: "page-header-main" },
-          h("span", { className: "page-eyebrow" }, "Browse"),
-          h("h1", null, "Browse Cars"),
-          h(
-            "p",
-            null,
-            filters.query
-              ? `Results for "${filters.query}".`
-              : "Explore the catalog with curated filters and hand picked models.",
-          ),
-        ),
-        h(
-          "div",
-          { className: "page-header-actions" },
-          h(SearchBar, {
-            variant: "inline",
-            title: "Search the catalog",
-            subtitle: "Search by name, brand, or tag and jump to results.",
-            placeholder: "Search by model, brand, or tag...",
-            query: filters.query,
-          }),
+          "p",
+          null,
+          "Explore the catalog with curated filters and hand picked models.",
         ),
       ),
       h(
