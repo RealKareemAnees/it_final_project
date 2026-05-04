@@ -4,6 +4,14 @@ import { navigate } from "../utils/routing.utils";
 
 export class NavBar extends Component {
   render(): VNode {
+    const buttonStyle = {
+      background: "none",
+      color: "white",
+      border: "none",
+      cursor: "pointer",
+      padding: "5px 10px",
+    };
+
     return h(
       "nav",
       {
@@ -17,45 +25,53 @@ export class NavBar extends Component {
       },
       h(
         "div",
-        { style: { display: "flex", gap: "20px" } },
-        h("h2", null, "My App"),
+        {
+          style: {
+            display: "flex",
+            gap: "20px",
+            flexWrap: "wrap",
+            alignItems: "center",
+          },
+        },
+        h("h2", null, "Car Wiki"),
         h(
           "button",
-          {
-            onClick: () => navigate("/"),
-            style: {
-              background: "none",
-              color: "white",
-              border: "none",
-              cursor: "pointer",
-            },
-          },
+          { onClick: () => navigate("/"), style: buttonStyle },
           "Home",
         ),
         h(
           "button",
-          {
-            onClick: () => navigate("/about"),
-            style: {
-              background: "none",
-              color: "white",
-              border: "none",
-              cursor: "pointer",
-            },
-          },
+          { onClick: () => navigate("/browse"), style: buttonStyle },
+          "Browse",
+        ),
+        h(
+          "button",
+          { onClick: () => navigate("/about"), style: buttonStyle },
           "About",
         ),
         h(
           "button",
-          {
-            onClick: () => navigate("/auth"),
-            style: {
-              background: "none",
-              color: "white",
-              border: "none",
-              cursor: "pointer",
-            },
-          },
+          { onClick: () => navigate("/contact"), style: buttonStyle },
+          "Contact",
+        ),
+        h(
+          "button",
+          { onClick: () => navigate("/wishlist"), style: buttonStyle },
+          "Wishlist",
+        ),
+        h(
+          "button",
+          { onClick: () => navigate("/profile"), style: buttonStyle },
+          "Profile",
+        ),
+        h(
+          "button",
+          { onClick: () => navigate("/admin"), style: buttonStyle },
+          "Admin",
+        ),
+        h(
+          "button",
+          { onClick: () => navigate("/auth"), style: buttonStyle },
           "Auth",
         ),
       ),

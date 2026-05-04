@@ -5,6 +5,12 @@ import { Footer } from "./components/Footer.component";
 import { HomePage } from "./pages/home/Home.page.component";
 import { AuthPage } from "./pages/Auth/Auth";
 import { AboutPage } from "./pages/About/About";
+import { BrowsePage } from "./pages/Browse/Browse";
+import { ContactPage } from "./pages/Contact/Contact";
+import { AdminPage } from "./pages/Admin/Admin";
+import { ProfilePage } from "./pages/Profile/Profile";
+import { SingleCarPage } from "./pages/Single-Car/Single-Car";
+import { WishlistPage } from "./pages/Wishlist/Wishlist";
 import { getCurrentRoute } from "./utils/routing.utils";
 
 interface AppState {
@@ -44,6 +50,24 @@ export class App extends Component<{}, AppState> {
         break;
       case "auth":
         pageContent = h(AuthPage, null);
+        break;
+      case "browse":
+        pageContent = h(BrowsePage, null);
+        break;
+      case "contact":
+        pageContent = h(ContactPage, null);
+        break;
+      case "admin":
+        pageContent = h(AdminPage, null);
+        break;
+      case "profile":
+        pageContent = h(ProfilePage, null);
+        break;
+      case "car":
+        pageContent = h(SingleCarPage, null);
+        break;
+      case "wishlist":
+        pageContent = h(WishlistPage, null);
         break;
       default:
         pageContent = h(
