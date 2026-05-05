@@ -718,7 +718,7 @@
         opacity: 0.14;
         pointer-events: none;
         z-index: 0;
-        background-image: url(/assets/images/back-effect.jpg);
+        background-image: url(./assets/images/back-effect.jpg);
         background-position: 50%;
         background-repeat: no-repeat;
         background-size: 100% 100%;
@@ -3742,7 +3742,7 @@
           `Crafted for those who<br>demand perfection`,
         ],
         z = L.map((e, t) => ({
-          image: `/assets/images/slide-1-images/${e}`,
+          image: `./assets/images/slide-1-images/${e}`,
           quote: R[t % R.length],
           position: `center 55%`,
         })),
@@ -3941,7 +3941,7 @@
                     `div`,
                     { className: `thesis-media` },
                     c(`img`, {
-                      src: `/assets/images/car-tire.jpg`,
+                      src: `./assets/images/car-tire.jpg`,
                       alt: `Close-up of a performance car wheel`,
                       loading: `lazy`,
                       decoding: `async`,
@@ -3984,7 +3984,7 @@
                         `div`,
                         { className: `type-thumb` },
                         c(`img`, {
-                          src: `/assets/images/car-types/luxury.jpg`,
+                          src: `./assets/images/car-types/luxury.jpg`,
                           alt: `Luxury car type`,
                           loading: `lazy`,
                           decoding: `async`,
@@ -4005,7 +4005,7 @@
                         `div`,
                         { className: `type-thumb` },
                         c(`img`, {
-                          src: `/assets/images/car-types/muscle.jpg`,
+                          src: `./assets/images/car-types/muscle.jpg`,
                           alt: `Muscle car type`,
                           loading: `lazy`,
                           decoding: `async`,
@@ -4026,7 +4026,7 @@
                         `div`,
                         { className: `type-thumb` },
                         c(`img`, {
-                          src: `/assets/images/car-types/racing.jpg`,
+                          src: `./assets/images/car-types/racing.jpg`,
                           alt: `Racing car type`,
                           loading: `lazy`,
                           decoding: `async`,
@@ -4047,7 +4047,7 @@
                         `div`,
                         { className: `type-thumb` },
                         c(`img`, {
-                          src: `/assets/images/car-types/offroader.jpg`,
+                          src: `./assets/images/car-types/offroader.jpg`,
                           alt: `Offroad car type`,
                           loading: `lazy`,
                           decoding: `async`,
@@ -4068,7 +4068,7 @@
                         `div`,
                         { className: `type-thumb` },
                         c(`img`, {
-                          src: `/assets/images/car-types/sedan.jpg`,
+                          src: `./assets/images/car-types/sedan.jpg`,
                           alt: `Sedan car type`,
                           loading: `lazy`,
                           decoding: `async`,
@@ -4089,7 +4089,7 @@
                         `div`,
                         { className: `type-thumb` },
                         c(`img`, {
-                          src: `/assets/images/car-types/SUV.jpg`,
+                          src: `./assets/images/car-types/SUV.jpg`,
                           alt: `SUV car type`,
                           loading: `lazy`,
                           decoding: `async`,
@@ -4110,7 +4110,7 @@
                         `div`,
                         { className: `type-thumb` },
                         c(`img`, {
-                          src: `/assets/images/car-types/sports.jpg`,
+                          src: `./assets/images/car-types/sports.jpg`,
                           alt: `Sports car type`,
                           loading: `lazy`,
                           decoding: `async`,
@@ -4131,7 +4131,7 @@
                         `div`,
                         { className: `type-thumb` },
                         c(`img`, {
-                          src: `/assets/images/car-types/roadster.jpg`,
+                          src: `./assets/images/car-types/roadster.jpg`,
                           alt: `Roadster car type`,
                           loading: `lazy`,
                           decoding: `async`,
@@ -4189,7 +4189,7 @@
                         `div`,
                         { className: `country-image` },
                         c(`img`, {
-                          src: `/assets/images/countries/american.jpeg`,
+                          src: `./assets/images/countries/american.jpeg`,
                           alt: `American performance coupe at sunset`,
                           loading: `lazy`,
                           decoding: `async`,
@@ -4219,7 +4219,7 @@
                         `div`,
                         { className: `country-image` },
                         c(`img`, {
-                          src: `/assets/images/countries/german.avif`,
+                          src: `./assets/images/countries/german.avif`,
                           alt: `German supercar with classic architecture in the background`,
                           loading: `lazy`,
                           decoding: `async`,
@@ -4249,7 +4249,7 @@
                         `div`,
                         { className: `country-image` },
                         c(`img`, {
-                          src: `/assets/images/countries/italian.jpeg`,
+                          src: `./assets/images/countries/italian.jpeg`,
                           alt: `Italian sports car in front of a graphic backdrop`,
                           loading: `lazy`,
                           decoding: `async`,
@@ -4279,7 +4279,7 @@
                         `div`,
                         { className: `country-image` },
                         c(`img`, {
-                          src: `/assets/images/countries/japan.jpg`,
+                          src: `./assets/images/countries/japan.jpg`,
                           alt: `Japanese performance car with bold graphic art`,
                           loading: `lazy`,
                           decoding: `async`,
@@ -4935,7 +4935,7 @@
                           c(`img`, {
                             src:
                               e.images?.[0] ||
-                              `/assets/images/slide-1-images/audi.avif`,
+                              `./assets/images/slide-1-images/audi.avif`,
                             alt: e.name,
                             loading: `lazy`,
                           }),
@@ -5655,7 +5655,7 @@
                             c(`img`, {
                               src:
                                 e.images?.[0] ||
-                                `/assets/images/slide-1-images/audi.avif`,
+                                `./assets/images/slide-1-images/audi.avif`,
                               alt: e.name,
                             }),
                             c(`span`, { className: `car-card__badge` }, e.type),
@@ -5800,7 +5800,7 @@
               p = e.threeDfile
                 ? e.threeDfile.startsWith(`/`)
                   ? e.threeDfile
-                  : `/assets/3d/${e.threeDfile}`
+                  : `./assets/3d/${e.threeDfile}`
                 : null,
               m = (e) => {
                 f && this.setState({ selectedIndex: ((e % o) + o) % o });
@@ -5826,7 +5826,7 @@
                       ),
                     )
                   : c(`img`, {
-                      src: `/assets/images/slide-1-images/audi.avif`,
+                      src: `./assets/images/slide-1-images/audi.avif`,
                       alt: e.name,
                       className: `sc-strip-img sc-strip-img--solo`,
                     }),
@@ -6151,7 +6151,7 @@
                       c(`img`, {
                         src:
                           e.images?.[0] ||
-                          `/assets/images/slide-1-images/audi.avif`,
+                          `./assets/images/slide-1-images/audi.avif`,
                         alt: e.name,
                       }),
                       c(`span`, { className: `car-card__badge` }, e.type),
