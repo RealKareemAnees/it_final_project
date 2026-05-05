@@ -9,11 +9,17 @@ export interface RouteState {
  * Parse the current route from window.location.pathname
  */
 export function getCurrentRoute(): RouteState {
-  const path = window.location.pathname || "/";
-  const segments = path.split("/").filter(Boolean);
+  const path = window.location.pathname || "it_final_project";
+  const segments = path.split("/").filter(Boolean).slice(1); // Remove leading empty segment
 
   // Default to home if root
-  if (path === "/" || path === "") {
+  if (
+    path === "/it_final_project" ||
+    path === "/" ||
+    segments.length === 0 ||
+    path === "it_final_project" ||
+    segments.length === 1
+  ) {
     return { currentRoute: "home" };
   }
 
