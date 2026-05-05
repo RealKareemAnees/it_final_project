@@ -1,0 +1,100 @@
+/* ── PROFILE PAGE ──────────────────────────────────────────────── */
+.profile-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4xl);
+  flex-wrap: wrap;
+}
+
+.profile-stats {
+  display: flex;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  border: 1px solid var(--color-border-light);
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.stat-card span {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-lg);
+  color: var(--color-text-muted);
+}
+
+.stat-card strong {
+  font-size: var(--font-size-xl);
+}
+
+.profile-panel,
+.profile-section,
+.admin-panel {
+  background: var(--color-surface);
+  padding: var(--spacing-3xl);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--color-border-light);
+}
+
+.profile-panel h2,
+.profile-section h2 {
+  margin-bottom: var(--spacing-xl);
+}
+
+.profile-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-lg);
+  font-size: var(--font-size-xs);
+}
+
+.detail-row strong {
+  color: var(--color-text-dark);
+  font-size: var(--font-size-base);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* Dark theme */
+body.darktheme .profile-panel,
+body.darktheme .profile-section {
+  background: var(--color-bg-darker);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+}
+
+body.darktheme .stat-card {
+  background: var(--color-bg-darker);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+}
+
+body.darktheme .detail-row strong {
+  color: var(--color-text-light);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,84 @@
+/* ── ADMIN DASHBOARD ────────────────────────────────────────────── */
+.admin-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.admin-summary-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  border: 1px solid var(--color-border-light);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.admin-summary-card strong {
+  font-size: var(--font-size-2xl);
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.admin-item {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  align-items: center;
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.admin-item-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.admin-item-actions {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.admin-tag {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.admin-note {
+  max-width: 60ch;
+  color: var(--color-text-muted);
+}
+
+/* Dark theme */
+body.darktheme .admin-note {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+body.darktheme .admin-panel,
+body.darktheme .admin-summary-card {
+  background: var(--color-bg-darker);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+}
+
+body.darktheme .admin-item {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}

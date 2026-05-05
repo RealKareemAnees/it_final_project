@@ -1,0 +1,194 @@
+/* ── HERO SECTION & CAROUSEL ────────────────────────────────────────── */
+
+.app-container {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-bg-darker);
+    --hero-image: linear-gradient(rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 100%), url('https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80&w=2069');
+    --hero-position: center 70%;
+}
+
+.app-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--hero-image);
+    background-size: cover;
+    background-position: var(--hero-position);
+    transition: opacity var(--transition-fade);
+    z-index: 0;
+}
+
+.app-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.55) 100%);
+    z-index: 1;
+}
+
+.app-container.is-fading::before {
+    opacity: 0;
+}
+
+/* ── MAIN CONTENT ──────────────────────────────────────────────── */
+.content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--z-overlay);
+    pointer-events: none;
+}
+
+.hero-text-container {
+    text-align: center;
+    max-width: 720px;
+    padding: 0 24px;
+    transform: translateY(-8%);
+    pointer-events: auto;
+}
+
+h1 {
+    font-size: var(--font-size-hero);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+    margin-bottom: var(--spacing-xl);
+    letter-spacing: var(--letter-spacing-tight);
+    opacity: 1;
+    transition: opacity var(--transition-fade);
+    color: #fff;
+}
+
+h1.fade-out {
+    opacity: 0;
+}
+
+h1.fade-in {
+    animation: fadeIn var(--transition-fade) forwards;
+}
+
+.explore-btn {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-dark);
+    border-radius: var(--radius-xl);
+    padding: 12px 24px;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin: 0 auto;
+    transition: all var(--transition-medium);
+}
+
+.explore-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.explore-btn:active {
+    transform: translateY(0);
+}
+
+.explore-btn .arrow-icon {
+    background-color: var(--color-text-dark);
+    color: var(--color-text-light);
+}
+
+/* ── HOTSPOTS ──────────────────────────────────────────────────── */
+.hotspot {
+    display: none;
+}
+
+/* ── BOTTOM CONTROLS ──────────────────────────────────────────────── */
+.bottom-controls {
+    position: absolute;
+    bottom: clamp(20px, 5vw, 50px);
+    left: clamp(16px, 4vw, 50px);
+    right: clamp(16px, 4vw, 50px);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--spacing-lg);
+    pointer-events: auto;
+}
+
+.right-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--spacing-md);
+}
+
+.nav-btn {
+    width: clamp(40px, 5vw, 50px);
+    height: clamp(40px, 5vw, 50px);
+    border-radius: var(--radius-full);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: var(--color-text-light);
+    font-size: clamp(16px, 2vw, 20px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-medium);
+}
+
+.nav-btn:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+}
+
+.nav-btn:active {
+    transform: translateY(0);
+}
+
+.page-counter {
+    position: static;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--letter-spacing-xl);
+}
+
+.page-counter .muted {
+    opacity: 0.5;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    h1 {
+        font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+    }
+
+    .app-container {
+        --hero-position: center 60%;
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        font-size: 16px;
+    }
+
+    .hero-text-container {
+        transform: translateY(-12%);
+    }
+
+    .bottom-controls {
+        gap: var(--spacing-md);
+    }
+
+    .right-controls {
+        gap: var(--spacing-sm);
+    }
+}
