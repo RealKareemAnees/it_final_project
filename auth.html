@@ -17,90 +17,80 @@
     <link rel="stylesheet" href="styles/auth.css" />
   </head>
   <body class="auth-page">
-    <div class="auth-shell">
-      <div class="auth-intro">
-        <span class="auth-eyebrow">Member access</span>
-        <h1>Welcome to CarWiki</h1>
-        <p>
-          Create a personal garage, track favorites, and keep your wishlist in
-          sync across devices.
-        </p>
-        <div class="auth-highlights">
-          <div class="auth-highlight">Curated alerts</div>
-          <div class="auth-highlight">Private wishlist</div>
-          <div class="auth-highlight">Saved searches</div>
+    <div class="auth-container">
+      <!-- Logo Header -->
+      <a href="index.html" class="auth-logo">CarWiki</a>
+
+      <div class="auth-box">
+        <!-- Toggle between Login and Signup -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-target="login">Log In</button>
+          <button class="auth-tab" data-target="signup">Sign Up</button>
         </div>
-      </div>
-      <div class="auth-panel">
-        <a href="index.html" class="auth-logo">CarWiki</a>
-        <div class="auth-box">
-          <div id="auth-error" style="display: none"></div>
-          <div class="auth-tabs">
-            <button class="auth-tab active" data-target="login">Log In</button>
-            <button class="auth-tab" data-target="signup">Sign Up</button>
+
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form active">
+          <div class="form-group">
+            <label for="login-username">Username</label>
+            <input
+              type="text"
+              id="login-username"
+              name="username"
+              placeholder="Enter your username"
+              required
+            />
           </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input
+              type="password"
+              id="login-password"
+              name="password"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+          <!-- Optional: Forgot password link -->
+          <div class="form-options">
+            <a href="#" class="forgot-password">Forgot password?</a>
+          </div>
+          <button type="submit" class="auth-submit">Log In</button>
+        </form>
 
-          <form id="login-form" class="auth-form active">
-            <div class="form-group">
-              <label for="login-username">Username</label>
-              <input
-                type="text"
-                id="login-username"
-                name="username"
-                placeholder="Enter your username"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="login-password">Password</label>
-              <input
-                type="password"
-                id="login-password"
-                name="password"
-                placeholder="Enter your password"
-                required
-              />
-            </div>
-            <div class="form-options">
-              <a href="#" class="forgot-password">Forgot password?</a>
-            </div>
-            <button type="submit" class="auth-submit">Log In</button>
-          </form>
-
-          <form id="signup-form" class="auth-form">
-            <div class="form-group">
-              <label for="signup-username">Username</label>
-              <input
-                type="text"
-                id="signup-username"
-                name="username"
-                placeholder="Choose a username"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="signup-email">Email</label>
-              <input
-                type="email"
-                id="signup-email"
-                name="email"
-                placeholder="Enter your email"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="signup-password">Password</label>
-              <input
-                type="password"
-                id="signup-password"
-                name="password"
-                placeholder="Create a password"
-                required
-              />
-            </div>
-            <button type="submit" class="auth-submit">Create Account</button>
-          </form>
-        </div>
+        <!-- Signup Form -->
+        <form id="signup-form" class="auth-form">
+          <div class="form-group">
+            <label for="signup-username">Username</label>
+            <input
+              type="text"
+              id="signup-username"
+              name="username"
+              placeholder="Choose a username"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input
+              type="email"
+              id="signup-email"
+              name="email"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input
+              type="password"
+              id="signup-password"
+              name="password"
+              placeholder="Create a password"
+              required
+            />
+          </div>
+          <button type="submit" class="auth-submit">Create Account</button>
+        </form>
       </div>
     </div>
 

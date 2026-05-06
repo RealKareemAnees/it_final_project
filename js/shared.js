@@ -2,7 +2,8 @@
  * Shared Mock Data and Utilities for CarWiki Static Refactor
  */
 
-const MOCK_CARS = JSON.parse(`[
+let MOCK_CARS = [];
+const DEFAULT_CARS = JSON.parse(`[
   {
     "name": "Toyota Corolla",
     "type": "Sedan",
@@ -512,7 +513,18 @@ const MOCK_CARS = JSON.parse(`[
     "localID": 30,
     "threeDfile": "2023_byd_han_dm-p.glb"
   }
-]`)
+]`);
+
+function initCars() {
+  const storedCars = localStorage.getItem("cars");
+  if (storedCars) {
+    MOCK_CARS = JSON.parse(storedCars);
+  } else {
+    MOCK_CARS = DEFAULT_CARS;
+    localStorage.setItem("cars", JSON.stringify(MOCK_CARS));
+  }
+}
+initCars();
 // --- Utilities ---
 
 function getUser() {
@@ -533,6 +545,7 @@ function setUser(username, role = "user") {
 
 function logout() {
   localStorage.removeItem("user");
+  localStorage.removeItem("wishlist");
   window.location.href = "index.html";
 }
 
