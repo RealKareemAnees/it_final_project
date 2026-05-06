@@ -78,7 +78,7 @@ function renderCarDetail() {
 
                 <div class="sc-stage ${is3DView ? "sc-stage--3d" : ""}">
                     <div class="sc-track">
-                        <div class="sc-strip" style="transform: translateX(-${currentImageIndex * 100}%); width: ${currentCar.images.length * 100}%">
+                        <div class="sc-strip" style="transform: translateX(-${(currentImageIndex / currentCar.images.length) * 100}%); width: ${currentCar.images.length * 100}%">
                             ${currentCar.images.map((img) => `<img src="${img}" class="sc-strip-img" />`).join("")}
                         </div>
                     </div>
