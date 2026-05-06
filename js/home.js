@@ -2,19 +2,22 @@
  * Home Page specific JS (Carousel)
  */
 
+const resolveAssetUrl = (relativePath) =>
+  new URL(relativePath, window.location.href).href;
+
 const HOME_SLIDES = [
   {
-    image: "public/images/slide-1-images/aston-martin.jpg",
+    image: resolveAssetUrl("public/images/slide-1-images/aston-martin.jpg"),
     quote: "Discover premium cars<br>in our comprehensive wiki",
     position: "center 55%",
   },
   {
-    image: "public/images/slide-1-images/audi.avif",
+    image: resolveAssetUrl("public/images/slide-1-images/audi.avif"),
     quote: "Performance meets elegance<br>in every curve",
     position: "center 55%",
   },
   {
-    image: "public/images/slide-1-images/porsche.jpg",
+    image: resolveAssetUrl("public/images/slide-1-images/porsche.jpg"),
     quote: "Precision engineering<br>for the elite",
     position: "center 55%",
   },

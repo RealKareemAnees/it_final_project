@@ -31,7 +31,7 @@ body.auth-page {
     color: #111;
     background:
         linear-gradient(145deg, rgba(17, 17, 17, 0.96), rgba(28, 28, 28, 0.9)),
-        url("public/images/slide-1-images/audi.avif") center/cover no-repeat;
+        url("../public/images/slide-1-images/audi.avif") center/cover no-repeat;
     position: relative;
     isolation: isolate;
 }
