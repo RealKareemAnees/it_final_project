@@ -88,7 +88,7 @@
     left: 50%;
     transform: translateX(-50%);
     width: 100vw;
-    background-image: url('/assets/images/back-effect.jpg');
+    background-image: url('../public/images/back-effect.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;

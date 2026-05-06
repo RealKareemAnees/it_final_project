@@ -1,3 +1,0 @@
-# Carman Project
-
-## Setup:

@@ -1,22 +1,198 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Car Gallery Landing</title>
+    <title>CarWiki - Home</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      type="module"
-      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
-    ></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="./src/main.ts"></script>
-  </body>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+    
+    <!-- CSS files -->
+    <link rel="stylesheet" href="styles/global.css" />
+    <link rel="stylesheet" href="styles/header.css" />
+    <link rel="stylesheet" href="styles/sections.css" />
+    <link rel="stylesheet" href="styles/browse-countries.css" />
+    <link rel="stylesheet" href="styles/contact-footer.css" />
+    <link rel="stylesheet" href="styles/footer.css" />
+    <link rel="stylesheet" href="styles/pages.css" />
+    <link rel="stylesheet" href="styles/hero.css" />
+
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+    <div id="app-container">
+        <div class="mockup-frame">
+            <section class="app-container" aria-label="Hero slideshow">
+                <header class="header">
+                    <div class="logo" onclick="window.location.href='index.html'">CarWiki</div>
+                    <nav class="desktop-nav">
+                        <a href="index.html">Home</a>
+                        <a href="about.html">About</a>
+                        <a href="browse.html">Browse</a>
+                        <a href="contact.html">Contact</a>
+                    </nav>
+                    <div class="header-right">
+                        <button type="button" class="chat-btn theme-toggle-btn" aria-label="Toggle color theme">
+                            Theme <span class="arrow-icon">↗</span>
+                        </button>
+                        <div class="nav-actions">
+                            <!-- Injected by shared.js -->
+                        </div>
+                        <button type="button" class="mobile-menu-btn" aria-label="Open menu">
+                            <span></span><span></span><span></span>
+                        </button>
+                    </div>
+                </header>
+
+                <div class="mobile-nav" aria-hidden="true">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="browse.html">Browse</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="auth.html">Login</a>
+                </div>
+
+                <main class="content">
+                    <div class="hero-text-container">
+                        <h1 class="hero-headline">Discover premium cars<br>in our comprehensive wiki</h1>
+                        <button class="explore-btn" onclick="window.location.href='browse.html'">
+                            Explore Now <span class="arrow-icon">↗</span>
+                        </button>
+                    </div>
+                    <div class="bottom-controls">
+                        <button class="nav-btn prev" aria-label="Previous slide">←</button>
+                        <div class="right-controls">
+                            <div class="page-counter">
+                                <span class="current-slide">01</span>
+                                <span class="muted">/</span>
+                                <span class="total-slides">03</span>
+                            </div>
+                            <button class="nav-btn next" aria-label="Next slide">→</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="thesis" aria-label="Website thesis">
+                    <div class="thesis-inner">
+                        <div class="thesis-text">
+                            <h2>Thesis</h2>
+                            <p>CarWiki is a comprehensive automotive knowledge base designed to showcase premium vehicles through an elegant interface. It pairs bold typography with intuitive navigation so users can explore, discover, and learn without distractions. The layout is responsive by default, keeping the same high-end feel across desktop, tablet, and mobile.</p>
+                            <a href="about.html" class="learn-more-btn">Learn More!</a>
+                        </div>
+                        <div class="thesis-media">
+                            <img src="public/images/car-tire.jpg" alt="Close-up of a performance car wheel" loading="lazy" />
+                        </div>
+                    </div>
+                </section>
+
+                <section class="browse-types" aria-label="Browse by car type">
+                    <div class="browse-inner">
+                        <div class="browse-header">
+                            <h2>Browse by Car Type</h2>
+                            <p>Explore curated categories with a clean, consistent layout.</p>
+                        </div>
+                        <div class="type-grid">
+                            <a class="type-card" href="browse.html?type=Luxury">
+                                <div class="type-thumb"><img src="public/images/car-types/luxury.jpg" alt="Luxury" /></div>
+                                <span class="type-title">Luxury</span>
+                            </a>
+                            <a class="type-card" href="browse.html?type=Muscle">
+                                <div class="type-thumb"><img src="public/images/car-types/muscle.jpg" alt="Muscle" /></div>
+                                <span class="type-title">Muscle</span>
+                            </a>
+                            <a class="type-card" href="browse.html?type=Racing">
+                                <div class="type-thumb"><img src="public/images/car-types/racing.jpg" alt="Racing" /></div>
+                                <span class="type-title">Racing</span>
+                            </a>
+                            <a class="type-card" href="browse.html?type=Offroad">
+                                <div class="type-thumb"><img src="public/images/car-types/offroader.jpg" alt="Offroad" /></div>
+                                <span class="type-title">Offroad</span>
+                            </a>
+                        </div>
+                        <a href="browse.html" class="more-link">
+                            <span class="more-text">and much more</span>
+                            <span class="more-arrow">→</span>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="browse-countries" aria-label="Browse by country">
+                    <div class="countries-inner">
+                        <div class="countries-header">
+                            <h2>Browse by Country</h2>
+                            <p>Discover signature styles shaped by roads, culture, and engineering traditions.</p>
+                        </div>
+                        <div class="country-grid">
+                            <a class="country-card" href="browse.html?country=USA">
+                                <div class="country-image"><img src="public/images/countries/american.jpeg" alt="American" /></div>
+                                <div class="country-body">
+                                    <h3 class="country-title">American</h3>
+                                    <p class="country-copy">Bold silhouettes and long-distance comfort built for open highways.</p>
+                                </div>
+                            </a>
+                            <a class="country-card" href="browse.html?country=Germany">
+                                <div class="country-image"><img src="public/images/countries/german.avif" alt="German" /></div>
+                                <div class="country-body">
+                                    <h3 class="country-title">German</h3>
+                                    <p class="country-copy">Precision engineering with quiet confidence in every detail.</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="home-cta" aria-label="Browse the catalog">
+                    <div class="home-cta-inner">
+                        <p class="home-cta-eyebrow">Catalog</p>
+                        <h2 class="home-cta-title">Find your next drive</h2>
+                        <p class="home-cta-copy">Browse by country, brand, body style, and tags—everything in one place.</p>
+                        <a href="browse.html" class="home-cta-btn">Browse cars</a>
+                    </div>
+                </section>
+
+                <section class="contact-section" aria-label="Contact us">
+                    <div class="contact-inner">
+                        <div class="contact-eyebrow">Get in touch</div>
+                        <h2 class="contact-heading">We'd love to hear<br>from you.</h2>
+                        <p class="contact-sub">Whether you're hunting for a specific model, need expert guidance, or simply want to explore what's possible — our team is ready.</p>
+                        <a href="contact.html" class="contact-cta">Contact Us <span class="cta-arrow">↗</span></a>
+                    </div>
+                </section>
+
+                <footer class="site-footer">
+                    <div class="footer-inner">
+                        <div class="footer-top">
+                            <div class="footer-brand">
+                                <span class="footer-logo">CarWiki</span>
+                                <p class="footer-tagline">Comprehensive automotive knowledge base for enthusiasts and researchers.</p>
+                            </div>
+                            <nav class="footer-nav">
+                                <div class="footer-col">
+                                    <h4>Navigation</h4>
+                                    <a href="index.html">Home</a>
+                                    <a href="browse.html">Browse Cars</a>
+                                    <a href="about.html">About</a>
+                                    <a href="contact.html">Contact</a>
+                                </div>
+                                <div class="footer-col">
+                                    <h4>Account</h4>
+                                    <a href="profile.html">My Profile</a>
+                                    <a href="wishlist.html">Wishlist</a>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="footer-bottom">
+                            <span class="footer-copy">© <span data-footer-year></span> CarWiki. All rights reserved.</span>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </div>
+    </div>
+
+    <!-- JS files -->
+    <script src="js/shared.js"></script>
+    <script src="js/home.js"></script>
+</body>
 </html>
