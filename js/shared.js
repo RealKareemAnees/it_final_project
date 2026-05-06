@@ -2,6 +2,7 @@
  * Shared Mock Data and Utilities for CarWiki Static Refactor
  */
 
+// In-memory working copy of the car catalog used by every page.
 let MOCK_CARS = [];
 const DEFAULT_CARS = JSON.parse(`[
   {
@@ -515,11 +516,16 @@ const DEFAULT_CARS = JSON.parse(`[
   }
 ]`);
 
+// Loads the catalog from browser storage so edits persist across page visits.
 function initCars() {
+  // Read the serialized cars array from localStorage.
   const storedCars = localStorage.getItem("cars");
+
+  // If the catalog already exists, reuse it by parsing the JSON payload.
   if (storedCars) {
     MOCK_CARS = JSON.parse(storedCars);
   } else {
+    // Otherwise, seed storage with the built-in default catalog.
     MOCK_CARS = DEFAULT_CARS;
     localStorage.setItem("cars", JSON.stringify(MOCK_CARS));
   }
@@ -527,44 +533,65 @@ function initCars() {
 initCars();
 // --- Utilities ---
 
+// Reads the current signed-in user object from localStorage.
 function getUser() {
+  // localStorage stores everything as strings, so user data must be parsed.
   const user = localStorage.getItem("user");
   return user ? JSON.parse(user) : null;
 }
 
+// Stores a user object in localStorage and keeps their current theme and wishlist.
 function setUser(username, role = "user") {
+  // Build the user object in the shape expected by the rest of the app.
   const user = {
     username,
     role,
+    // Preserve the current theme preference if one already exists.
     theme: localStorage.getItem("theme") || "light",
+    // Copy the active wishlist so login/signup keeps saved items in sync.
     wishList: getWishlist(),
   };
+  // Persist the user payload for future page loads.
   localStorage.setItem("user", JSON.stringify(user));
   return user;
 }
 
+// Clears authentication and wishlist state, then sends the user back home.
 function logout() {
+  // Remove the authenticated user record.
   localStorage.removeItem("user");
+  // Remove guest wishlist data so the next session starts cleanly.
   localStorage.removeItem("wishlist");
+  // Redirect to the home page after logout completes.
   window.location.href = "index.html";
 }
 
+// Returns the wishlist array for the current user or guest session.
 function getWishlist() {
+  // Logged-in users keep wishlist state inside the user object.
   const user = getUser();
   if (user) return user.wishList || [];
+
+  // Guests store wishlist state separately in localStorage.
   const list = localStorage.getItem("wishlist");
   return list ? JSON.parse(list) : [];
 }
 
+// Adds or removes a car ID from the active wishlist and persists the result.
 function toggleWishlist(carId) {
+  // Start from the current wishlist state.
   let list = getWishlist();
+  // Normalize the ID to a string because storage uses string arrays.
   const idStr = String(carId);
+
+  // Remove the car if it is already present; otherwise add it.
   if (list.includes(idStr)) {
     list = list.filter((id) => id !== idStr);
   } else {
     list.push(idStr);
   }
 
+  // Persist the updated wishlist either into the user profile or guest storage.
   const user = getUser();
   if (user) {
     user.wishList = list;
@@ -577,22 +604,30 @@ function toggleWishlist(carId) {
 
 // --- UI Logic ---
 
+// Sets up global UI behavior shared by all pages.
 function initSharedUI() {
   // Theme Toggle
+  // Read the saved theme preference, defaulting to light mode.
   const theme = localStorage.getItem("theme") || "light";
   if (theme === "dark") {
+    // Apply the dark theme classes so CSS can switch the visual palette.
     document.documentElement.classList.add("darktheme");
     document.body.classList.add("darktheme");
   }
 
+  // Hook the theme button so it flips between light and dark modes.
   const themeBtn = document.querySelector(".theme-toggle-btn");
   if (themeBtn) {
     themeBtn.addEventListener("click", () => {
+      // Toggle the theme class on the root element and capture the new state.
       const isDark = document.documentElement.classList.toggle("darktheme");
+      // Mirror the state on the body for page-level theme selectors.
       document.body.classList.toggle("darktheme");
+      // Store the chosen theme so it survives reloads.
       const newTheme = isDark ? "dark" : "light";
       localStorage.setItem("theme", newTheme);
 
+      // If a user is signed in, keep their profile theme synchronized too.
       const user = getUser();
       if (user) {
         user.theme = newTheme;
@@ -602,22 +637,28 @@ function initSharedUI() {
   }
 
   // Header Scroll
+  // Add a scroll listener so the header can switch to its condensed style.
   const header = document.querySelector(".header");
   if (header) {
     window.addEventListener("scroll", () => {
+      // The class toggles once the page has scrolled past a small threshold.
       header.classList.toggle("is-scrolled", window.scrollY > 24);
     });
   }
 
   // Mobile Menu
+  // Wire the hamburger button to the slide-down mobile navigation panel.
   const menuBtn = document.querySelector(".mobile-menu-btn");
   const mobileNav = document.querySelector(".mobile-nav");
   if (menuBtn && mobileNav) {
     menuBtn.addEventListener("click", () => {
+      // Toggle the nav panel and remember whether the drawer is open.
       const active = mobileNav.classList.toggle("active");
+      // Update the body so page-level styles can lock scrolling if needed.
       document.body.classList.toggle("nav-drawer-open", active);
 
       // Burger animation
+      // Transform the three bars into an X when the menu is open.
       const spans = menuBtn.querySelectorAll("span");
       if (active) {
         spans[0].style.transform = "rotate(45deg) translate(5px, 5px)";
@@ -632,18 +673,21 @@ function initSharedUI() {
   }
 
   // Navbar Dynamic Links (User vs Guest)
+  // Render account links according to whether a user is signed in.
   const user = getUser();
   const navActions = document.querySelector(".header-right .nav-actions");
   const mobileActionsContainer = document.querySelector(".mobile-nav");
 
   if (navActions) {
     if (user) {
+      // Signed-in users can reach their profile, dashboard, and logout.
       navActions.innerHTML = `
         <a href="profile.html" class="nav-link">Profile</a>
         ${user.role === "admin" ? '<a href="admin.html" class="nav-link">Dashboard</a>' : ""}
         <button class="nav-link nav-button" onclick="logout()">Logout</button>
       `;
     } else {
+      // Guests are prompted to authenticate.
       navActions.innerHTML = `
         <a href="auth.html" class="nav-link">Login</a>
         <a href="auth.html" class="nav-link">Signup</a>
@@ -657,8 +701,10 @@ function initSharedUI() {
   }
 
   // Footer Year
+  // Keep the copyright year current without manual updates.
   const yearEl = document.querySelector("[data-footer-year]");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 }
 
+// Run the shared UI bootstrap after the DOM is ready.
 document.addEventListener("DOMContentLoaded", initSharedUI);

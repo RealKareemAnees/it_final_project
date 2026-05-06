@@ -6,13 +6,18 @@ let currentCar = null;
 let currentImageIndex = 0;
 let is3DView = false;
 
+// Loads a single car record from the catalog and renders the detail view.
 function renderCarDetail() {
+  // Locate the main container that receives the full page markup.
   const container = document.getElementById("car-detail-container");
+  // Read the id from the query string so the correct car can be displayed.
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
+  // Find the matching car in the shared catalog.
   currentCar = MOCK_CARS.find((c) => c.localID == id);
 
+  // If no match exists, replace the page with a not-found state.
   if (!currentCar) {
     container.innerHTML = `
       <div class="page-section sc-page">
@@ -27,9 +32,12 @@ function renderCarDetail() {
     return;
   }
 
+  // Read the current wishlist so the save button can reflect saved state.
   const wishlist = getWishlist();
+  // Compare the current car id against saved ids.
   const isWishlisted = wishlist.includes(String(currentCar.localID));
 
+  // Render the full car detail page, including gallery, stats, and actions.
   container.innerHTML = `
     <div class="page-section sc-page">
         <div class="sc-topbar">
@@ -173,26 +181,37 @@ function renderCarDetail() {
   `;
 }
 
+// Switches between the gallery and the 3D viewer state.
 function setView(is3D) {
+  // Store the selected view mode and rebuild the page markup.
   is3DView = is3D;
   renderCarDetail();
 }
 
+// Moves the image gallery forward or backward by one step.
 function changeImage(dir) {
+  // Compute the next image index while wrapping around the image list.
   currentImageIndex =
     (currentImageIndex + dir + currentCar.images.length) %
     currentCar.images.length;
+  // Re-render so the visible image and counters update.
   renderCarDetail();
 }
 
+// Jumps directly to a specific gallery image.
 function goToImage(index) {
+  // Store the chosen image index before refreshing the view.
   currentImageIndex = index;
   renderCarDetail();
 }
 
+// Toggles wishlist membership for the active car and refreshes the page.
 function toggleWishAndRender() {
+  // Persist the saved state through the shared wishlist helper.
   toggleWishlist(currentCar.localID);
+  // Re-render so the button label updates immediately.
   renderCarDetail();
 }
 
+// Delay initialization until the car detail container exists in the DOM.
 document.addEventListener("DOMContentLoaded", renderCarDetail);

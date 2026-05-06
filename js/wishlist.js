@@ -2,13 +2,20 @@
  * Wishlist Page JS
  */
 
+// Reads the saved wishlist and renders the corresponding car cards.
 function renderWishlist() {
+  // Pull the current saved car IDs from shared storage.
   const wishlist = getWishlist();
-  const grid = document.getElementById('wishlist-grid');
-  
-  const wishlistedCars = MOCK_CARS.filter(car => wishlist.includes(String(car.localID)));
+  // Locate the grid container that will hold the wishlist cards.
+  const grid = document.getElementById("wishlist-grid");
+
+  // Reduce the full catalog down to only the wishlisted vehicles.
+  const wishlistedCars = MOCK_CARS.filter((car) =>
+    wishlist.includes(String(car.localID)),
+  );
 
   if (wishlistedCars.length === 0) {
+    // Render an empty state when the wishlist has no cars.
     grid.innerHTML = `
       <div class="page-empty-state">
           <p>No cars in your wishlist yet.</p>
@@ -18,7 +25,10 @@ function renderWishlist() {
     return;
   }
 
-  grid.innerHTML = wishlistedCars.map(car => `
+  // Render each saved car and attach a remove action.
+  grid.innerHTML = wishlistedCars
+    .map(
+      (car) => `
     <article class="car-card">
         <div class="car-card__media" onclick="window.location.href='car.html?id=${car.localID}'">
             <img src="${car.images[0]}" alt="${car.name}" />
@@ -36,13 +46,20 @@ function renderWishlist() {
             </div>
         </div>
     </article>
-  `).join('');
+  `,
+    )
+    .join("");
 }
 
+// Removes a car from the wishlist and refreshes the page state.
 function removeFromWishlist(e, id) {
+  // Prevent the click from bubbling up to the clickable card area.
   e.stopPropagation();
+  // Toggle the car out of the saved wishlist list.
   toggleWishlist(id);
+  // Redraw the wishlist so the removed item disappears immediately.
   renderWishlist();
 }
 
-document.addEventListener('DOMContentLoaded', renderWishlist);
+// Render the wishlist once the page DOM is available.
+document.addEventListener("DOMContentLoaded", renderWishlist);

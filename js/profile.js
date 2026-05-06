@@ -2,29 +2,48 @@
  * Profile Page JS
  */
 
+// Loads the signed-in user's profile details and wishlist cards.
 function renderProfile() {
+  // Read the current user from shared storage.
   const user = getUser();
   if (!user) {
-    window.location.href = 'auth.html';
+    // Unauthenticated visitors are redirected to the auth page.
+    window.location.href = "auth.html";
     return;
   }
 
-  document.getElementById('profile-name').textContent = user.username;
-  document.getElementById('profile-initials').textContent = user.username.charAt(0).toUpperCase();
-  document.getElementById('profile-role').textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+  // Fill in the profile header with the stored username.
+  document.getElementById("profile-name").textContent = user.username;
+  // Derive a one-letter avatar from the username.
+  document.getElementById("profile-initials").textContent = user.username
+    .charAt(0)
+    .toUpperCase();
+  // Format the role label for display in the profile header.
+  document.getElementById("profile-role").textContent =
+    user.role.charAt(0).toUpperCase() + user.role.slice(1);
 
+  // Read the shared wishlist so the saved count and grid can stay in sync.
   const wishlist = getWishlist();
-  document.getElementById('wishlist-count').textContent = wishlist.length;
+  document.getElementById("wishlist-count").textContent = wishlist.length;
 
-  const grid = document.getElementById('profile-wishlist-grid');
-  const wishlistedCars = MOCK_CARS.filter(car => wishlist.includes(String(car.localID)));
+  // Find the container that displays the saved car cards.
+  const grid = document.getElementById("profile-wishlist-grid");
+  // Filter the shared catalog down to the cars saved by this user.
+  const wishlistedCars = MOCK_CARS.filter((car) =>
+    wishlist.includes(String(car.localID)),
+  );
 
   if (wishlistedCars.length === 0) {
-    grid.innerHTML = '<p class="page-note">Your wishlist is empty. Start exploring!</p>';
+    // Show an empty-state message when there are no saved cars yet.
+    grid.innerHTML =
+      '<p class="page-note">Your wishlist is empty. Start exploring!</p>';
     return;
   }
 
-  grid.innerHTML = wishlistedCars.map(car => `
+  // Render each saved car as a card with a remove action.
+  grid.innerHTML = wishlistedCars
+    .map(
+      (car) => `
     <article class="car-card">
         <div class="car-card__media" onclick="window.location.href='car.html?id=${car.localID}'">
             <img src="${car.images[0]}" alt="${car.name}" />
@@ -37,13 +56,20 @@ function renderProfile() {
             </div>
         </div>
     </article>
-  `).join('');
+  `,
+    )
+    .join("");
 }
 
+// Removes a saved car from the wishlist and refreshes the profile view.
 function removeFromProfile(e, id) {
+  // Prevent the click from also triggering the parent card navigation.
   e.stopPropagation();
+  // Toggle the car out of the shared wishlist state.
   toggleWishlist(id);
+  // Re-render so the card disappears and the count updates.
   renderProfile();
 }
 
-document.addEventListener('DOMContentLoaded', renderProfile);
+// Initialize the profile page after the DOM is ready.
+document.addEventListener("DOMContentLoaded", renderProfile);
