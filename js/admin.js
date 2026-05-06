@@ -20,6 +20,9 @@ function initAdmin() {
     return;
   }
 
+  // Update cars count
+  document.getElementById('cars-count').textContent = MOCK_CARS.length;
+
   // Tabs
   const tabs = document.querySelectorAll('.admin-tab-btn');
   const panels = document.querySelectorAll('.admin-panel');
