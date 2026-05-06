@@ -7,12 +7,12 @@ let currentImageIndex = 0;
 let is3DView = false;
 
 function renderCarDetail() {
-  const container = document.getElementById('car-detail-container');
+  const container = document.getElementById("car-detail-container");
   const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
-  
-  currentCar = MOCK_CARS.find(c => c.localID == id);
-  
+  const id = params.get("id");
+
+  currentCar = MOCK_CARS.find((c) => c.localID == id);
+
   if (!currentCar) {
     container.innerHTML = `
       <div class="page-section sc-page">
@@ -41,19 +41,26 @@ function renderCarDetail() {
                 <span class="sc-topbar-sep">/</span>
                 <span class="sc-topbar-model">${currentCar.name}</span>
             </div>
-            ${currentCar.threeDfile ? `
+            ${
+              currentCar.threeDfile
+                ? `
             <div class="sc-view-toggle">
-                <button class="sc-view-btn ${!is3DView ? 'active' : ''}" onclick="setView(false)">Gallery</button>
-                <button class="sc-view-btn ${is3DView ? 'active' : ''}" onclick="setView(true)">3D</button>
+                <button class="sc-view-btn ${!is3DView ? "active" : ""}" onclick="setView(false)">Gallery</button>
+                <button class="sc-view-btn ${is3DView ? "active" : ""}" onclick="setView(true)">3D</button>
             </div>
-            ` : '<div></div>'}
+            `
+                : "<div></div>"
+            }
         </div>
 
         <div class="sc-hero">
             <div class="sc-visual-col">
                 <div class="sc-identity">
                     <div class="sc-tag-row">
-                        ${currentCar.tags.slice(0, 3).map(tag => `<span class="sc-badge">${tag}</span>`).join('')}
+                        ${currentCar.tags
+                          .slice(0, 3)
+                          .map((tag) => `<span class="sc-badge">${tag}</span>`)
+                          .join("")}
                     </div>
                     <div class="sc-title-block">
                         <p class="sc-kicker">${currentCar.manufacturer}</p>
@@ -61,18 +68,22 @@ function renderCarDetail() {
                     </div>
                 </div>
 
-                <div class="sc-stage ${is3DView ? 'sc-stage--3d' : ''}">
+                <div class="sc-stage ${is3DView ? "sc-stage--3d" : ""}">
                     <div class="sc-track">
                         <div class="sc-strip" style="transform: translateX(-${currentImageIndex * 100}%); width: ${currentCar.images.length * 100}%">
-                            ${currentCar.images.map(img => `<img src="${img}" class="sc-strip-img" />`).join('')}
+                            ${currentCar.images.map((img) => `<img src="${img}" class="sc-strip-img" />`).join("")}
                         </div>
                     </div>
                     
-                    ${currentCar.threeDfile ? `
-                    <div class="sc-3d-layer" style="display: ${is3DView ? 'block' : 'none'}">
-                        <model-viewer class="sc-model" src="assets/3d/${currentCar.threeDfile}" camera-controls auto-rotate></model-viewer>
+                    ${
+                      currentCar.threeDfile
+                        ? `
+                    <div class="sc-3d-layer" style="display: ${is3DView ? "block" : "none"}">
+                        <model-viewer class="sc-model" src="public/3d/${currentCar.threeDfile}" camera-controls auto-rotate></model-viewer>
                     </div>
-                    ` : ''}
+                    `
+                        : ""
+                    }
 
                     <div class="sc-arrows">
                         <button class="sc-arrow" onclick="changeImage(-1)">‹</button>
@@ -80,24 +91,32 @@ function renderCarDetail() {
                     </div>
 
                     <div class="sc-frame-counter">
-                        <span>${String(currentImageIndex + 1).padStart(2, '0')}</span>
+                        <span>${String(currentImageIndex + 1).padStart(2, "0")}</span>
                         <span class="sc-frame-sep">/</span>
-                        <span>${String(currentCar.images.length).padStart(2, '0')}</span>
+                        <span>${String(currentCar.images.length).padStart(2, "0")}</span>
                     </div>
 
                     <div class="sc-dots">
-                        ${currentCar.images.map((_, i) => `
-                            <button class="sc-dot ${i === currentImageIndex ? 'active' : ''}" onclick="goToImage(${i})"></button>
-                        `).join('')}
+                        ${currentCar.images
+                          .map(
+                            (_, i) => `
+                            <button class="sc-dot ${i === currentImageIndex ? "active" : ""}" onclick="goToImage(${i})"></button>
+                        `,
+                          )
+                          .join("")}
                     </div>
                 </div>
 
                 <div class="sc-thumbstrip">
-                    ${currentCar.images.map((img, i) => `
-                        <button class="sc-thumb ${i === currentImageIndex ? 'active' : ''}" onclick="goToImage(${i})">
+                    ${currentCar.images
+                      .map(
+                        (img, i) => `
+                        <button class="sc-thumb ${i === currentImageIndex ? "active" : ""}" onclick="goToImage(${i})">
                             <img src="${img}" class="sc-thumb-img" />
                         </button>
-                    `).join('')}
+                    `,
+                      )
+                      .join("")}
                 </div>
             </div>
 
@@ -125,8 +144,8 @@ function renderCarDetail() {
                 </div>
                 <hr class="sc-rule" />
                 <div class="sc-actions">
-                    <button class="sc-cta-primary ${isWishlisted ? 'saved' : ''}" onclick="toggleWishAndRender()">
-                        ${isWishlisted ? 'Saved ✓' : 'Save to Wishlist'}
+                    <button class="sc-cta-primary ${isWishlisted ? "saved" : ""}" onclick="toggleWishAndRender()">
+                        ${isWishlisted ? "Saved ✓" : "Save to Wishlist"}
                     </button>
                     <button class="sc-cta-ghost" onclick="window.location.href='browse.html'">Back to browse</button>
                 </div>
@@ -160,7 +179,9 @@ function setView(is3D) {
 }
 
 function changeImage(dir) {
-  currentImageIndex = (currentImageIndex + dir + currentCar.images.length) % currentCar.images.length;
+  currentImageIndex =
+    (currentImageIndex + dir + currentCar.images.length) %
+    currentCar.images.length;
   renderCarDetail();
 }
 
@@ -174,4 +195,4 @@ function toggleWishAndRender() {
   renderCarDetail();
 }
 
-document.addEventListener('DOMContentLoaded', renderCarDetail);
+document.addEventListener("DOMContentLoaded", renderCarDetail);
