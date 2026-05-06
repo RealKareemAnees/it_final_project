@@ -1,165 +1,215 @@
 <!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard - CarWiki</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles/global.css" />
     <link rel="stylesheet" href="styles/header.css" />
     <link rel="stylesheet" href="styles/footer.css" />
     <link rel="stylesheet" href="styles/pages.css" />
-</head>
-<body>
+  </head>
+  <body>
     <header class="header is-inner">
-        <div class="logo" onclick="window.location.href='index.html'">CarWiki</div>
-        <nav class="desktop-nav">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="browse.html">Browse</a>
-            <a href="contact.html">Contact</a>
-        </nav>
-        <div class="header-right">
-            <button type="button" class="chat-btn theme-toggle-btn">Theme <span class="arrow-icon">↗</span></button>
-            <div class="nav-actions"></div>
-            <button type="button" class="mobile-menu-btn"><span></span><span></span><span></span></button>
-        </div>
-    </header>
-
-    <div class="mobile-nav" aria-hidden="true">
+      <div class="logo" onclick="window.location.href = 'index.html'">
+        CarWiki
+      </div>
+      <nav class="desktop-nav">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="browse.html">Browse</a>
         <a href="contact.html">Contact</a>
+      </nav>
+      <div class="header-right">
+        <button type="button" class="chat-btn theme-toggle-btn">
+          Theme <span class="arrow-icon">↗</span>
+        </button>
+        <div class="nav-actions"></div>
+        <button type="button" class="mobile-menu-btn">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="mobile-nav" aria-hidden="true">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="browse.html">Browse</a>
+      <a href="contact.html">Contact</a>
     </div>
 
     <main class="page-shell">
-        <div class="page-section admin-page">
-            <div class="page-header">
-                <span class="page-eyebrow">Dashboard</span>
-                <h1>Admin Center</h1>
-                <p>Manage the catalog, users, and feedback reviews.</p>
-            </div>
-
-            <div class="admin-grid-summary">
-                <div class="admin-summary-card">
-                    <h3>Cars</h3>
-                    <strong id="cars-count">0</strong>
-                </div>
-                <div class="admin-summary-card">
-                    <h3>Users</h3>
-                    <strong>1,248</strong>
-                </div>
-                <div class="admin-summary-card">
-                    <h3>Reviews</h3>
-                    <strong>86</strong>
-                </div>
-            </div>
-
-            <div class="admin-layout">
-                <aside class="admin-sidebar">
-                    <nav class="admin-nav-local">
-                        <button class="admin-tab-btn is-active" data-target="cars">Cars</button>
-                        <button class="admin-tab-btn" data-target="users">Users</button>
-                        <button class="admin-tab-btn" data-target="feedback">Feedback</button>
-                    </nav>
-                </aside>
-                <div class="admin-content">
-                    <div id="admin-cars-panel" class="admin-panel active">
-                        <div class="admin-panel-header">
-                            <h2>Manage Cars</h2>
-                            <button class="primary-button" onclick="alert('Feature not in static demo')">+ Add Car</button>
-                        </div>
-                        <div class="admin-list" id="admin-cars-list">
-                            <!-- Injected by admin.js -->
-                        </div>
-                    </div>
-
-                    <div id="admin-users-panel" class="admin-panel">
-                        <div class="admin-panel-header">
-                            <h2>User Management</h2>
-                        </div>
-                        <div class="admin-list" id="admin-users-list">
-                            <!-- Injected by admin.js -->
-                        </div>
-                    </div>
-
-                    <div id="admin-feedback-panel" class="admin-panel">
-                        <div class="admin-panel-header">
-                            <h2>Feedback Reviews</h2>
-                        </div>
-                        <div class="admin-list" id="admin-feedback-list">
-                            <!-- Injected by admin.js -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="page-section admin-page">
+        <div class="page-header">
+          <span class="page-eyebrow">Dashboard</span>
+          <h1>Admin Center</h1>
+          <p>Manage the catalog, users, and feedback reviews.</p>
         </div>
 
-        <!-- Edit Car Modal -->
-        <div id="edit-car-modal" class="modal-overlay" style="display: none;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Edit Car</h2>
-                    <button type="button" class="close-modal-btn" onclick="closeEditModal()">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form id="edit-car-form" class="auth-form">
-                        <input type="hidden" id="edit-car-id" />
-                        <div class="form-group">
-                            <label for="edit-car-name">Name</label>
-                            <input type="text" id="edit-car-name" class="form-input" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-car-manufacturer">Manufacturer</label>
-                            <input type="text" id="edit-car-manufacturer" class="form-input" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-car-year">Year</label>
-                            <input type="number" id="edit-car-year" class="form-input" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-car-price">Price</label>
-                            <input type="number" id="edit-car-price" class="form-input" required />
-                        </div>
-                        <button type="submit" class="primary-button">Save Changes</button>
-                    </form>
-                </div>
-            </div>
+        <div class="admin-grid-summary">
+          <div class="admin-summary-card">
+            <h3>Cars</h3>
+            <strong id="cars-count">0</strong>
+          </div>
+          <div class="admin-summary-card">
+            <h3>Users</h3>
+            <strong>1,248</strong>
+          </div>
+          <div class="admin-summary-card">
+            <h3>Reviews</h3>
+            <strong>86</strong>
+          </div>
         </div>
+
+        <div class="admin-layout">
+          <aside class="admin-sidebar">
+            <nav class="admin-nav-local">
+              <button class="admin-tab-btn is-active" data-target="cars">
+                Cars
+              </button>
+              <button class="admin-tab-btn" data-target="users">Users</button>
+              <button class="admin-tab-btn" data-target="feedback">
+                Feedback
+              </button>
+            </nav>
+          </aside>
+          <div class="admin-content">
+            <div id="admin-cars-panel" class="admin-panel active">
+              <div class="admin-panel-header">
+                <h2>Manage Cars</h2>
+                <button
+                  class="primary-button"
+                  onclick="alert('Feature not in static demo')"
+                >
+                  + Add Car
+                </button>
+              </div>
+              <div class="admin-list" id="admin-cars-list">
+                <!-- Injected by admin.js -->
+              </div>
+            </div>
+
+            <div id="admin-users-panel" class="admin-panel">
+              <div class="admin-panel-header">
+                <h2>User Management</h2>
+              </div>
+              <div class="admin-list" id="admin-users-list">
+                <!-- Injected by admin.js -->
+              </div>
+            </div>
+
+            <div id="admin-feedback-panel" class="admin-panel">
+              <div class="admin-panel-header">
+                <h2>Feedback Reviews</h2>
+              </div>
+              <div class="admin-list" id="admin-feedback-list">
+                <!-- Injected by admin.js -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Car Modal -->
+      <div id="edit-car-modal" class="modal-overlay" style="display: none">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Edit Car</h2>
+            <button
+              type="button"
+              class="close-modal-btn"
+              onclick="closeEditModal()"
+            >
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="edit-car-form" class="auth-form">
+              <input type="hidden" id="edit-car-id" />
+              <div class="form-group">
+                <label for="edit-car-name">Name</label>
+                <input
+                  type="text"
+                  id="edit-car-name"
+                  class="form-input"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="edit-car-manufacturer">Manufacturer</label>
+                <input
+                  type="text"
+                  id="edit-car-manufacturer"
+                  class="form-input"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="edit-car-year">Year</label>
+                <input
+                  type="number"
+                  id="edit-car-year"
+                  class="form-input"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="edit-car-price">Price</label>
+                <input
+                  type="number"
+                  id="edit-car-price"
+                  class="form-input"
+                  required
+                />
+              </div>
+              <button type="submit" class="primary-button">Save Changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <span class="footer-logo">CarWiki</span>
-                    <p class="footer-tagline">Comprehensive automotive knowledge base for enthusiasts and researchers.</p>
-                </div>
-                <nav class="footer-nav">
-                    <div class="footer-col">
-                        <h4>Navigation</h4>
-                        <a href="index.html">Home</a>
-                        <a href="browse.html">Browse Cars</a>
-                        <a href="about.html">About</a>
-                        <a href="contact.html">Contact</a>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Account</h4>
-                        <a href="profile.html">My Profile</a>
-                        <a href="wishlist.html">Wishlist</a>
-                    </div>
-                </nav>
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <span class="footer-logo">CarWiki</span>
+            <p class="footer-tagline">
+              Comprehensive automotive knowledge base for enthusiasts and
+              researchers.
+            </p>
+          </div>
+          <nav class="footer-nav">
+            <div class="footer-col">
+              <h4>Navigation</h4>
+              <a href="index.html">Home</a>
+              <a href="browse.html">Browse Cars</a>
+              <a href="about.html">About</a>
+              <a href="contact.html">Contact</a>
             </div>
-            <div class="footer-bottom">
-                <span class="footer-copy">© <span data-footer-year></span> CarWiki. All rights reserved.</span>
+            <div class="footer-col">
+              <h4>Account</h4>
+              <a href="profile.html">My Profile</a>
+              <a href="wishlist.html">Wishlist</a>
             </div>
+          </nav>
         </div>
+        <div class="footer-bottom">
+          <span class="footer-copy"
+            >© <span data-footer-year></span> CarWiki. All rights
+            reserved.</span
+          >
+        </div>
+      </div>
     </footer>
 
     <script src="js/shared.js"></script>
     <script src="js/admin.js"></script>
-</body>
+  </body>
 </html>
