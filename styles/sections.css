@@ -388,3 +388,297 @@ body.darktheme .home-cta {
     background: #0a0a0a;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+/* ── BROWSE BY COUNTRY ─────────────────────────────────────────────── */
+
+.browse-countries {
+    background: var(--color-bg-light);
+    color: var(--color-text-dark);
+    padding: var(--spacing-padding-responsive) 0;
+}
+
+.countries-inner {
+    width: min(var(--size-container), calc(100% - 48px));
+    margin: 0 auto;
+}
+
+.countries-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-bottom: clamp(20px, 4vw, 32px);
+}
+
+.countries-header h2 {
+    font-size: var(--font-size-heading-responsive);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: -0.5px;
+    color: var(--color-text-dark);
+}
+
+.countries-header p {
+    color: var(--color-text-muted);
+    opacity: 0.7;
+    line-height: var(--line-height-normal);
+    max-width: 70ch;
+}
+
+.country-grid {
+    column-count: 2;
+    column-gap: 24px;
+}
+
+.country-card {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 0 24px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-text-dark);
+    color: var(--color-text-light);
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: box-shadow var(--transition-slowest), transform var(--transition-slowest);
+}
+
+.country-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%);
+    opacity: 0.7;
+    transition: opacity var(--transition-slowest);
+    z-index: 1;
+}
+
+.country-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+}
+
+.country-card:active {
+    transform: translateY(0);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.country-card:hover::after {
+    opacity: 0.95;
+}
+
+.country-image {
+    width: 100%;
+}
+
+.country-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform var(--transition-slowest);
+}
+
+.country-card:hover .country-image img {
+    transform: scale(1.05);
+}
+
+.country-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 40px 24px 24px;
+    z-index: 2;
+}
+
+.country-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.5px;
+    color: var(--color-text-light);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    transform: translateY(12px);
+    transition: transform var(--transition-slowest);
+}
+
+.country-copy {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-normal);
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: all var(--transition-slowest);
+}
+
+.country-card:hover .country-title {
+    transform: translateY(0);
+}
+
+.country-card:hover .country-copy {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.05s;
+}
+
+/* ── CONTACT SECTION ───────────────────────────────────────────────── */
+
+.contact-section {
+    background: var(--color-bg-light);
+    color: var(--color-text-dark);
+    padding: var(--spacing-padding-xl) 0;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.contact-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: clamp(40px, 6vw, 60px);
+    background: rgba(0, 0, 0, 0.12);
+}
+
+.contact-inner {
+    width: min(var(--size-container-md), calc(100% - 48px));
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+.contact-eyebrow {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--letter-spacing-3xl);
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.4);
+    margin-bottom: var(--spacing-xl);
+}
+
+.contact-heading {
+    font-size: var(--font-size-contact-heading);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    color: var(--color-text-dark);
+    margin-bottom: var(--spacing-xl);
+}
+
+.contact-sub {
+    font-size: clamp(15px, 1.8vw, 17px);
+    color: rgba(0, 0, 0, 0.55);
+    line-height: var(--line-height-loose);
+    max-width: 48ch;
+    margin-bottom: var(--spacing-4xl);
+}
+
+.contact-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) 28px;
+    background: var(--color-text-dark);
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.3px;
+    border-radius: var(--radius-xl);
+    transition: all var(--transition-slow);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.contact-cta:hover {
+    background: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+}
+
+.contact-cta:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.cta-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-base);
+    transition: background var(--transition-base);
+}
+
+.contact-cta:hover .cta-arrow {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+@media (max-width: 900px) {
+    .country-grid {
+        column-count: 1;
+    }
+}
+
+@media (max-width: 640px) {
+    .countries-inner,
+    .contact-inner {
+        padding: 0 20px;
+    }
+
+    .country-body {
+        padding: 24px 16px 16px;
+    }
+
+    .country-title {
+        font-size: 18px;
+        transform: translateY(0);
+    }
+
+    .country-copy {
+        font-size: 13px;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .contact-section::before {
+        height: 40px;
+    }
+
+    .contact-heading {
+        font-size: clamp(2rem, 4vw, 2.8rem);
+    }
+}
+
+body.darktheme .contact-section {
+    background: var(--color-bg-dark);
+    color: var(--color-text-light);
+}
+
+body.darktheme .contact-eyebrow {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+body.darktheme .contact-heading {
+    color: var(--color-text-light);
+}
+
+body.darktheme .contact-sub {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+body.darktheme .contact-section::before {
+    background: rgba(255, 255, 255, 0.12);
+}

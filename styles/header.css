@@ -217,6 +217,15 @@ body.nav-drawer-open .header {
     background: rgba(255, 255, 255, 0.08);
 }
 
+.mobile-nav-account {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 /* ── DARK THEME HEADER ───────────────────────────────────────────── */
 body.darktheme .header.is-scrolled,
 body.darktheme .header.is-inner {

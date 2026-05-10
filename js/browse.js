@@ -90,7 +90,6 @@ function renderFilters() {
 function renderCarGrid() {
   // Find the grid container that holds the cards.
   const grid = document.getElementById("car-grid");
-  // Read the filter state from the URL and the wishlist from shared storage.
   const filters = getFiltersFromUrl();
   const wishlist = getWishlist();
 
@@ -152,6 +151,8 @@ function toggleAndRefresh(e, id) {
   // Redraw the page so the button state updates immediately.
   renderBrowse();
 }
+
+
 
 // Rebuilds the browse page from the current URL and data state.
 function renderBrowse() {

@@ -535,63 +535,48 @@ initCars();
 
 // Reads the current signed-in user object from localStorage.
 function getUser() {
-  // localStorage stores everything as strings, so user data must be parsed.
   const user = localStorage.getItem("user");
   return user ? JSON.parse(user) : null;
 }
 
-// Stores a user object in localStorage and keeps their current theme and wishlist.
+// Stores a user object in localStorage.
 function setUser(username, role = "user") {
-  // Build the user object in the shape expected by the rest of the app.
   const user = {
     username,
     role,
-    // Preserve the current theme preference if one already exists.
     theme: localStorage.getItem("theme") || "light",
-    // Copy the active wishlist so login/signup keeps saved items in sync.
     wishList: getWishlist(),
   };
-  // Persist the user payload for future page loads.
   localStorage.setItem("user", JSON.stringify(user));
   return user;
 }
 
-// Clears authentication and wishlist state, then sends the user back home.
+// Clears authentication and wishlist state.
 function logout() {
-  // Remove the authenticated user record.
   localStorage.removeItem("user");
-  // Remove guest wishlist data so the next session starts cleanly.
   localStorage.removeItem("wishlist");
-  // Redirect to the home page after logout completes.
   window.location.href = "index.html";
 }
 
-// Returns the wishlist array for the current user or guest session.
+// Returns the wishlist array.
 function getWishlist() {
-  // Logged-in users keep wishlist state inside the user object.
   const user = getUser();
   if (user) return user.wishList || [];
-
-  // Guests store wishlist state separately in localStorage.
   const list = localStorage.getItem("wishlist");
   return list ? JSON.parse(list) : [];
 }
 
-// Adds or removes a car ID from the active wishlist and persists the result.
+// Adds or removes a car ID from the active wishlist.
 function toggleWishlist(carId) {
-  // Start from the current wishlist state.
   let list = getWishlist();
-  // Normalize the ID to a string because storage uses string arrays.
   const idStr = String(carId);
 
-  // Remove the car if it is already present; otherwise add it.
   if (list.includes(idStr)) {
     list = list.filter((id) => id !== idStr);
   } else {
     list.push(idStr);
   }
 
-  // Persist the updated wishlist either into the user profile or guest storage.
   const user = getUser();
   if (user) {
     user.wishList = list;
@@ -600,6 +585,17 @@ function toggleWishlist(carId) {
     localStorage.setItem("wishlist", JSON.stringify(list));
   }
   return list;
+}
+
+// Updates the price of a car in the catalog and persists it.
+function updateCarPrice(id, newPrice) {
+  const car = MOCK_CARS.find((c) => c.localID == id);
+  if (car) {
+    car.price = parseInt(newPrice);
+    localStorage.setItem("cars", JSON.stringify(MOCK_CARS));
+    return true;
+  }
+  return false;
 }
 
 // --- UI Logic ---
@@ -672,32 +668,33 @@ function initSharedUI() {
     });
   }
 
-  // Navbar Dynamic Links (User vs Guest)
-  // Render account links according to whether a user is signed in.
+  // Render account links consistently in both the desktop header and the mobile drawer.
   const user = getUser();
   const navActions = document.querySelector(".header-right .nav-actions");
-  const mobileActionsContainer = document.querySelector(".mobile-nav");
+  const mobileNavAccount = document.querySelector(".mobile-nav");
+  const accountMarkup = user
+    ? `
+        <a href="wishlist.html" class="nav-link">Wishlist</a>
+        <button class="nav-link nav-button" type="button" onclick="logout()">Logout</button>
+      `
+    : `
+        <a href="auth.html" class="nav-link">Login</a>
+      `;
 
   if (navActions) {
-    if (user) {
-      // Signed-in users can reach their profile, dashboard, and logout.
-      navActions.innerHTML = `
-        <a href="profile.html" class="nav-link">Profile</a>
-        ${user.role === "admin" ? '<a href="admin.html" class="nav-link">Dashboard</a>' : ""}
-        <button class="nav-link nav-button" onclick="logout()">Logout</button>
-      `;
-    } else {
-      // Guests are prompted to authenticate.
-      navActions.innerHTML = `
-        <a href="auth.html" class="nav-link">Login</a>
-        <a href="auth.html" class="nav-link">Signup</a>
-      `;
-    }
+    navActions.innerHTML = accountMarkup;
   }
 
-  if (mobileActionsContainer) {
-    // Find the last links in mobile nav to replace/update
-    // For simplicity, let's just re-render the bottom part or handle it if we want it perfect
+  if (mobileNavAccount) {
+    const mobileAccount = mobileNavAccount.querySelector(".mobile-nav-account");
+    if (mobileAccount) {
+      mobileAccount.innerHTML = accountMarkup;
+    } else {
+      const accountBlock = document.createElement("div");
+      accountBlock.className = "mobile-nav-account";
+      accountBlock.innerHTML = accountMarkup;
+      mobileNavAccount.appendChild(accountBlock);
+    }
   }
 
   // Footer Year

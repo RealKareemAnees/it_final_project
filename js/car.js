@@ -131,7 +131,7 @@ function renderCarDetail() {
             <div class="sc-data-col">
                 <div class="sc-price-block">
                     <span class="sc-price-label">Starting from</span>
-                    <span class="sc-price">$${currentCar.price.toLocaleString()}</span>
+                    <span class="sc-price">$${currentCar.price.toLocaleString()} <button class="edit-btn" onclick="editPrice()">Edit Price</button></span>
                 </div>
                 <hr class="sc-rule" />
                 <p class="sc-desc">${currentCar.description}</p>
@@ -211,6 +211,17 @@ function toggleWishAndRender() {
   toggleWishlist(currentCar.localID);
   // Re-render so the button label updates immediately.
   renderCarDetail();
+}
+
+// Prompts the user for a new price and updates the catalog.
+function editPrice() {
+  const newPrice = prompt("Enter new price:", currentCar.price);
+  if (newPrice !== null && !isNaN(newPrice) && newPrice !== "") {
+    if (updateCarPrice(currentCar.localID, newPrice)) {
+      currentCar.price = parseInt(newPrice);
+      renderCarDetail();
+    }
+  }
 }
 
 // Delay initialization until the car detail container exists in the DOM.
