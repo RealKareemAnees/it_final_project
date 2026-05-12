@@ -68,8 +68,6 @@
   font-size: var(--font-size-base);
   padding: 10px 18px;
   border: none;
-  border-radius: var(--radius-full);
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
 
 .primary-button,
@@ -93,7 +91,6 @@
 .ghost-button:hover,
 .car-action:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
 }
 
 .primary-button:active,
@@ -101,7 +98,6 @@
 .ghost-button:active,
 .car-action:active {
   transform: translateY(0);
-  box-shadow: none;
 }
 
 .car-grid {
@@ -116,18 +112,14 @@
 
 .car-card {
   background: var(--color-surface);
-  border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--color-border-light);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .car-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.12);
 }
 
 .car-card__media {
@@ -155,7 +147,6 @@
   letter-spacing: var(--letter-spacing-lg);
   text-transform: uppercase;
   padding: 6px 10px;
-  border-radius: var(--radius-full);
 }
 
 .car-card__body {
@@ -191,7 +182,6 @@
 
 .car-tag {
   padding: 4px 10px;
-  border-radius: var(--radius-full);
   background: var(--color-surface-muted);
   font-size: var(--font-size-xs);
   text-transform: uppercase;
@@ -226,10 +216,8 @@
 
 .browse-filters {
   background: var(--color-surface);
-  border-radius: var(--radius-lg);
   padding: var(--spacing-3xl);
   border: 1px solid var(--color-border-light);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-3xl);
@@ -265,13 +253,11 @@
 
 .filter-pill {
   padding: 6px 12px;
-  border-radius: var(--radius-full);
   border: 1px solid var(--color-border-light);
   background: var(--color-surface-muted);
   font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-lg);
-  transition: all var(--transition-fast);
   cursor: pointer;
 }
 
@@ -315,12 +301,10 @@
   border: 1px solid var(--color-border-light);
   background: var(--color-surface);
   padding: 6px 12px;
-  border-radius: var(--radius-full);
   font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-lg);
   cursor: pointer;
-  transition: background var(--transition-fast), transform var(--transition-fast);
 }
 
 .filter-chip:hover {
@@ -349,7 +333,6 @@
 
 .contact-card {
   background: var(--color-surface);
-  border-radius: var(--radius-lg);
   padding: var(--spacing-2xl);
   border: 1px solid var(--color-border-light);
 }
@@ -366,7 +349,6 @@
 
 .contact-steps {
   background: var(--color-surface-muted);
-  border-radius: var(--radius-lg);
   padding: var(--spacing-2xl);
 }
 
@@ -388,9 +370,7 @@
 .contact-form--panel {
   background: var(--color-surface);
   padding: var(--spacing-3xl);
-  border-radius: var(--radius-lg);
   border: 1px solid var(--color-border-light);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
 }
 
 .field,
@@ -402,7 +382,6 @@
   font-size: var(--font-size-base);
   padding: 12px 14px;
   border: 1px solid transparent;
-  border-radius: var(--radius-md);
   background: var(--color-surface-muted);
 }
 
@@ -431,7 +410,6 @@
 
 .metric-card {
   background: var(--color-surface);
-  border-radius: var(--radius-lg);
   padding: var(--spacing-xl);
   border: 1px solid var(--color-border-light);
   display: flex;
@@ -451,7 +429,6 @@
 
 .about-card {
   background: var(--color-surface);
-  border-radius: var(--radius-lg);
   padding: var(--spacing-3xl);
   border: 1px solid var(--color-border-light);
 }
@@ -462,6 +439,5 @@
 
 .about-story {
   background: var(--color-surface-muted);
-  border-radius: var(--radius-lg);
   padding: var(--spacing-3xl);
 }

@@ -7,7 +7,6 @@
 
 .admin-summary-card {
   background: var(--color-surface);
-  border-radius: var(--radius-lg);
   padding: var(--spacing-xl);
   border: 1px solid var(--color-border-light);
   display: flex;
@@ -76,7 +75,6 @@ body.darktheme .admin-panel,
 body.darktheme .admin-summary-card {
   background: var(--color-bg-darker);
   border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
 }
 
 body.darktheme .admin-item {

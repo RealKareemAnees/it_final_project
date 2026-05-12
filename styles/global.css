@@ -87,11 +87,11 @@
     --spacing-padding-xl: clamp(80px, 12vw, 130px);
 
     /* Border Radius */
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-xl: 40px;
-    --radius-full: 999px;
+    --radius-sm: 0px;
+    --radius-md: 0px;
+    --radius-lg: 0px;
+    --radius-xl: 0px;
+    --radius-full: 0px;
 
     /* Transitions & Animations */
     --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
@@ -186,20 +186,4 @@ button {
     padding: var(--spacing-padding-responsive) 0;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
 
-@keyframes wave {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    50% {
-        transform: translateX(4px);
-    }
-}

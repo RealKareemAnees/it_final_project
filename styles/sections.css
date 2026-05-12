@@ -51,18 +51,14 @@
     font-weight: var(--font-weight-medium);
     letter-spacing: var(--letter-spacing-base);
     cursor: pointer;
-    transition: all var(--transition-medium);
     -webkit-tap-highlight-color: transparent;
 }
 
 .learn-more-btn:hover {
     border-color: rgba(0, 0, 0, 0.35);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-    transform: translateY(-1px);
 }
 
 .learn-more-btn:active {
-    transform: translateY(0);
 }
 
 .learn-more-btn:focus-visible {
@@ -140,19 +136,14 @@
     text-decoration: none;
     color: inherit;
     cursor: pointer;
-    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
     -webkit-tap-highlight-color: transparent;
 }
 
 .type-card:hover {
-    transform: translateY(-2px);
     border-color: rgba(0, 0, 0, 0.18);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
 }
 
 .type-card:active {
-    transform: translateY(0);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
 }
 
 .type-card:focus-visible {
@@ -197,13 +188,11 @@
     font-weight: var(--font-weight-medium);
     letter-spacing: var(--letter-spacing-base);
     cursor: pointer;
-    transition: all var(--transition-medium);
     -webkit-tap-highlight-color: transparent;
 }
 
 .more-link:hover {
     border-color: rgba(0, 0, 0, 0.3);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
     transform: translateY(-1px);
 }
 
@@ -218,7 +207,6 @@
 
 .more-arrow {
     display: inline-block;
-    animation: wave 1.2s ease-in-out infinite;
 }
 
 /* ── RESPONSIVE ──────────────────────────────────────────────────── */
@@ -323,18 +311,15 @@
     align-items: center;
     justify-content: center;
     padding: 12px 28px;
-    border-radius: var(--radius-full);
     background: var(--color-bg-light);
     color: var(--color-text-dark);
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-medium);
     text-decoration: none;
-    transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
 
 .home-cta-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
 }
 
 /* ── HOME SECTIONS — DARK THEME ───────────────────────────────────── */
@@ -360,7 +345,6 @@ body.darktheme .countries-header p {
 body.darktheme .type-card {
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: none;
 }
 
 body.darktheme .type-thumb {
@@ -381,7 +365,6 @@ body.darktheme .more-link {
 body.darktheme .learn-more-btn:hover,
 body.darktheme .more-link:hover {
     border-color: rgba(255, 255, 255, 0.35);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
 
 body.darktheme .home-cta {
@@ -434,35 +417,29 @@ body.darktheme .home-cta {
     flex-direction: column;
     width: 100%;
     margin: 0 0 24px;
-    border-radius: var(--radius-md);
     overflow: hidden;
     background: var(--color-text-dark);
     color: var(--color-text-light);
     break-inside: avoid;
     -webkit-column-break-inside: avoid;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
     cursor: pointer;
-    transition: box-shadow var(--transition-slowest), transform var(--transition-slowest);
 }
 
 .country-card::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%);
+    background: rgba(0,0,0,0.3);
     opacity: 0.7;
-    transition: opacity var(--transition-slowest);
     z-index: 1;
 }
 
 .country-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
 }
 
 .country-card:active {
     transform: translateY(0);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .country-card:hover::after {
@@ -477,7 +454,6 @@ body.darktheme .home-cta {
     width: 100%;
     height: auto;
     display: block;
-    transition: transform var(--transition-slowest);
 }
 
 .country-card:hover .country-image img {
@@ -503,7 +479,6 @@ body.darktheme .home-cta {
     color: var(--color-text-light);
     text-shadow: 0 2px 4px rgba(0,0,0,0.4);
     transform: translateY(12px);
-    transition: transform var(--transition-slowest);
 }
 
 .country-copy {
@@ -513,7 +488,6 @@ body.darktheme .home-cta {
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     opacity: 0;
     transform: translateY(12px);
-    transition: all var(--transition-slowest);
 }
 
 .country-card:hover .country-title {
@@ -594,20 +568,16 @@ body.darktheme .home-cta {
     font-size: var(--font-size-md);
     font-weight: var(--font-weight-medium);
     letter-spacing: 0.3px;
-    border-radius: var(--radius-xl);
-    transition: all var(--transition-slow);
     -webkit-tap-highlight-color: transparent;
 }
 
 .contact-cta:hover {
     background: #000;
     transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
 }
 
 .contact-cta:active {
     transform: translateY(0);
-    box-shadow: none;
 }
 
 .cta-arrow {
@@ -617,9 +587,7 @@ body.darktheme .home-cta {
     width: 26px;
     height: 26px;
     background: rgba(255, 255, 255, 0.15);
-    border-radius: var(--radius-full);
     font-size: var(--font-size-base);
-    transition: background var(--transition-base);
 }
 
 .contact-cta:hover .cta-arrow {

@@ -7,8 +7,6 @@
   font-size: var(--font-size-base);
   padding: 10px 18px;
   border: none;
-  border-radius: var(--radius-full);
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
   cursor: pointer;
 }
 
@@ -32,16 +30,12 @@
 .secondary-button:hover,
 .ghost-button:hover,
 .car-action:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
 }
 
 .primary-button:active,
 .secondary-button:active,
 .ghost-button:active,
 .car-action:active {
-  transform: translateY(0);
-  box-shadow: none;
 }
 
 /* Dark theme */

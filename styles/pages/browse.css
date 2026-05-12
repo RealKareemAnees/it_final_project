@@ -7,10 +7,8 @@
 
 .browse-filters {
   background: var(--color-surface);
-  border-radius: var(--radius-lg);
   padding: var(--spacing-3xl);
   border: 1px solid var(--color-border-light);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-3xl);
@@ -42,13 +40,11 @@
 
 .filter-pill {
   padding: 6px 12px;
-  border-radius: var(--radius-full);
   border: 1px solid var(--color-border-light);
   background: var(--color-surface-muted);
   font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-lg);
-  transition: all var(--transition-fast);
   cursor: pointer;
 }
 
@@ -86,12 +82,10 @@
   border: 1px solid var(--color-border-light);
   background: var(--color-surface);
   padding: 6px 12px;
-  border-radius: var(--radius-full);
   font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-lg);
   cursor: pointer;
-  transition: all var(--transition-fast);
 }
 
 .filter-chip::after {
@@ -116,7 +110,6 @@
 }
 
 .skeleton-card {
-  border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--color-surface);
   border: 1px solid var(--color-border-light);
@@ -125,9 +118,7 @@
 .skeleton-image {
   width: 100%;
   height: 210px;
-  background: linear-gradient(90deg, var(--color-surface-muted) 25%, var(--color-surface-strong) 50%, var(--color-surface-muted) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  background: var(--color-surface-muted);
 }
 
 .skeleton-body {
@@ -139,20 +130,13 @@
 
 .skeleton-line {
   height: 12px;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(90deg, var(--color-surface-muted) 25%, var(--color-surface-strong) 50%, var(--color-surface-muted) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  background: var(--color-surface-muted);
 }
 
 .skeleton-line--short { width: 40%; }
 .skeleton-line--medium { width: 65%; }
 .skeleton-line--full { width: 100%; }
 
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
 
 /* Responsive */
 @media (max-width: 1100px) {
@@ -169,7 +153,6 @@
 body.darktheme .browse-filters {
   background: var(--color-bg-darker);
   border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
 }
 
 body.darktheme .filter-group h3 {

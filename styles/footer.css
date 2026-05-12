@@ -67,7 +67,6 @@
     font-size: var(--font-size-base);
     color: rgba(255, 255, 255, 0.65);
     text-decoration: none;
-    transition: color var(--transition-fast);
 }
 
 .footer-col a:hover {
@@ -100,17 +99,14 @@
     justify-content: center;
     width: 36px;
     height: 36px;
-    border-radius: var(--radius-full);
     border: 1px solid rgba(255, 255, 255, 0.12);
     color: rgba(255, 255, 255, 0.5);
     text-decoration: none;
-    transition: all var(--transition-medium);
 }
 
 .social-link:hover {
     border-color: rgba(255, 255, 255, 0.4);
     color: var(--color-text-light);
-    transform: translateY(-2px);
 }
 
 .social-link svg {

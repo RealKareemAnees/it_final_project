@@ -13,17 +13,12 @@
     z-index: 50;
     color: var(--color-text-light);
     background: transparent;
-    transition: background-color var(--transition-medium),
-        color var(--transition-medium),
-        box-shadow var(--transition-medium),
-        border-bottom var(--transition-medium);
 }
 
 .header.is-scrolled,
 .header.is-inner {
     background-color: rgba(255, 255, 255, 0.92);
     color: var(--color-text-dark);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -46,7 +41,6 @@
     text-decoration: none;
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-regular);
-    transition: opacity var(--transition-base);
 }
 
 .desktop-nav a:hover {
@@ -74,7 +68,6 @@
     text-decoration: none;
     background: transparent;
     padding: 6px 10px;
-    transition: opacity var(--transition-base);
 }
 
 .nav-link:hover {
@@ -89,23 +82,18 @@
 .chat-btn {
     background-color: var(--color-bg-light);
     color: var(--color-text-dark);
-    border-radius: var(--radius-xl);
     padding: 10px 20px;
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-medium);
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
-    transition: all var(--transition-medium);
 }
 
 .chat-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .chat-btn:active {
-    transform: translateY(0);
 }
 
 .arrow-icon {
@@ -115,7 +103,6 @@
     width: 24px;
     height: 24px;
     background-color: #ededed;
-    border-radius: var(--radius-full);
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-semibold);
 }
@@ -138,7 +125,6 @@
     width: 25px;
     height: 2px;
     background-color: var(--color-text-light);
-    transition: var(--transition-medium);
 }
 
 .header.is-scrolled .mobile-menu-btn span,
@@ -173,11 +159,8 @@
     transform: translateY(-12px);
     opacity: 0;
     pointer-events: none;
-    transition: transform var(--transition-medium), opacity var(--transition-medium);
     z-index: 55;
-    border-radius: var(--radius-lg);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.55);
 }
 
 .mobile-nav.active {
@@ -197,8 +180,6 @@ body.nav-drawer-open .header {
     font-size: var(--font-size-base);
     padding: 10px 12px;
     opacity: 0.92;
-    border-radius: var(--radius-md);
-    transition: opacity var(--transition-base), background var(--transition-base);
 }
 
 .mobile-nav .nav-button {
@@ -208,7 +189,6 @@ body.nav-drawer-open .header {
     padding: 10px 12px;
     font-size: var(--font-size-base);
     opacity: 0.92;
-    border-radius: var(--radius-md);
 }
 
 .mobile-nav a:hover,
@@ -231,7 +211,6 @@ body.darktheme .header.is-scrolled,
 body.darktheme .header.is-inner {
     background-color: rgba(15, 15, 15, 0.94);
     color: var(--color-text-light);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
